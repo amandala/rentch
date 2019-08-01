@@ -2,8 +2,14 @@
   "name": "rentch",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://rentch.herokuapp.com/",
   "devDependencies": {
     "react-scripts": "3.0.1"
+  },
+  "engines": {
+    "npm": "6.9.0",
+    "node": "12.0.0",
+    "yarn": "1.9.4"
   },
   "dependencies": {
     "react": "^16.8.6",
