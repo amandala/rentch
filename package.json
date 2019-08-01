@@ -16,6 +16,7 @@
     "react-dom": "^16.8.6"
   },
   "scripts": {
+    "heroku-prebuild": "yarn install --production=false",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
