@@ -41,3 +41,13 @@
 .App-nav-item:hover {
   background-color: #096a68;
 }
+
+.App-message {
+  margin-top: 100px;
+  opacity: 0;
+  color: #096a68;
+}
+
+.App-message--show {
+  opacity: 1;
+}
