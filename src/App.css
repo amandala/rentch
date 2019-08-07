@@ -15,21 +15,29 @@
   background-color: #0eaaa6;
   min-height: 100px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding-right: 40px;
 }
 
-.App-link {
-  color: #61dafb;
+.App-nav {
+  list-style: none;
+  margin: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-nav-item {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-size: 0.875rem;
+  text-align: left;
+  font-weight: bold;
+  line-height: 7;
+  padding: 42px 30px;
+}
+
+.App-nav-item:hover {
+  background-color: #096a68;
 }
