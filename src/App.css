@@ -3,31 +3,41 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+  width: 450px;
+  height: 100px;
+  padding: 0;
+  background: url(//www.rentch.ca/wp-content/uploads/2019/05/White.png)
+    no-repeat scroll center left !important;
+  background-size: contain !important;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #0eaaa6;
+  min-height: 100px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding-right: 40px;
 }
 
-.App-link {
-  color: #61dafb;
+.App-nav {
+  list-style: none;
+  margin: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-nav-item {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-size: 0.875rem;
+  text-align: left;
+  font-weight: bold;
+  line-height: 7;
+  padding: 42px 30px;
+}
+
+.App-nav-item:hover {
+  background-color: #096a68;
 }
