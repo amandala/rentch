@@ -1,23 +1,16 @@
 import React, { useState } from "react";
+import Login from "./Login";
 
 import "./App.css";
 
 function App() {
-  const [showMessage, setShowMessage] = useState(false);
-
   return (
     <div className="App">
       <header className="App-header">
         <div className="App-logo" />
-        <ul className="App-nav">
-          <li onClick={() => setShowMessage(!showMessage)}>
-            <a className="App-nav-item">Login</a>
-          </li>
-        </ul>
+        <ul className="App-nav" />
       </header>
-      <p className={showMessage ? `App-message--show` : "App-message"}>
-        Login coming soon!
-      </p>
+      <Login />
     </div>
   );
 }
