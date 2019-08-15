@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { GoogleLogout, GoogleLogin } from "react-google-login";
 import { useStateValue } from "../StateProvider";
 
@@ -8,6 +9,10 @@ const Login = () => {
   const [error, setError] = useState(null);
 
   const [{ loggedIn }, dispatch] = useStateValue();
+
+  if (loggedIn) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="Login">
@@ -31,9 +36,9 @@ const Login = () => {
             clientId="509100598048-ahu311l4ugtmf68q093g8po4oqubc38s.apps.googleusercontent.com"
             buttonText="Login"
             onSuccess={data => {
-              console.log(data);
               dispatch({
-                type: "login"
+                type: "login",
+                data: data.profileObj
               });
             }}
             onFailure={e => {
