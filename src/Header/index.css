@@ -1,0 +1,19 @@
+.Header {
+  background-color: #0eaaa6;
+  min-height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Logo {
+  width: 450px;
+  height: 100px;
+  padding: 0;
+  background: url(//www.rentch.ca/wp-content/uploads/2019/05/White.png)
+    no-repeat scroll center left !important;
+  background-size: contain !important;
+}
