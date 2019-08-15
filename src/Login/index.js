@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import { GoogleLogout, GoogleLogin } from "react-google-login";
+import { useStateValue } from "../StateProvider";
 
 import "./index.css";
 
 const Login = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState(null);
 
-  const responseGoogle = response => {
-    console.log(response);
-  };
+  const [{ loggedIn }, dispatch] = useStateValue();
 
   return (
     <div className="Login">
-      {isAuthenticated ? (
+      {loggedIn ? (
         <div>
           <p>Welcome to Rentch</p>
           <GoogleLogout
             clientId="509100598048-ahu311l4ugtmf68q093g8po4oqubc38s.apps.googleusercontent.com"
             buttonText="Logout"
-            onLogoutSuccess={() => setIsAuthenticated(false)}
+            onLogoutSuccess={() =>
+              dispatch({
+                type: "logout"
+              })
+            }
           />
         </div>
       ) : (
@@ -28,8 +30,15 @@ const Login = () => {
           <GoogleLogin
             clientId="509100598048-ahu311l4ugtmf68q093g8po4oqubc38s.apps.googleusercontent.com"
             buttonText="Login"
-            onSuccess={() => setIsAuthenticated(true)}
-            onFailure={responseGoogle}
+            onSuccess={data => {
+              console.log(data);
+              dispatch({
+                type: "login"
+              });
+            }}
+            onFailure={e => {
+              console.log(e);
+            }}
             cookiePolicy={"single_host_origin"}
           />
         </div>
