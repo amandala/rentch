@@ -4,6 +4,8 @@ import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
 import { useStateValue } from "../StateProvider";
 
+import Property from "../Property";
+
 import "./index.css";
 
 const contentfulClient = new ContentfulClient({
@@ -36,20 +38,20 @@ const Home = () => {
             return null;
           }
 
-          if (!data.items) {
+          if (!data.items.length) {
             return <p>No user data exists.</p>;
           }
 
-          // See the Contentful query response
-          console.log(data.items);
+          const properties = data.items[0].fields.property;
 
-          const property = data.items[0].fields.property[0];
+          console.log(properties);
 
-          // Process and pass in the loaded `data` necessary for your page or child components.
           return (
             <div className="Home">
               <h1>Welcome, {userData.givenName}</h1>
-              {property.fields.name}
+              {properties.map(property => (
+                <Property property={property} />
+              ))}
             </div>
           );
         }}
