@@ -9,9 +9,11 @@ import { StateProvider } from "./StateProvider";
 import "./App.css";
 
 function App() {
+  const profileData = JSON.parse(localStorage.getItem("profile"));
+
   const initialState = {
-    loggedIn: false,
-    userData: undefined
+    loggedIn: !!profileData,
+    userData: profileData
   };
 
   const reducer = (state, action) => {
