@@ -1,9 +1,19 @@
 import React from "react";
 
+import "./index.scss";
+
 export const Button = ({ onClick, children }) => {
-  return <button onClick={onClick}>{children}</button>;
+  return (
+    <button className="Button" onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 export const ButtonHollow = ({ onClick, children }) => {
-  return <button onClick={onClick}>{children}</button>;
+  return (
+    <button className="ButtonHollow" onClick={onClick}>
+      {children}
+    </button>
+  );
 };

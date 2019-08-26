@@ -27,9 +27,7 @@ const Property = ({ property }) => {
       <HeadingSmall>
         Landlord: {property.fields.landlord.fields.name}
       </HeadingSmall>
-      <Button onClick={() => setNavigateToRequestForm(true)}>
-        Request repair
-      </Button>
+      <Button onClick={() => setNavigateToRequestForm(true)}>Get Help</Button>
     </div>
   );
 };
