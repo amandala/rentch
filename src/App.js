@@ -39,11 +39,13 @@ function App() {
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <div className="App">
+      <div>
         <Router>
           <Header />
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={Login} />
+          <div className="App">
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+          </div>
         </Router>
       </div>
     </StateProvider>

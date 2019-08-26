@@ -3,10 +3,11 @@ import { Redirect } from "react-router-dom";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
 import { useStateValue } from "../StateProvider";
+import { HeadingLarge, HeadingMedium } from "../Heading";
 
 import Property from "../Property";
 
-import "./index.css";
+import "./index.scss";
 
 const contentfulClient = new ContentfulClient({
   accessToken: "3PcuT-6xkUk8xMdwkMi4mvSUoEO-ud0Iv6Se7XP9Klk",
@@ -48,10 +49,20 @@ const Home = () => {
 
           return (
             <div className="Home">
-              <h1>Welcome, {userData.givenName}</h1>
-              {properties.map(property => (
-                <Property property={property} />
-              ))}
+              <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
+              <div className="ContentWrapper">
+                <div>
+                  <HeadingMedium>
+                    Your place {`${properties.length > 1 ? "s" : ""}`}
+                  </HeadingMedium>
+                  {properties.map(property => (
+                    <Property property={property} />
+                  ))}
+                </div>
+                <div className="Notifactions">
+                  <HeadingMedium>Notifications</HeadingMedium>
+                </div>
+              </div>
             </div>
           );
         }}
