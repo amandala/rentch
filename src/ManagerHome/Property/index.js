@@ -9,15 +9,15 @@ const Property = ({ property }) => {
   const getImgUrl = photo => photo.fields.file.url.split("//")[1];
 
   return (
-    <div className="TenantPropertyWrapper">
-      <div className="TenantPropertyName">
+    <div className="ManagerPropertyWrapper">
+      <div className="ManagerPropertyName">
         <HeadingMedium>{property.fields.name}</HeadingMedium>
         <img
           style={{ width: "333px", height: "auto" }}
           src={`https:${property.fields.photos[0].fields.file.url}`}
         />
       </div>
-      <div className="TenantPropertyDetails">
+      <div className="ManagerPropertyDetails">
         <HeadingSmall>
           Monthly rent: ${property.fields.monthlyRent}
         </HeadingSmall>

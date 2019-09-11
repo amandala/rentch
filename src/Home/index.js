@@ -5,6 +5,7 @@ import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 import { useStateValue } from "../StateProvider";
 
 import TenantHome from "../TenantHome";
+import ManagerHome from "../ManagerHome";
 
 import Property from "../TenantHome/Property";
 
@@ -25,6 +26,8 @@ const Home = () => {
   const renderHomeView = (role, properties) => {
     if (role === "tenant") {
       return <TenantHome property={properties[0]} />;
+    } else if (role === "manager") {
+      return <ManagerHome properties={properties} />;
     }
   };
 
