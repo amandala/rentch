@@ -1,0 +1,14 @@
+.ManagerPropertyWrapper {
+  padding: 15px;
+  border: 1px solid #a0aec0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ManagerPropertyDetails {
+  flex: 1;
+  margin-left: 20px;
+}
