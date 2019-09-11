@@ -1,14 +1,21 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 
 import { useStateValue } from "../StateProvider";
 
+import { Button } from "../Button";
 import Property from "./Property";
-import { HeadingMedium } from "../Heading";
+import { HeadingMedium, HeadingLarge } from "../Heading";
 
 import "./index.scss";
 
 const TenantHome = ({ property }) => {
   const [{ userData }, dispatch] = useStateValue();
+  const [navigateToRequestForm, setNavigateToRequestForm] = React.useState();
+
+  if (navigateToRequestForm) {
+    return <Redirect to="/request" />;
+  }
 
   console.log(property);
   const allNotifications = property.fields.notifications;
@@ -33,6 +40,10 @@ const TenantHome = ({ property }) => {
 
   return (
     <div className="TenantHome">
+      <div className="TenantGreeting">
+        <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
+        <Button onClick={() => setNavigateToRequestForm(true)}>Get Help</Button>
+      </div>
       {filteredNotifications.length > 0 ? (
         <div className="Notifications">
           <HeadingMedium>You have new notifications</HeadingMedium>

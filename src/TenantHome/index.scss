@@ -11,3 +11,9 @@
 .Notifications {
   margin-bottom: 20px;
 }
+
+.TenantGreeting {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

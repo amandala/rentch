@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
 import { useStateValue } from "../StateProvider";
-import { HeadingLarge } from "../Heading";
+
 import TenantHome from "../TenantHome";
 
 import Property from "../TenantHome/Property";
@@ -57,7 +57,6 @@ const Home = () => {
 
           return (
             <div className="Home">
-              <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
               <div className="ContentWrapper">
                 {renderHomeView(role, properties)}
               </div>
