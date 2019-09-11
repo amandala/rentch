@@ -20,6 +20,9 @@ const Header = () => {
             });
             localStorage.removeItem("profile");
           }}
+          onLogoutFailure={() => {
+            console.log("FAILURE");
+          }}
         />
       ) : null}
     </header>

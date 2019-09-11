@@ -1,8 +1,8 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { getPropertyGreeting } from "../helpers/user";
-import { HeadingMedium, HeadingSmall } from "../Heading";
-import { Button } from "../Button";
+import { getPropertyGreeting } from "../../helpers/user";
+import { HeadingMedium, HeadingSmall } from "../../Heading";
+import { Button } from "../../Button";
 
 import "./index.scss";
 
@@ -13,8 +13,6 @@ const Property = ({ property }) => {
   if (navigateToRequestForm) {
     return <Redirect to="/request" />;
   }
-
-  console.log(property);
 
   return (
     <div className="Wrapper">

@@ -3,9 +3,10 @@ import { Redirect } from "react-router-dom";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
 import { useStateValue } from "../StateProvider";
-import { HeadingLarge, HeadingMedium } from "../Heading";
+import { HeadingLarge } from "../Heading";
+import TenantHome from "../TenantHome";
 
-import Property from "../Property";
+import Property from "../TenantHome/Property";
 
 import "./index.scss";
 
@@ -20,6 +21,12 @@ const Home = () => {
   if (!loggedIn) {
     return <Redirect to="/login" />;
   }
+
+  const renderHomeView = (role, properties) => {
+    if (role === "tenant") {
+      return <TenantHome property={properties[0]} />;
+    }
+  };
 
   return (
     <ContentfulProvider client={contentfulClient}>
@@ -44,24 +51,15 @@ const Home = () => {
           }
 
           const properties = data.items[0].fields.property;
+          const role = data.items[0].fields.role;
 
-          console.log(properties);
+          console.log(userData);
 
           return (
             <div className="Home">
               <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
               <div className="ContentWrapper">
-                <div>
-                  <HeadingMedium>
-                    Your place {`${properties.length > 1 ? "s" : ""}`}
-                  </HeadingMedium>
-                  {properties.map(property => (
-                    <Property property={property} />
-                  ))}
-                </div>
-                <div className="Notifactions">
-                  <HeadingMedium>Notifications</HeadingMedium>
-                </div>
+                {renderHomeView(role, properties)}
               </div>
             </div>
           );
