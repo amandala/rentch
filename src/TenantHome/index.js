@@ -5,6 +5,8 @@ import { useStateValue } from "../StateProvider";
 import Property from "./Property";
 import { HeadingMedium } from "../Heading";
 
+import "./index.scss";
+
 const TenantHome = ({ property }) => {
   const [{ userData }, dispatch] = useStateValue();
 
@@ -20,7 +22,7 @@ const TenantHome = ({ property }) => {
       const { date, type, subject } = notification.fields;
 
       return (
-        <div>
+        <div className="Notification">
           <span>{date}</span>
           <span>{type}</span>
           <span>{subject}</span>
@@ -30,9 +32,9 @@ const TenantHome = ({ property }) => {
   };
 
   return (
-    <div>
+    <div className="TenantHome">
       {filteredNotifications.length > 0 ? (
-        <div>
+        <div className="Notifications">
           <HeadingMedium>You have new notifications</HeadingMedium>
           {renderNotifications()}
         </div>
