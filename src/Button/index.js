@@ -1,10 +1,10 @@
 import React from "react";
 
-import "./index.scss";
+import styles from "./index.module.scss";
 
 export const Button = ({ onClick, children }) => {
   return (
-    <button className="Button" onClick={onClick}>
+    <button className={styles.Button} onClick={onClick}>
       {children}
     </button>
   );
@@ -12,7 +12,7 @@ export const Button = ({ onClick, children }) => {
 
 export const ButtonHollow = ({ onClick, children }) => {
   return (
-    <button className="ButtonHollow" onClick={onClick}>
+    <button className={styles.ButtonHollow} onClick={onClick}>
       {children}
     </button>
   );
