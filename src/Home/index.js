@@ -56,8 +56,6 @@ const Home = () => {
           const properties = data.items[0].fields.property;
           const role = data.items[0].fields.role;
 
-          console.log(userData);
-
           return (
             <div className="Home">
               <div className="ContentWrapper">

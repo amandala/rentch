@@ -17,7 +17,6 @@ const TenantHome = ({ property }) => {
     return <Redirect to="/request" />;
   }
 
-  console.log(property);
   const allNotifications = property.fields.notifications;
   const filteredNotifications = allNotifications.filter(
     notification => notification.fields.creator.fields.email !== userData.email
@@ -25,11 +24,10 @@ const TenantHome = ({ property }) => {
 
   const renderNotifications = () => {
     return filteredNotifications.map(notification => {
-      console.log(notification);
       const { date, type, subject } = notification.fields;
 
       return (
-        <div className="Notification">
+        <div className="Notification" key={date}>
           <span>{date}</span>
           <span>{type}</span>
           <span>{subject}</span>

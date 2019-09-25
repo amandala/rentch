@@ -3,11 +3,11 @@ import { Form, TextArea, useFormState, Select, Option } from "informed";
 
 import { Button } from "../Button";
 
+import styles from "./index.module.scss";
+
 const Validation = field => {
   const formState = useFormState();
   const errors = formState.errors;
-
-  console.log(field);
 
   return (
     <span>
@@ -24,10 +24,14 @@ const TenantRequest = () => {
   };
 
   return (
-    <Form>
-      <label>
-        Request type:
-        <Select field="requestType" validate={validate}>
+    <Form className={styles.Form}>
+      <label className={styles.Label}>
+        Request type
+        <Select
+          className={styles.Field}
+          field="requestType"
+          validate={validate}
+        >
           <Option disabled value="">
             Select one
           </Option>
@@ -38,9 +42,13 @@ const TenantRequest = () => {
         </Select>
         <Validation field="requestType" />
       </label>
-      <label>
+      <label className={styles.Label}>
         Details
-        <TextArea field="details" validate={validate} />
+        <TextArea
+          className={styles.Field}
+          field="details"
+          validate={validate}
+        />
         <Validation field="details" />
       </label>
       <Button type="Button">Send Rentch</Button>
