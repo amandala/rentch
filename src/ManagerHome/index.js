@@ -7,7 +7,7 @@ import { Button } from "../Button";
 import Property from "./Property";
 import { HeadingMedium, HeadingLarge } from "../Heading";
 
-import "./index.scss";
+import styles from "./index.module.scss";
 
 const ManagerHome = ({ properties }) => {
   const [{ userData }, dispatch] = useStateValue();
@@ -21,12 +21,12 @@ const ManagerHome = ({ properties }) => {
 
     if (notifications.length) {
       return (
-        <div className="Notifications">
+        <div className={styles.Notifications}>
           <HeadingMedium>You have new notifications</HeadingMedium>
           {notifications.map(notification => {
             const { date, type, subject } = notification.fields;
             return (
-              <div className="Notification">
+              <div className={styles.Notification}>
                 <span>{date}</span>
                 <span>{type}</span>
                 <span>{subject}</span>
@@ -39,8 +39,8 @@ const ManagerHome = ({ properties }) => {
   };
 
   return (
-    <div className="ManagerHome">
-      <div className="ManagerGreeting">
+    <div className={styles.Home}>
+      <div className={styles.Greeting}>
         <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
       </div>
 

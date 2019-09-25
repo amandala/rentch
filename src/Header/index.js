@@ -1,15 +1,16 @@
 import React from "react";
+import { withRouter } from "react-router";
 import { GoogleLogout, GoogleLogin } from "react-google-login";
 
 import { useStateValue } from "../StateProvider";
 
-import "./index.css";
+import styles from "./index.module.scss";
 
-const Header = () => {
+const Header = props => {
   const [{ loggedIn }, dispatch] = useStateValue();
   return (
-    <header className="Header">
-      <div className="Logo" />
+    <header className={styles.Header}>
+      <div className={styles.Logo} onClick={() => props.history.push("/")} />
       {loggedIn ? (
         <GoogleLogout
           clientId="509100598048-ahu311l4ugtmf68q093g8po4oqubc38s.apps.googleusercontent.com"
@@ -29,4 +30,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withRouter(Header);

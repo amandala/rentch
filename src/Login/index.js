@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import { useStateValue } from "../StateProvider";
 
-import "./index.css";
+import styles from "./index.module.css";
 
 const Login = () => {
   const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ const Login = () => {
   }
 
   return (
-    <div className="Login">
+    <div className={styles.Login}>
       <div>
         {error ? <p>something went wrong</p> : null}
         <h1>Welcome to Rentch, please login to continue</h1>

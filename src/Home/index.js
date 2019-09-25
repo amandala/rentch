@@ -9,7 +9,7 @@ import ManagerHome from "../ManagerHome";
 
 import Property from "../TenantHome/Property";
 
-import "./index.scss";
+import styles from "./index.module.scss";
 
 const contentfulClient = new ContentfulClient({
   accessToken: "3PcuT-6xkUk8xMdwkMi4mvSUoEO-ud0Iv6Se7XP9Klk",
@@ -56,11 +56,9 @@ const Home = () => {
           const properties = data.items[0].fields.property;
           const role = data.items[0].fields.role;
 
-          console.log(userData);
-
           return (
-            <div className="Home">
-              <div className="ContentWrapper">
+            <div className={styles.Home}>
+              <div className={styles.ContentWrapper}>
                 {renderHomeView(role, properties)}
               </div>
             </div>

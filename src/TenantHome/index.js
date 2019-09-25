@@ -7,7 +7,7 @@ import { Button } from "../Button";
 import Property from "./Property";
 import { HeadingMedium, HeadingLarge } from "../Heading";
 
-import "./index.scss";
+import styles from "./index.module.scss";
 
 const TenantHome = ({ property }) => {
   const [{ userData }, dispatch] = useStateValue();
@@ -17,7 +17,6 @@ const TenantHome = ({ property }) => {
     return <Redirect to="/request" />;
   }
 
-  console.log(property);
   const allNotifications = property.fields.notifications;
   const filteredNotifications = allNotifications.filter(
     notification => notification.fields.creator.fields.email !== userData.email
@@ -25,11 +24,10 @@ const TenantHome = ({ property }) => {
 
   const renderNotifications = () => {
     return filteredNotifications.map(notification => {
-      console.log(notification);
       const { date, type, subject } = notification.fields;
 
       return (
-        <div className="Notification">
+        <div className={styles.Notification} key={date}>
           <span>{date}</span>
           <span>{type}</span>
           <span>{subject}</span>
@@ -39,13 +37,13 @@ const TenantHome = ({ property }) => {
   };
 
   return (
-    <div className="TenantHome">
-      <div className="TenantGreeting">
+    <div className={styles.Home}>
+      <div className={styles.Greeting}>
         <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
         <Button onClick={() => setNavigateToRequestForm(true)}>Get Help</Button>
       </div>
       {filteredNotifications.length > 0 ? (
-        <div className="Notifications">
+        <div className={styles.Notifications}>
           <HeadingMedium>You have new notifications</HeadingMedium>
           {renderNotifications()}
         </div>
