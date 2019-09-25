@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from "./Login";
 import Home from "./Home";
 import Header from "./Header";
+import TenantRequest from "./TenantRequest";
 import { StateProvider } from "./StateProvider";
 
 import "./App.css";
@@ -45,6 +46,7 @@ function App() {
           <div className="App">
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
+            <Route path="/request" component={TenantRequest} />
           </div>
         </Router>
       </div>
