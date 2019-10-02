@@ -17,10 +17,16 @@ const TenantHome = ({ property }) => {
     return <Redirect to="/request" />;
   }
 
-  const allNotifications = property.fields.notifications;
-  const filteredNotifications = allNotifications.filter(
-    notification => notification.fields.creator.fields.email !== userData.email
-  );
+  // TODO: check for notifications first
+  const allNotifications = property.fields.notifications || [];
+  let filteredNotifications;
+  if (allNotifications.length > 0) {
+    filteredNotifications = allNotifications.filter(
+      notification =>
+        notification.fields &&
+        notification.fields.creator.fields.email !== userData.email
+    );
+  }
 
   const renderNotifications = () => {
     return filteredNotifications.map(notification => {
