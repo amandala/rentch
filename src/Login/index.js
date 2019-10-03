@@ -24,7 +24,7 @@ const Login = () => {
           buttonText="Login"
           onSuccess={data => {
             dispatch({
-              type: "login",
+              type: "LOGIN",
               data: data.profileObj
             });
 

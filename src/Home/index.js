@@ -35,6 +35,7 @@ const Home = () => {
     <ContentfulProvider client={contentfulClient}>
       <Query
         contentType="user"
+        include={4}
         query={{
           "fields.email": userData.email
         }}
@@ -49,11 +50,14 @@ const Home = () => {
             return null;
           }
 
-          if (!data.items.length) {
+          if (!data.items.length || !data.items[0]) {
             return <p>No user data exists.</p>;
           }
 
+          console.log(data);
+
           const properties = data.items[0].fields.property;
+
           const role = data.items[0].fields.role;
 
           return (

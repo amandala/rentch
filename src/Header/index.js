@@ -17,7 +17,7 @@ const Header = props => {
           buttonText="Logout"
           onLogoutSuccess={() => {
             dispatch({
-              type: "logout"
+              type: "LOGOUT"
             });
             localStorage.removeItem("profile");
           }}

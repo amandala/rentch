@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import { useStateValue } from "../StateProvider";
@@ -13,6 +13,17 @@ const TenantHome = ({ property }) => {
   const [{ userData }, dispatch] = useStateValue();
   const [navigateToRequestForm, setNavigateToRequestForm] = React.useState();
 
+  useEffect(() => {
+    dispatch({
+      type: "SET_PROPERTIES",
+      data: [property]
+    });
+    dispatch({
+      type: "SET_USER_ROLE",
+      data: "tenant"
+    });
+  }, []);
+
   if (navigateToRequestForm) {
     return <Redirect to="/request" />;
   }
@@ -20,6 +31,7 @@ const TenantHome = ({ property }) => {
   // TODO: check for notifications first
   const allNotifications = property.fields.notifications || [];
   let filteredNotifications;
+
   if (allNotifications.length > 0) {
     filteredNotifications = allNotifications.filter(
       notification =>
@@ -48,7 +60,7 @@ const TenantHome = ({ property }) => {
         <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
         <Button onClick={() => setNavigateToRequestForm(true)}>Get Help</Button>
       </div>
-      {filteredNotifications.length > 0 ? (
+      {filteredNotifications && filteredNotifications.length > 0 ? (
         <div className={styles.Notifications}>
           <HeadingMedium>You have new notifications</HeadingMedium>
           {renderNotifications()}

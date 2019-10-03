@@ -14,23 +14,38 @@ function App() {
 
   const initialState = {
     loggedIn: !!profileData,
-    userData: profileData
+    userData: profileData,
+    properties: [],
+    role: undefined
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case "login":
+      case "LOGIN":
         return {
           ...state,
           loggedIn: true,
           userData: action.data
         };
 
-      case "logout":
+      case "LOGOUT":
         return {
           ...state,
           loggedIn: false,
           userData: undefined
+        };
+
+      case "SET_PROPERTIES": {
+        return {
+          ...state,
+          properties: action.data
+        };
+      }
+
+      case "SET_USER_ROLE":
+        return {
+          ...state,
+          role: action.data
         };
 
       default:
