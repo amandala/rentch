@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
+import { Query } from "react-contentful";
 
 import { useStateValue } from "../../StateProvider";
 
@@ -28,28 +29,57 @@ const TenantHome = ({ property }) => {
     return <Redirect to="/request" />;
   }
 
-  // TODO: check for notifications first
-
-  console.log("PROPERTY>>", property);
-  const allNotifications = property.fields.notifications || [];
-  let filteredNotifications;
-
-  console.log("Notifications", allNotifications);
-
   const renderNotifications = () => {
-    return allNotifications.map(notification => {
-      console.log(notification);
+    return (
+      <Query
+        contentType="notification"
+        include={4}
+        query={{
+          "fields.propertyId": property.sys.id
+        }}
+      >
+        {({ data, error, fetched, loading }) => {
+          console.log("HERE");
+          if (loading || !fetched) {
+            return null;
+          }
 
-      if (!notification.fields) return;
+          if (error) {
+            console.error(error);
+            return null;
+          }
 
-      return (
-        <div className={styles.Notification} key={notification.fields.date}>
-          <span>{notification.fields.date}</span>
-          <span>{notification.fields.type}</span>
-          <span>{notification.fields.subject}</span>
-        </div>
-      );
-    });
+          if (!data.items.length || !data.items[0]) {
+            return <p>No notifications</p>;
+          }
+
+          console.log("Notificaitons data", data);
+
+          const notifications = data.items;
+
+          return (
+            <div className={styles.Home}>
+              {notifications.map(notification => {
+                console.log(notification);
+
+                if (!notification.fields) return;
+
+                return (
+                  <div
+                    className={styles.Notification}
+                    key={notification.fields.date}
+                  >
+                    <span>{notification.fields.date}</span>
+                    <span>{notification.fields.type}</span>
+                    <span>{notification.fields.subject}</span>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }}
+      </Query>
+    );
   };
 
   return (
@@ -58,12 +88,7 @@ const TenantHome = ({ property }) => {
         <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
         <Button onClick={() => setNavigateToRequestForm(true)}>Get Help</Button>
       </div>
-      {allNotifications && allNotifications.length > 0 ? (
-        <div className={styles.Notifications}>
-          <HeadingMedium>You have new notifications</HeadingMedium>
-          {renderNotifications()}
-        </div>
-      ) : null}
+      <div className={styles.Notifications}>{renderNotifications()}</div>
       <div>
         <Property property={property} />
       </div>

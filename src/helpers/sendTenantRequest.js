@@ -63,15 +63,7 @@ export const buildRequest = (property, values) => {
           }
         }
       },
-      property: {
-        "en-US": {
-          sys: {
-            type: "Link",
-            linkType: "Entry",
-            id: property.sys.id
-          }
-        }
-      },
+      propertyId: { "en-US": property.sys.id },
       subject: {
         "en-US": `New request: ${values.requestType}`
       },
