@@ -4,8 +4,10 @@ import { Form, TextArea, useFormState, Select, Option } from "informed";
 
 import { Button } from "../../components/Button";
 import { useStateValue } from "../../StateProvider";
-import { createRequest } from "./helpers";
+import { buildRequest } from "../../helpers/contentful";
 import styles from "./index.module.scss";
+
+import { createNotification } from "../../helpers/contentful";
 
 const Validation = field => {
   const formState = useFormState();
@@ -26,8 +28,7 @@ const RequestBuilder = property => {
   const { submits, errors, values } = formState;
 
   if (submits > 0 && !errors.length) {
-    const request = createRequest(property.property, values);
-    console.log("new request", request);
+    buildRequest(property.property, values);
   }
 
   return null;

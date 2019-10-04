@@ -12,8 +12,8 @@ import Property from "../../pages/TenantHome/Property";
 import styles from "./index.module.scss";
 
 const contentfulClient = new ContentfulClient({
-  accessToken: "3PcuT-6xkUk8xMdwkMi4mvSUoEO-ud0Iv6Se7XP9Klk",
-  space: "wxi01ulkw63v"
+  accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
+  space: process.env.REACT_APP_CONTENTFUL_SPACE
 });
 
 const Home = () => {
