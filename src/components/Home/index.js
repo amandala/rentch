@@ -54,7 +54,7 @@ const Home = () => {
             return <p>No user data exists.</p>;
           }
 
-          console.log(data);
+          console.log("User data", data);
 
           const properties = data.items[0].fields.property;
 

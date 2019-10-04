@@ -29,26 +29,24 @@ const TenantHome = ({ property }) => {
   }
 
   // TODO: check for notifications first
+
+  console.log("PROPERTY>>", property);
   const allNotifications = property.fields.notifications || [];
   let filteredNotifications;
 
-  if (allNotifications.length > 0) {
-    filteredNotifications = allNotifications.filter(
-      notification =>
-        notification.fields &&
-        notification.fields.creator.fields.email !== userData.email
-    );
-  }
+  console.log("Notifications", allNotifications);
 
   const renderNotifications = () => {
-    return filteredNotifications.map(notification => {
-      const { date, type, subject } = notification.fields;
+    return allNotifications.map(notification => {
+      console.log(notification);
+
+      if (!notification.fields) return;
 
       return (
-        <div className={styles.Notification} key={date}>
-          <span>{date}</span>
-          <span>{type}</span>
-          <span>{subject}</span>
+        <div className={styles.Notification} key={notification.fields.date}>
+          <span>{notification.fields.date}</span>
+          <span>{notification.fields.type}</span>
+          <span>{notification.fields.subject}</span>
         </div>
       );
     });
@@ -60,7 +58,7 @@ const TenantHome = ({ property }) => {
         <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
         <Button onClick={() => setNavigateToRequestForm(true)}>Get Help</Button>
       </div>
-      {filteredNotifications && filteredNotifications.length > 0 ? (
+      {allNotifications && allNotifications.length > 0 ? (
         <div className={styles.Notifications}>
           <HeadingMedium>You have new notifications</HeadingMedium>
           {renderNotifications()}

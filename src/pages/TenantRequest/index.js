@@ -4,10 +4,8 @@ import { Form, TextArea, useFormState, Select, Option } from "informed";
 
 import { Button } from "../../components/Button";
 import { useStateValue } from "../../StateProvider";
-import { buildRequest } from "../../helpers/contentful";
+import { buildRequest } from "../../helpers/sendTenantRequest";
 import styles from "./index.module.scss";
-
-import { createNotification } from "../../helpers/contentful";
 
 const Validation = field => {
   const formState = useFormState();
