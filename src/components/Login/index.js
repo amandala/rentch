@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
-import { useStateValue } from "../StateProvider";
+import { useStateValue } from "../../StateProvider";
 
 import styles from "./index.module.css";
 

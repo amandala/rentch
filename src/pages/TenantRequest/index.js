@@ -2,8 +2,8 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { Form, TextArea, useFormState, Select, Option } from "informed";
 
-import { Button } from "../Button";
-import { useStateValue } from "../StateProvider";
+import { Button } from "../../components/Button";
+import { useStateValue } from "../../StateProvider";
 import { createRequest } from "./helpers";
 import styles from "./index.module.scss";
 

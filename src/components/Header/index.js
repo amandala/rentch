@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router";
 import { GoogleLogout, GoogleLogin } from "react-google-login";
 
-import { useStateValue } from "../StateProvider";
+import { useStateValue } from "../../StateProvider";
 
 import styles from "./index.module.scss";
 

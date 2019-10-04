@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
-import { useStateValue } from "../StateProvider";
+import { useStateValue } from "../../StateProvider";
 
-import { Button } from "../Button";
+import { Button } from "../../components/Button";
 import Property from "./Property";
-import { HeadingMedium, HeadingLarge } from "../Heading";
+import { HeadingMedium, HeadingLarge } from "../../components/Heading";
 
 import styles from "./index.module.scss";
 

@@ -2,12 +2,12 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
-import { useStateValue } from "../StateProvider";
+import { useStateValue } from "../../StateProvider";
 
-import TenantHome from "../TenantHome";
-import ManagerHome from "../ManagerHome";
+import TenantHome from "../../pages/TenantHome";
+import ManagerHome from "../../pages/ManagerHome";
 
-import Property from "../TenantHome/Property";
+import Property from "../../pages/TenantHome/Property";
 
 import styles from "./index.module.scss";
 

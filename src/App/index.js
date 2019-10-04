@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import Login from "../Login";
-import Home from "../Home";
-import Header from "../Header";
-import TenantRequest from "../TenantRequest";
+import Login from "../components/Login";
+import Home from "../components/Home";
+import Header from "../components/Header";
+import TenantRequest from "../pages/TenantRequest";
 import { StateProvider } from "../StateProvider";
 
 import styles from "./index.module.scss";
