@@ -5,6 +5,7 @@ import { Query } from "react-contentful";
 import { useStateValue } from "../../StateProvider";
 
 import { Button } from "../../components/Button";
+import Notification from "../../components/Notification";
 import Property from "./Property";
 import { HeadingMedium, HeadingLarge } from "../../components/Heading";
 
@@ -39,7 +40,6 @@ const TenantHome = ({ property }) => {
         }}
       >
         {({ data, error, fetched, loading }) => {
-          console.log("HERE");
           if (loading || !fetched) {
             return null;
           }
@@ -53,26 +53,16 @@ const TenantHome = ({ property }) => {
             return <p>No notifications</p>;
           }
 
-          console.log("Notificaitons data", data);
-
           const notifications = data.items;
 
           return (
             <div className={styles.Home}>
               {notifications.map(notification => {
-                console.log(notification);
-
-                if (!notification.fields) return;
-
                 return (
-                  <div
-                    className={styles.Notification}
+                  <Notification
                     key={notification.fields.date}
-                  >
-                    <span>{notification.fields.date}</span>
-                    <span>{notification.fields.type}</span>
-                    <span>{notification.fields.subject}</span>
-                  </div>
+                    notification={{ ...Object.assign({}, notification) }}
+                  />
                 );
               })}
             </div>

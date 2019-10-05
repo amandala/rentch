@@ -1,0 +1,16 @@
+.Wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f4f7f8;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.Subject {
+  align-self: left;
+}
