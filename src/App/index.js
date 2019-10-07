@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import Login from "../Login";
-import Home from "../Home";
-import Header from "../Header";
-import TenantRequest from "../TenantRequest";
+import Login from "../components/Login";
+import Home from "../components/Home";
+import Header from "../components/Header";
+import TenantRequest from "../pages/TenantRequest";
 import { StateProvider } from "../StateProvider";
 
 import styles from "./index.module.scss";
@@ -14,23 +14,38 @@ function App() {
 
   const initialState = {
     loggedIn: !!profileData,
-    userData: profileData
+    userData: profileData,
+    properties: [],
+    role: undefined
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case "login":
+      case "LOGIN":
         return {
           ...state,
           loggedIn: true,
           userData: action.data
         };
 
-      case "logout":
+      case "LOGOUT":
         return {
           ...state,
           loggedIn: false,
           userData: undefined
+        };
+
+      case "SET_PROPERTIES": {
+        return {
+          ...state,
+          properties: action.data
+        };
+      }
+
+      case "SET_USER_ROLE":
+        return {
+          ...state,
+          role: action.data
         };
 
       default:

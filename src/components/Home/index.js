@@ -2,18 +2,18 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
-import { useStateValue } from "../StateProvider";
+import { useStateValue } from "../../StateProvider";
 
-import TenantHome from "../TenantHome";
-import ManagerHome from "../ManagerHome";
+import TenantHome from "../../pages/TenantHome";
+import ManagerHome from "../../pages/ManagerHome";
 
-import Property from "../TenantHome/Property";
+import Property from "../../pages/TenantHome/Property";
 
 import styles from "./index.module.scss";
 
 const contentfulClient = new ContentfulClient({
-  accessToken: "3PcuT-6xkUk8xMdwkMi4mvSUoEO-ud0Iv6Se7XP9Klk",
-  space: "wxi01ulkw63v"
+  accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
+  space: process.env.REACT_APP_CONTENTFUL_SPACE
 });
 
 const Home = () => {
@@ -35,6 +35,7 @@ const Home = () => {
     <ContentfulProvider client={contentfulClient}>
       <Query
         contentType="user"
+        include={4}
         query={{
           "fields.email": userData.email
         }}
@@ -49,11 +50,14 @@ const Home = () => {
             return null;
           }
 
-          if (!data.items.length) {
+          if (!data.items.length || !data.items[0]) {
             return <p>No user data exists.</p>;
           }
 
+          console.log("User data", data);
+
           const properties = data.items[0].fields.property;
+
           const role = data.items[0].fields.role;
 
           return (

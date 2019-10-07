@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { getPropertyGreeting } from "../../helpers/user";
-import { HeadingMedium, HeadingSmall } from "../../Heading";
+import { getPropertyGreeting } from "../../../helpers/user";
+import { HeadingMedium, HeadingSmall } from "../../../components/Heading";
 
 import styles from "./index.module.scss";
 

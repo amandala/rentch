@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router";
 import { GoogleLogout, GoogleLogin } from "react-google-login";
 
-import { useStateValue } from "../StateProvider";
+import { useStateValue } from "../../StateProvider";
 
 import styles from "./index.module.scss";
 
@@ -17,7 +17,7 @@ const Header = props => {
           buttonText="Logout"
           onLogoutSuccess={() => {
             dispatch({
-              type: "logout"
+              type: "LOGOUT"
             });
             localStorage.removeItem("profile");
           }}

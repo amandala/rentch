@@ -2427,6 +2427,14 @@ content-type@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
 
+contentful-management@^5.11.2:
+  version "5.11.2"
+  resolved "https://registry.yarnpkg.com/contentful-management/-/contentful-management-5.11.2.tgz#3a2cb17292acf922f365471618f559ade0af6c97"
+  dependencies:
+    axios "^0.19.0"
+    contentful-sdk-core "^6.4.0"
+    lodash "^4.17.11"
+
 contentful-parsers@^0.2.7:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/contentful-parsers/-/contentful-parsers-0.2.8.tgz#eb6121ee737f566b1272fc0a48fc3a686b18cd8c"
@@ -2442,6 +2450,13 @@ contentful-resolve-response@^1.1.4:
 contentful-sdk-core@^6.3.6:
   version "6.3.6"
   resolved "https://registry.yarnpkg.com/contentful-sdk-core/-/contentful-sdk-core-6.3.6.tgz#b8b65d76c26482da7dc0a0803c2245a22e2e5b49"
+  dependencies:
+    lodash "^4.17.10"
+    qs "^6.5.2"
+
+contentful-sdk-core@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/contentful-sdk-core/-/contentful-sdk-core-6.4.0.tgz#3b42991ae9084baf1bc5d01c61cb54441f740803"
   dependencies:
     lodash "^4.17.10"
     qs "^6.5.2"
@@ -5671,6 +5686,10 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
