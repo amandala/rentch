@@ -31,7 +31,7 @@ const Login = () => {
             localStorage.setItem("profile", JSON.stringify(data.profileObj));
           }}
           onFailure={e => {
-            console.log(e);
+            console.error(e);
           }}
           cookiePolicy={"single_host_origin"}
         />
