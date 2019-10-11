@@ -26,7 +26,7 @@ const RequestBuilder = property => {
 
   const { submits, errors, values } = formState;
 
-  if (submits > 0 && !errors.length) {
+  if (submits === 1 && !errors.length && !succes) {
     buildRequest(property.property, values).then(data => {
       if (data.error) {
         // error notification
@@ -72,6 +72,7 @@ const TenantRequest = () => {
           <Option value="appliance">Appliance repair</Option>
           <Option value="heat">Heating issues</Option>
           <Option value="plumbing">Plumbing issues</Option>
+          <Option value="lease">Lease negotiation</Option>
           <Option value="general">Other</Option>
         </Select>
         <Validation field="requestType" />

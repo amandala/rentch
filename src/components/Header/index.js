@@ -21,8 +21,11 @@ const Header = props => {
             });
             localStorage.removeItem("profile");
           }}
-          onLogoutFailure={() => {
-            console.log("FAILURE");
+          onLogoutFailure={e => {
+            console.error(e);
+            dispatch({
+              type: "LOGOUT"
+            });
           }}
         />
       ) : null}
