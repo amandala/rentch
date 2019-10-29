@@ -1,5 +1,14 @@
 import React from "react";
 import moment from "moment";
+import { useModal } from "react-modal-hook";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  DialogContentText
+} from "@material-ui/core";
 
 import { useStateValue } from "../../StateProvider";
 
@@ -12,10 +21,28 @@ const Notification = ({ notification }) => {
   const formattedDate = moment(date).format("ll");
   const formattedTime = moment(date).format("LT");
 
+  console.log(notification);
+
   const isCreator = notification.fields.creator.fields.email === userData.email;
 
+  const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
+    <Dialog fullScreen open={open} onExited={onExited}>
+      <DialogTitle>{notification.fields.subject}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>{notification.fields.message}</DialogContentText>
+        <DialogActions>
+          <Button onClick={hideModal}>Close</Button>
+        </DialogActions>
+      </DialogContent>
+    </Dialog>
+  ));
+
   return (
-    <div className={styles.Wrapper} key={notification.fields.date}>
+    <button
+      onClick={showModal}
+      className={styles.Wrapper}
+      key={notification.fields.date}
+    >
       <span className={styles.Date}>
         {formattedDate} @ {formattedTime}
       </span>
@@ -23,7 +50,7 @@ const Notification = ({ notification }) => {
       <span>{`${isCreator ? "Outgoing " : "Incomming "}${
         notification.fields.type
       }`}</span>
-    </div>
+    </button>
   );
 };
 
