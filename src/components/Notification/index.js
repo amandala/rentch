@@ -24,8 +24,6 @@ const RequestBuilder = ({ hideModal, property, notification }) => {
 
   if (submits === 1 && !errors.length && !succes) {
     buildManagerResponse(values, property, notification).then(data => {
-      console.log("Request Data", data);
-
       if (data.error) {
         console.error("There was an error", data.error);
       }
@@ -61,7 +59,7 @@ const Notification = ({ notification }) => {
           On {formattedDate} @ {formattedTime}{" "}
           {notification.fields.creator.fields.name} wrote:{" "}
         </DialogContentText>
-        <DialogContentText>{notification.fields.message}</DialogContentText>
+        <DialogContentText>{notification.fields.message} </DialogContentText>
         <Form>
           <label>
             <TextArea
@@ -90,13 +88,10 @@ const Notification = ({ notification }) => {
       className={styles.Wrapper}
       key={notification.fields.date}
     >
+      <span className={styles.Subject}>{notification.fields.subject}</span>
       <span className={styles.Date}>
         {formattedDate} @ {formattedTime}
       </span>
-      <span className={styles.Subject}>{notification.fields.subject}</span>
-      <span>{`${isCreator ? "Outgoing " : "Incomming "}${
-        notification.fields.type
-      }`}</span>
     </button>
   );
 };

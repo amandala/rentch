@@ -12,6 +12,11 @@
   :last-child {
     margin-bottom: 0;
   }
+
+  &:hover,
+  &:focus {
+    background-color: darken(#f4f7f8, 4);
+  }
 }
 
 .Subject {

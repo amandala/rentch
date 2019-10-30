@@ -37,7 +37,6 @@ const postManagerResponse = (response, property, notification) => {
 };
 
 export const buildManagerResponse = (values, property, notification) => {
-  console.log("PROPSERTY", property);
   const date = new Date();
   const request = {
     fields: {
