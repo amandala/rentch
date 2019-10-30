@@ -37,7 +37,7 @@ const postTenantRequest = (request, property) => {
   );
 };
 
-export const buildRequest = (property, values) => {
+export const buildTenantRequest = (property, values) => {
   const date = new Date();
   const request = {
     fields: {

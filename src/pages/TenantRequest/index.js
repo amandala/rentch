@@ -4,7 +4,7 @@ import { Form, TextArea, useFormState, Select, Option } from "informed";
 
 import { Button } from "../../components/Button";
 import { useStateValue } from "../../StateProvider";
-import { buildRequest } from "../../helpers/sendTenantRequest";
+import { buildTenantRequest } from "../../helpers/sendTenantRequest";
 import styles from "./index.module.scss";
 
 const Validation = field => {
@@ -27,7 +27,7 @@ const RequestBuilder = property => {
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    buildRequest(property.property, values).then(data => {
+    buildTenantRequest(property.property, values).then(data => {
       if (data.error) {
         // error notification
         console.error("There was an error", data.error);
