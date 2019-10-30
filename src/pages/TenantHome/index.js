@@ -55,9 +55,17 @@ const TenantHome = ({ property }) => {
 
           const notifications = data.items;
 
+          const filteredNotifications = notifications.filter(notification => {
+            const isCreator =
+              notification.fields.creator.fields.email === userData.email;
+            if (!isCreator) {
+              return notification;
+            }
+          });
+
           return (
             <div className={styles.Home}>
-              {notifications.map(notification => {
+              {filteredNotifications.map(notification => {
                 return (
                   <Notification
                     key={notification.fields.date}
