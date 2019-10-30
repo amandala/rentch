@@ -24,7 +24,7 @@ const postTenantRequest = (request, property) => {
         };
 
         const service_id = "default_service";
-        const template_id = "template_pB1kyODk";
+        const template_id = "tenantRequest";
         const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
         emailjs.send(service_id, template_id, template_params, user_id);
 

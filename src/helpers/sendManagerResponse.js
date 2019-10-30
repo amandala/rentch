@@ -6,27 +6,26 @@ var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postManagerResponse = (response, property) => {
+const postManagerResponse = (response, property, notification) => {
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
       .then(space => space.createEntry("notification", response))
       .then(entry => entry.publish())
       .then(entry => {
-        // const template_params = {
-        //   reply_to: property.fields.tenant[0].fields.email,
-        //   to_name: property.fields.manager.fields.name,
-        //   to_email: property.fields.manager.fields.email,
-        //   tenant_name: property.fields.tenant[0].fields.name["en-US"],
-        //   property_name: property.fields.name,
-        //   message: response.fields.message["en-US"],
-        //   subject: response.fields.subject["en-US"]
-        // };
+        const template_params = {
+          reply_to: property.fields.manager.fields.email,
+          to_name: notification.fields.creator.fields.name,
+          to_email: notification.fields.creator.fields.email,
+          property_name: property.fields.name,
+          message: response.fields.message["en-US"],
+          subject: response.fields.subject["en-US"]
+        };
 
-        // const service_id = "default_service";
-        // const template_id = "template_pB1kyODk";
-        // const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
-        // emailjs.send(service_id, template_id, template_params, user_id);
+        const service_id = "default_service";
+        const template_id = "managerResponse";
+        const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
+        emailjs.send(service_id, template_id, template_params, user_id);
 
         return entry;
       })
@@ -75,5 +74,5 @@ export const buildManagerResponse = (values, property, notification) => {
     }
   };
 
-  return postManagerResponse(request, property);
+  return postManagerResponse(request, property, notification);
 };
