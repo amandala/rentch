@@ -71,7 +71,7 @@ const TenantRequest = () => {
           <Option value="heat">Heating issues</Option>
           <Option value="plumbing">Plumbing issues</Option>
           <Option value="lease">Lease negotiation</Option>
-          <Option value="general">Other</Option>
+          <Option value="other">Other</Option>
         </Select>
         <Validation field="requestType" />
       </label>
