@@ -71,7 +71,38 @@ const Notification = ({ notification }) => {
   const formattedDate = moment(date).format("ll");
   const formattedTime = moment(date).format("LT");
 
+  const ManagerResponseForm = ({ hideModal }) => {
+    return (
+      <Form>
+        <label>
+          <TextArea
+            className={styles.Field}
+            field="response"
+            validate={validate}
+          />
+        </label>
+        <ManagerResponseBuilder
+          hideModal={hideModal}
+          notification={notification}
+          property={notification.fields.creator.fields.property[0]}
+        />
+        <DialogActions>
+          <Button
+            onClick={() => {
+              console.log("send not fixed reply");
+              hideModal();
+            }}
+          >
+            Send
+          </Button>
+          <Button onClick={hideModal}>Close</Button>
+        </DialogActions>
+      </Form>
+    );
+  };
+
   const ResponseModalContent = () => {
+    const [showForm, setShowForm] = useState(false);
     return (
       <>
         <DialogTitle>{notification.fields.subject}</DialogTitle>
@@ -81,30 +112,24 @@ const Notification = ({ notification }) => {
             {notification.fields.creator.fields.name} wrote:{" "}
           </DialogContentText>
           <DialogContentText>{notification.fields.message} </DialogContentText>
-          {/* <Form>
-            <label>
-              <TextArea
-                className={styles.Field}
-                field="response"
-                validate={validate}
-              />
-            </label>
-            <ManagerResponseBuilder
-              hideModal={hideModal}
-              notification={notification}
-              property={notification.fields.creator.fields.property[0]}
-            /> */}
-          <DialogActions>
-            <Button onClick={() => console.log("FIXED")}>Fixed</Button>
-            <Button
-              onClick={() => {
-                console.log("notFIXED");
-              }}
-            >
-              Not Fixed
-            </Button>
-            <Button onClick={hideModal}>Close</Button>
-          </DialogActions>
+          {showForm ? (
+            <ManagerResponseForm hideModal={hideModal} />
+          ) : (
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  console.log(
+                    "send fixed response and archive request and responses"
+                  );
+                  hideModal();
+                }}
+              >
+                Fixed
+              </Button>
+              <Button onClick={() => setShowForm(true)}>Not Fixed</Button>
+              <Button onClick={hideModal}>Close</Button>
+            </DialogActions>
+          )}
           {/* </Form> */}
         </DialogContent>
       </>
