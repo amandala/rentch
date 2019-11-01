@@ -5,6 +5,8 @@ import { Form, TextArea, useFormState, Select, Option } from "informed";
 import { Button } from "../../components/Button";
 import { useStateValue } from "../../StateProvider";
 import { buildTenantRequest } from "../../helpers/sendTenantRequest";
+import { validate } from "../../helpers/validation";
+
 import styles from "./index.module.scss";
 
 const Validation = field => {
@@ -52,10 +54,6 @@ const TenantRequest = () => {
   if (!properties.length) {
     return <Redirect to="/" />;
   }
-
-  const validate = value => {
-    return !value || !value.length > 1 ? "This field is required" : undefined;
-  };
 
   return (
     <Form className={styles.Form}>

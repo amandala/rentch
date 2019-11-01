@@ -15,6 +15,7 @@ import { useStateValue } from "../../StateProvider";
 
 import styles from "./index.module.scss";
 import { buildManagerResponse } from "../../helpers/sendManagerResponse";
+import { validate } from "../../helpers/validation";
 
 const RequestBuilder = ({ hideModal, property, notification }) => {
   const [succes, setSuccess] = useState(false);
@@ -46,10 +47,6 @@ const Notification = ({ notification }) => {
   const formattedDate = moment(date).format("ll");
   const formattedTime = moment(date).format("LT");
   const isCreator = notification.fields.creator.fields.email === userData.email;
-
-  const validate = value => {
-    return !value || !value.length > 1 ? "This field is required" : undefined;
-  };
 
   const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
     <Dialog fullScreen open={open} onExited={onExited}>
