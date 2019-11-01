@@ -12,6 +12,7 @@
     "yarn": "1.9.4"
   },
   "dependencies": {
+    "@material-ui/core": "^4.5.2",
     "classnames": "^2.2.6",
     "contentful-management": "^5.11.2",
     "emailjs-com": "^2.4.0",
@@ -22,7 +23,9 @@
     "react-contentful": "^1.4.5",
     "react-dom": "^16.8.6",
     "react-google-login": "^5.0.5",
-    "react-router-dom": "^5.0.1"
+    "react-modal-hook": "^2.0.0",
+    "react-router-dom": "^5.0.1",
+    "react-transition-group": "^4.3.0"
   },
   "scripts": {
     "heroku-prebuild": "yarn install --production=false",

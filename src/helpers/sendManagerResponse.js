@@ -6,25 +6,24 @@ var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postTenantRequest = (request, property) => {
+const postManagerResponse = (response, property, notification) => {
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
-      .then(space => space.createEntry("notification", request))
+      .then(space => space.createEntry("notification", response))
       .then(entry => entry.publish())
       .then(entry => {
         const template_params = {
-          reply_to: property.fields.tenant[0].fields.email,
-          to_name: property.fields.manager.fields.name,
-          to_email: property.fields.manager.fields.email,
-          tenant_name: property.fields.tenant[0].fields.name["en-US"],
+          reply_to: property.fields.manager.fields.email,
+          to_name: notification.fields.creator.fields.name,
+          to_email: notification.fields.creator.fields.email,
           property_name: property.fields.name,
-          message: request.fields.message["en-US"],
-          subject: request.fields.subject["en-US"]
+          message: response.fields.message["en-US"],
+          subject: response.fields.subject["en-US"]
         };
 
         const service_id = "default_service";
-        const template_id = "tenantRequest";
+        const template_id = "managerResponse";
         const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
         emailjs.send(service_id, template_id, template_params, user_id);
 
@@ -37,34 +36,43 @@ const postTenantRequest = (request, property) => {
   );
 };
 
-export const buildTenantRequest = (property, values) => {
+export const buildManagerResponse = (values, property, notification) => {
   const date = new Date();
   const request = {
     fields: {
       date: { "en-US": date.toLocaleString() },
-      type: { "en-US": ["request"] },
+      type: { "en-US": ["response"] },
       creator: {
         "en-US": {
           sys: {
             type: "Link",
             linkType: "Entry",
-            id: property.fields.tenant[0].sys.id
+            id: property.fields.manager.sys.id
+          }
+        }
+      },
+      parentNotification: {
+        "en-US": {
+          sys: {
+            type: "Link",
+            linkType: "Entry",
+            id: notification.sys.id
           }
         }
       },
       propertyId: { "en-US": property.sys.id },
-      tenantRequestType: { "en-US": values.requestType },
       subject: {
-        "en-US": `New ${values.requestType} request at ${property.fields.name}`
+        "en-US": `Rentch has responded to your request`
       },
       message: {
-        "en-US": values.details
+        "en-US": values.response
       },
       archived: {
         "en-US": false
-      }
+      },
+      requestAcknowledged: { "en-US": true }
     }
   };
 
-  return postTenantRequest(request, property);
+  return postManagerResponse(request, property, notification);
 };

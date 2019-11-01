@@ -5,9 +5,17 @@
   background-color: #f4f7f8;
   padding: 5px 10px;
   margin-bottom: 10px;
+  width: 100%;
+  border: none;
+  font-size: 16px;
 
   :last-child {
     margin-bottom: 0;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: darken(#f4f7f8, 4);
   }
 }
 
