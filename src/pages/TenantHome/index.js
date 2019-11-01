@@ -5,7 +5,7 @@ import { Query } from "react-contentful";
 import { useStateValue } from "../../StateProvider";
 
 import { Button } from "../../components/Button";
-import Notification from "../../components/Notification";
+import TenantRequestNotification from "../../components/TenantRequestNotification";
 import Property from "./Property";
 import { HeadingMedium, HeadingLarge } from "../../components/Heading";
 
@@ -58,7 +58,9 @@ const TenantHome = ({ property }) => {
           const filteredNotifications = notifications.filter(notification => {
             const isCreator =
               notification.fields.creator.fields.email === userData.email;
-            if (!isCreator) {
+            const isArchived = notification.fields.archived;
+
+            if (!isCreator && !isArchived) {
               return notification;
             }
           });
@@ -67,7 +69,7 @@ const TenantHome = ({ property }) => {
             <div className={styles.Home}>
               {filteredNotifications.map(notification => {
                 return (
-                  <Notification
+                  <TenantRequestNotification
                     key={notification.fields.date}
                     notification={{ ...Object.assign({}, notification) }}
                   />

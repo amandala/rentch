@@ -69,7 +69,8 @@ export const buildManagerResponse = (values, property, notification) => {
       },
       archived: {
         "en-US": false
-      }
+      },
+      requestAcknowledged: { "en-US": true }
     }
   };
 
