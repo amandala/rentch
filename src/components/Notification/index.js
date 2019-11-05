@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import moment from "moment";
 import { useModal } from "react-modal-hook";
 import {
   Button,
@@ -19,169 +18,132 @@ import { validate } from "../../helpers/validation";
 
 import TenantResponseBuilder from "../TenantResponseBuilder";
 
-// const ManagerResponseBuilder = ({ hideModal, property, notification }) => {
-//   const [succes, setSuccess] = useState(false);
-//   const formState = useFormState();
+import { getFormattedDate, getNotificationTitle, isTenant } from "./helpers";
 
-//   const { submits, errors, values } = formState;
+const ManagerResponseBuilder = ({ hideModal, property, notification }) => {
+  const [succes, setSuccess] = useState(false);
+  const formState = useFormState();
 
-//   if (submits === 1 && !errors.length && !succes) {
-//     buildManagerResponse(values, property, notification).then(data => {
-//       if (data.error) {
-//         console.error("There was an error", data.error);
-//       }
+  const { submits, errors, values } = formState;
 
-//       setSuccess(true);
-//     });
-//   }
+  if (submits === 1 && !errors.length && !succes) {
+    buildManagerResponse(values, property, notification).then(data => {
+      if (data.error) {
+        console.error("There was an error", data.error);
+      }
 
-//   if (succes) {
-//     hideModal();
-//   }
+      setSuccess(true);
+    });
+  }
 
-//   return null;
-// };
+  if (succes) {
+    hideModal();
+  }
+
+  return null;
+};
 
 const Request = ({ request }) => {
-  console.log(request);
   const [{ userData }] = useStateValue();
 
-  const formattedDate = moment(request.fields.date).format("ll");
-  const formattedTime = moment(request.fields.date).format("LT");
+  const TenantResponseForm = () => {
+    const [showForm, setShowForm] = useState(false);
+    return (
+      <>
+        <Form>
+          {showForm ? (
+            <label>
+              <TextArea
+                className={styles.Field}
+                field="response"
+                validate={validate}
+              />
+            </label>
+          ) : null}
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setShowForm(false);
+                console.log(
+                  "send fixed response and archive request and responses"
+                );
+                hideModal();
+              }}
+            >
+              Fixed
+            </Button>
+            <Button onClick={() => setShowForm(true)}>Not Fixed</Button>
+            <Button onClick={hideModal}>Close</Button>
+          </DialogActions>
+        </Form>
+      </>
+    );
+  };
 
-  // const ManagerResponseForm = ({ hideModal }) => {
-  //   return (
-  //     <Form>
-  //       <label>
-  //         <TextArea
-  //           className={styles.Field}
-  //           field="response"
-  //           validate={validate}
-  //         />
-  //       </label>
-  //       <ManagerResponseBuilder
-  //         hideModal={hideModal}
-  //         notification={request}
-  //         property={request.fields.creator.fields.property[0]}
-  //       />
-  //       <DialogActions>
-  //         <Button
-  //           onClick={() => {
-  //             console.log("send not fixed reply");
-  //             hideModal();
-  //           }}
-  //         >
-  //           Send
-  //         </Button>
-  //         <Button onClick={hideModal}>Close</Button>
-  //       </DialogActions>
-  //     </Form>
-  //   );
-  // };
+  const ManagerResponseForm = () => {
+    return (
+      <>
+        <Form>
+          <label>
+            <TextArea
+              className={styles.Field}
+              field="response"
+              validate={validate}
+            />
+          </label>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                console.log(
+                  "send fixed response and archive request and responses"
+                );
+                hideModal();
+              }}
+            >
+              Fixed
+            </Button>
+            <Button onClick={hideModal}>Close</Button>
+          </DialogActions>
+          <ManagerResponseBuilder
+            hideModal={hideModal}
+            request={request}
+            property={request.fields.creator.fields.property[0]}
+          />
+        </Form>
+      </>
+    );
+  };
 
-  // const ResponseModalContent = () => {
-  //   const [showForm, setShowForm] = useState(false);
-  //   return (
-  //     <>
-  //       <DialogTitle>{notification.fields.subject}</DialogTitle>
-  //       <DialogContent>
-  //         <DialogContentText>
-  //           On {formattedDate} @ {formattedTime}{" "}
-  //           {notification.fields.creator.fields.name} wrote:{" "}
-  //         </DialogContentText>
-  //         <DialogContentText>{notification.fields.message} </DialogContentText>
-  //         {showForm ? (
-  //           <ManagerResponseForm hideModal={hideModal} />
-  //         ) : (
-  //           <DialogActions>
-  //             <Button
-  //               onClick={() => {
-  //                 console.log(
-  //                   "send fixed response and archive request and responses"
-  //                 );
-  //                 hideModal();
-  //               }}
-  //             >
-  //               Fixed
-  //             </Button>
-  //             <Button onClick={() => setShowForm(true)}>Not Fixed</Button>
-  //             <Button onClick={hideModal}>Close</Button>
-  //           </DialogActions>
-  //         )}
-  //         {/* </Form> */}
-  //       </DialogContent>
-  //     </>
-  //   );
-  // };
-
-  // const RequestModalContent = () => {
-  //   const isAcknowledged =
-  //     notification.fields.hasOwnProperty("requestAcknowledged") &&
-  //     notification.fields.requestAcknowledged === true;
-  //   if (isAcknowledged) {
-  //     return (
-  //       <>
-  //         <DialogTitle>{notification.fields.subject}</DialogTitle>
-  //         <DialogContent>
-  //           <DialogContentText>
-  //             On {formattedDate} @ {formattedTime}{" "}
-  //             {notification.fields.creator.fields.name} wrote:{" "}
-  //           </DialogContentText>
-  //           <DialogContentText>
-  //             {notification.fields.message}{" "}
-  //           </DialogContentText>
-  //         </DialogContent>
-  //         <DialogActions>
-  //           <Button onClick={hideModal}>Close</Button>
-  //         </DialogActions>
-  //       </>
-  //     );
-  //   }
-
-  // return (
-  //   <>
-  //     <DialogTitle>{notification.fields.subject}</DialogTitle>
-  //     <DialogContent>
-  //       <DialogContentText>
-  //         On {formattedDate} @ {formattedTime}{" "}
-  //         {notification.fields.creator.fields.name} wrote:{" "}
-  //       </DialogContentText>
-  //       <DialogContentText>{notification.fields.message} </DialogContentText>
-  //       <Form>
-  //         <label>
-  //           <TextArea
-  //             className={styles.Field}
-  //             field="response"
-  //             validate={validate}
-  //           />
-  //         </label>
-  //         <ManagerResponseBuilder
-  //           hideModal={hideModal}
-  //           notification={notification}
-  //           property={notification.fields.creator.fields.property[0]}
-  //         />
-  //         <DialogActions>
-  //           <Button type="submit">Send</Button>
-  //           <Button onClick={hideModal}>Close</Button>
-  //         </DialogActions>
-  //       </Form>
-  //     </DialogContent>
-  //   </>
-  // );
-  // };
-
-  // const renderModalContent = () => {
-  //   if (notification.fields.type.includes("request")) {
-  //     return <RequestModalContent />;
-  //   } else {
-  //     return <ResponseModalContent />;
-  //   }
-  // };
+  const renderResponseForm = () => {
+    if (
+      isTenant({
+        userEmail: userData.email,
+        tenant: request.fields.property.fields.tenant[0]
+      })
+    ) {
+      return <TenantResponseForm />;
+    } else return <ManagerResponseForm />;
+  };
 
   const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
     <Dialog fullScreen open={open} onExited={onExited}>
-      MODAL
-      {/* {renderModalContent()} */}
+      {console.log(request)}
+      {console.log(userData)}
+      <DialogTitle>
+        {getNotificationTitle({
+          type: request.fields.type,
+          status: request.fields.status,
+          propertyName: request.fields.property.fields.name
+        })}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          {getFormattedDate({ date: request.fields.timestamp })}
+        </DialogContentText>
+        <DialogContentText>{request.fields.message} </DialogContentText>
+
+        {renderResponseForm()}
+      </DialogContent>
     </Dialog>
   ));
 
@@ -191,9 +153,11 @@ const Request = ({ request }) => {
       className={styles.Wrapper}
       key={request.fields.date}
     >
-      <span className={styles.Subject}>{request.fields.type}</span>
+      <span
+        className={styles.Subject}
+      >{`${request.fields.type} ${request.fields.property.fields.name}`}</span>
       <span className={styles.Date}>
-        {formattedDate} @ {formattedTime}
+        {getFormattedDate({ date: request.fields.timestamp })}
       </span>
     </button>
   );

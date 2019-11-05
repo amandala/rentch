@@ -47,6 +47,15 @@ export const buildTenantRequest = (property, values) => {
       timestamp: { "en-US": date.getTime() },
       type: { "en-US": values.requestType },
       propertyId: { "en-US": property.sys.id },
+      property: {
+        "en-US": {
+          sys: {
+            type: "Link",
+            linkType: "Entry",
+            id: property.sys.id
+          }
+        }
+      },
       status: { "en-US": "new" },
       message: {
         "en-US": values.details
