@@ -10,7 +10,7 @@ const postTenantRequest = (request, property) => {
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
-      .then(space => space.createEntry("notification", request))
+      .then(space => space.createEntry("request", request))
       .then(entry => entry.publish())
       .then(entry => {
         const template_params = {
@@ -20,7 +20,9 @@ const postTenantRequest = (request, property) => {
           tenant_name: property.fields.tenant[0].fields.name["en-US"],
           property_name: property.fields.name,
           message: request.fields.message["en-US"],
-          subject: request.fields.subject["en-US"]
+          subject: `There's a new ${request.fields.type["en-US"]} request at ${
+            property.fields.name["en-US"]
+          }`
         };
 
         const service_id = "default_service";
@@ -41,22 +43,19 @@ export const buildTenantRequest = (property, values) => {
   const date = new Date();
   const request = {
     fields: {
-      date: { "en-US": date.toLocaleString() },
-      type: { "en-US": ["request"] },
-      creator: {
+      timestamp: { "en-US": date.getTime() },
+      type: { "en-US": values.requestType },
+      propertyId: { "en-US": property.sys.id },
+      property: {
         "en-US": {
           sys: {
             type: "Link",
             linkType: "Entry",
-            id: property.fields.tenant[0].sys.id
+            id: property.sys.id
           }
         }
       },
-      propertyId: { "en-US": property.sys.id },
-      tenantRequestType: { "en-US": values.requestType },
-      subject: {
-        "en-US": `New ${values.requestType} request at ${property.fields.name}`
-      },
+      status: { "en-US": "new" },
       message: {
         "en-US": values.details
       },

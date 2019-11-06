@@ -5,7 +5,7 @@ import { Query } from "react-contentful";
 import { useStateValue } from "../../StateProvider";
 
 import { Button } from "../../components/Button";
-import TenantRequestNotification from "../../components/TenantRequestNotification";
+import Request from "../../components/Request";
 import Property from "./Property";
 import { HeadingMedium, HeadingLarge } from "../../components/Heading";
 
@@ -33,7 +33,7 @@ const TenantHome = ({ property }) => {
   const renderNotifications = () => {
     return (
       <Query
-        contentType="notification"
+        contentType="request"
         include={4}
         query={{
           "fields.propertyId": property.sys.id
@@ -50,28 +50,26 @@ const TenantHome = ({ property }) => {
           }
 
           if (!data.items.length || !data.items[0]) {
-            return <p>No notifications</p>;
+            return <p>Awesome! No active requests at this time</p>;
           }
 
-          const notifications = data.items;
+          const requests = data.items;
 
-          const filteredNotifications = notifications.filter(notification => {
-            const isCreator =
-              notification.fields.creator.fields.email === userData.email;
-            const isArchived = notification.fields.archived;
-
-            if (!isCreator && !isArchived) {
+          const filteredRequests = requests.filter(notification => {
+            if (!notification.fields.archived) {
               return notification;
             }
           });
 
+          console.log(filteredRequests);
+
           return (
             <div className={styles.Home}>
-              {filteredNotifications.map(notification => {
+              {filteredRequests.map(request => {
                 return (
-                  <TenantRequestNotification
-                    key={notification.fields.date}
-                    notification={{ ...Object.assign({}, notification) }}
+                  <Request
+                    key={request.fields.date}
+                    request={{ ...Object.assign({}, request) }}
                   />
                 );
               })}

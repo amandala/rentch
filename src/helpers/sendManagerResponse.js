@@ -6,17 +6,47 @@ var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postManagerResponse = (response, property, notification) => {
+const postManagerResponse = (response, property, request) => {
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
-      .then(space => space.createEntry("notification", response))
-      .then(entry => entry.publish())
-      .then(entry => {
+      .then(space => {
+        return space
+          .createEntry("notification", response)
+          .then(newNotification => {
+            space
+              .getEntry(request.sys.id)
+              .then(requestToUpdate => {
+                requestToUpdate.fields.notifications = {
+                  ["en-US"]: [
+                    ...requestToUpdate.fields.notifications,
+                    {
+                      sys: {
+                        type: "Link",
+                        linkType: "Entry",
+                        id: newNotification.sys.id
+                      }
+                    }
+                  ]
+                };
+                requestToUpdate.fields.status["en-US"] = "repair";
+                return requestToUpdate.update();
+              })
+              .then(requestToUpdate => requestToUpdate.publish())
+              .catch(error => {
+                console.log("Error updating request", error);
+              });
+
+            return newNotification;
+          })
+          .catch(error => console.log("Error creating entry", error));
+      })
+      .then(newNotification => newNotification.publish())
+      .then(newNotification => {
         const template_params = {
           reply_to: property.fields.manager.fields.email,
-          to_name: notification.fields.creator.fields.name,
-          to_email: notification.fields.creator.fields.email,
+          to_name: property.fields.tenant[0].fields.name,
+          to_email: property.fields.tenant[0].fields.email,
           property_name: property.fields.name,
           message: response.fields.message["en-US"],
           subject: response.fields.subject["en-US"]
@@ -27,7 +57,7 @@ const postManagerResponse = (response, property, notification) => {
         const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
         emailjs.send(service_id, template_id, template_params, user_id);
 
-        return entry;
+        return newNotification;
       })
       .catch(e => {
         console.error(e);
@@ -36,12 +66,11 @@ const postManagerResponse = (response, property, notification) => {
   );
 };
 
-export const buildManagerResponse = (values, property, notification) => {
+export const buildManagerResponse = (values, property, request) => {
   const date = new Date();
-  const request = {
+  const response = {
     fields: {
       date: { "en-US": date.toLocaleString() },
-      type: { "en-US": ["response"] },
       creator: {
         "en-US": {
           sys: {
@@ -51,28 +80,19 @@ export const buildManagerResponse = (values, property, notification) => {
           }
         }
       },
-      parentNotification: {
-        "en-US": {
-          sys: {
-            type: "Link",
-            linkType: "Entry",
-            id: notification.sys.id
-          }
-        }
-      },
       propertyId: { "en-US": property.sys.id },
+      requestId: { "en-US": request.sys.id },
       subject: {
-        "en-US": `Rentch has responded to your request`
+        "en-US": `A repair has been scheduled for ${request.fields.property.fields.name}`
       },
       message: {
         "en-US": values.response
       },
       archived: {
         "en-US": false
-      },
-      requestAcknowledged: { "en-US": true }
+      }
     }
   };
 
-  return postManagerResponse(request, property, notification);
+  return postManagerResponse(response, property, request);
 };
