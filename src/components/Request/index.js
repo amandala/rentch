@@ -24,8 +24,6 @@ const ManagerResponseBuilder = ({ hideModal, property, request }) => {
   const [succes, setSuccess] = useState(false);
   const formState = useFormState();
 
-  console.log("in RESPONSE BUILDS", request);
-
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
@@ -130,8 +128,6 @@ const Request = ({ request }) => {
 
   const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
     <Dialog fullScreen open={open} onExited={onExited}>
-      {console.log(request)}
-      {console.log(userData)}
       <DialogTitle>
         {getNotificationTitle({
           type: request.fields.type,

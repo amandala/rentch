@@ -7,14 +7,40 @@ var client = createClient({
 });
 
 const postManagerResponse = (response, property, request) => {
-  console.log("in POST", request);
-  console.log("property", property);
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
-      .then(space => space.createEntry("notification", response))
-      .then(entry => entry.publish())
-      .then(entry => {
+      .then(space => {
+        return space
+          .createEntry("notification", response)
+          .then(newNotification => {
+            space
+              .getEntry(request.sys.id)
+              .then(requestToUpdate => {
+                requestToUpdate.fields.notifications = {
+                  ["en-US"]: [
+                    {
+                      sys: {
+                        type: "Link",
+                        linkType: "Entry",
+                        id: newNotification.sys.id
+                      }
+                    }
+                  ]
+                };
+                requestToUpdate.fields.status["en-US"] = "repair";
+                requestToUpdate.update();
+              })
+              .catch(error => {
+                console.log("Error updating request", error);
+              });
+
+            return newNotification;
+          })
+          .catch(error => console.log("Error creating entry", error));
+      })
+      .then(newNotification => newNotification.publish())
+      .then(newNotification => {
         const template_params = {
           reply_to: property.fields.manager.fields.email,
           to_name: property.fields.tenant[0].fields.name,
@@ -29,7 +55,7 @@ const postManagerResponse = (response, property, request) => {
         const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
         emailjs.send(service_id, template_id, template_params, user_id);
 
-        return entry;
+        return newNotification;
       })
       .catch(e => {
         console.error(e);
@@ -39,7 +65,6 @@ const postManagerResponse = (response, property, request) => {
 };
 
 export const buildManagerResponse = (values, property, notification) => {
-  console.log("in BUILD", notification);
   const date = new Date();
   const response = {
     fields: {

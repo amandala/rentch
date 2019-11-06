@@ -51,7 +51,7 @@ const ManagerHome = ({ properties }) => {
               {filteredRequests.map(request => {
                 return (
                   <Request
-                    key={request.fields.date}
+                    key={request.sys.id}
                     request={{ ...Object.assign({}, request) }}
                   />
                 );
@@ -73,7 +73,7 @@ const ManagerHome = ({ properties }) => {
 
       <div>
         {properties.map(property => (
-          <Property property={property} />
+          <Property key={property.sys.id} property={property} />
         ))}
       </div>
     </div>
