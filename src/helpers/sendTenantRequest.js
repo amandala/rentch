@@ -13,7 +13,6 @@ const postTenantRequest = (request, property) => {
       .then(space => space.createEntry("request", request))
       .then(entry => entry.publish())
       .then(entry => {
-        console.log(request, property);
         const template_params = {
           reply_to: property.fields.tenant[0].fields.email,
           to_name: property.fields.manager.fields.name,
@@ -68,13 +67,3 @@ export const buildTenantRequest = (property, values) => {
 
   return postTenantRequest(request, property);
 };
-
-// creator: {
-//   "en-US": {
-//     sys: {
-//       type: "Link",
-//       linkType: "Entry",
-//       id: property.fields.tenant[0].sys.id
-//     }
-//   }
-// },

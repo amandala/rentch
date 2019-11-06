@@ -19,6 +19,7 @@ const postManagerResponse = (response, property, request) => {
               .then(requestToUpdate => {
                 requestToUpdate.fields.notifications = {
                   ["en-US"]: [
+                    ...requestToUpdate.fields.notifications,
                     {
                       sys: {
                         type: "Link",
@@ -29,8 +30,9 @@ const postManagerResponse = (response, property, request) => {
                   ]
                 };
                 requestToUpdate.fields.status["en-US"] = "repair";
-                requestToUpdate.update();
+                return requestToUpdate.update();
               })
+              .then(requestToUpdate => requestToUpdate.publish())
               .catch(error => {
                 console.log("Error updating request", error);
               });
@@ -64,7 +66,7 @@ const postManagerResponse = (response, property, request) => {
   );
 };
 
-export const buildManagerResponse = (values, property, notification) => {
+export const buildManagerResponse = (values, property, request) => {
   const date = new Date();
   const response = {
     fields: {
@@ -79,9 +81,9 @@ export const buildManagerResponse = (values, property, notification) => {
         }
       },
       propertyId: { "en-US": property.sys.id },
-      requestId: { "en-US": notification.sys.id },
+      requestId: { "en-US": request.sys.id },
       subject: {
-        "en-US": `Rentch has responded to your request`
+        "en-US": `A repair has been scheduled for ${request.fields.property.fields.name}`
       },
       message: {
         "en-US": values.response
@@ -92,5 +94,5 @@ export const buildManagerResponse = (values, property, notification) => {
     }
   };
 
-  return postManagerResponse(response, property, notification);
+  return postManagerResponse(response, property, request);
 };
