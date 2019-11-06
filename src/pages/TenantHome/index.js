@@ -5,7 +5,7 @@ import { Query } from "react-contentful";
 import { useStateValue } from "../../StateProvider";
 
 import { Button } from "../../components/Button";
-import Notification from "../../components/Notification";
+import Request from "../../components/Request";
 import Property from "./Property";
 import { HeadingMedium, HeadingLarge } from "../../components/Heading";
 
@@ -61,13 +61,15 @@ const TenantHome = ({ property }) => {
             }
           });
 
+          console.log(filteredRequests);
+
           return (
             <div className={styles.Home}>
-              {filteredRequests.map(notification => {
+              {filteredRequests.map(request => {
                 return (
-                  <Notification
-                    key={notification.fields.date}
-                    request={{ ...Object.assign({}, notification) }}
+                  <Request
+                    key={request.fields.date}
+                    request={{ ...Object.assign({}, request) }}
                   />
                 );
               })}

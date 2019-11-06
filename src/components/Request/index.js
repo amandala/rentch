@@ -20,14 +20,16 @@ import TenantResponseBuilder from "../TenantResponseBuilder";
 
 import { getFormattedDate, getNotificationTitle, isTenant } from "./helpers";
 
-const ManagerResponseBuilder = ({ hideModal, property, notification }) => {
+const ManagerResponseBuilder = ({ hideModal, property, request }) => {
   const [succes, setSuccess] = useState(false);
   const formState = useFormState();
+
+  console.log("in RESPONSE BUILDS", request);
 
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    buildManagerResponse(values, property, notification).then(data => {
+    buildManagerResponse(values, property, request).then(data => {
       if (data.error) {
         console.error("There was an error", data.error);
       }
@@ -93,6 +95,7 @@ const Request = ({ request }) => {
           </label>
           <DialogActions>
             <Button
+              type="submit"
               onClick={() => {
                 console.log(
                   "send fixed response and archive request and responses"
@@ -100,14 +103,14 @@ const Request = ({ request }) => {
                 hideModal();
               }}
             >
-              Fixed
+              Send repair notification
             </Button>
             <Button onClick={hideModal}>Close</Button>
           </DialogActions>
           <ManagerResponseBuilder
             hideModal={hideModal}
             request={request}
-            property={request.fields.creator.fields.property[0]}
+            property={request.fields.property}
           />
         </Form>
       </>

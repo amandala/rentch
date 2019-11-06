@@ -6,7 +6,9 @@ var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postManagerResponse = (response, property, notification) => {
+const postManagerResponse = (response, property, request) => {
+  console.log("in POST", request);
+  console.log("property", property);
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
@@ -15,8 +17,8 @@ const postManagerResponse = (response, property, notification) => {
       .then(entry => {
         const template_params = {
           reply_to: property.fields.manager.fields.email,
-          to_name: notification.fields.creator.fields.name,
-          to_email: notification.fields.creator.fields.email,
+          to_name: property.fields.tenant[0].fields.name,
+          to_email: property.fields.tenant[0].fields.email,
           property_name: property.fields.name,
           message: response.fields.message["en-US"],
           subject: response.fields.subject["en-US"]
@@ -37,11 +39,11 @@ const postManagerResponse = (response, property, notification) => {
 };
 
 export const buildManagerResponse = (values, property, notification) => {
+  console.log("in BUILD", notification);
   const date = new Date();
-  const request = {
+  const response = {
     fields: {
       date: { "en-US": date.toLocaleString() },
-      type: { "en-US": ["response"] },
       creator: {
         "en-US": {
           sys: {
@@ -51,16 +53,8 @@ export const buildManagerResponse = (values, property, notification) => {
           }
         }
       },
-      parentNotification: {
-        "en-US": {
-          sys: {
-            type: "Link",
-            linkType: "Entry",
-            id: notification.sys.id
-          }
-        }
-      },
       propertyId: { "en-US": property.sys.id },
+      requestId: { "en-US": notification.sys.id },
       subject: {
         "en-US": `Rentch has responded to your request`
       },
@@ -69,10 +63,9 @@ export const buildManagerResponse = (values, property, notification) => {
       },
       archived: {
         "en-US": false
-      },
-      requestAcknowledged: { "en-US": true }
+      }
     }
   };
 
-  return postManagerResponse(request, property, notification);
+  return postManagerResponse(response, property, notification);
 };
