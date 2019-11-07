@@ -19,7 +19,6 @@ const postManagerResponse = (response, property, request) => {
               .then(requestToUpdate => {
                 requestToUpdate.fields.notifications = {
                   ["en-US"]: [
-                    ...requestToUpdate.fields.notifications,
                     {
                       sys: {
                         type: "Link",

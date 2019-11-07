@@ -43,47 +43,12 @@ const ManagerResponseBuilder = ({ hideModal, property, request }) => {
   return null;
 };
 
-const Request = ({ request }) => {
-  const [{ userData }] = useStateValue();
-
-  const TenantResponseForm = () => {
-    const [showForm, setShowForm] = useState(false);
-    return (
-      <>
-        <Form>
-          {showForm ? (
-            <label>
-              <TextArea
-                className={styles.Field}
-                field="response"
-                validate={validate}
-              />
-            </label>
-          ) : null}
-          <DialogActions>
-            <Button
-              onClick={() => {
-                setShowForm(false);
-                console.log(
-                  "send fixed response and archive request and responses"
-                );
-                hideModal();
-              }}
-            >
-              Fixed
-            </Button>
-            <Button onClick={() => setShowForm(true)}>Not Fixed</Button>
-            <Button onClick={hideModal}>Close</Button>
-          </DialogActions>
-        </Form>
-      </>
-    );
-  };
-
-  const ManagerResponseForm = () => {
-    return (
-      <>
-        <Form>
+const TenantResponseForm = ({ request, hideModal }) => {
+  const [showForm, setShowForm] = useState(false);
+  return (
+    <>
+      <Form>
+        {showForm ? (
           <label>
             <TextArea
               className={styles.Field}
@@ -91,7 +56,43 @@ const Request = ({ request }) => {
               validate={validate}
             />
           </label>
-          <DialogActions>
+        ) : null}
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setShowForm(false);
+              console.log(
+                "send fixed response and archive request and responses"
+              );
+              hideModal();
+            }}
+          >
+            Fixed
+          </Button>
+          <Button onClick={() => setShowForm(true)}>Not Fixed</Button>
+          <Button onClick={hideModal}>Close</Button>
+        </DialogActions>
+      </Form>
+    </>
+  );
+};
+
+const ManagerResponseForm = ({ request, hideModal }) => {
+  const isActionable = request.fields.status === "new";
+  return (
+    <>
+      <Form>
+        {isActionable ? (
+          <label>
+            <TextArea
+              className={styles.Field}
+              field="response"
+              validate={validate}
+            />
+          </label>
+        ) : null}
+        <DialogActions>
+          {isActionable ? (
             <Button
               type="submit"
               onClick={() => {
@@ -103,28 +104,34 @@ const Request = ({ request }) => {
             >
               Send repair notification
             </Button>
-            <Button onClick={hideModal}>Close</Button>
-          </DialogActions>
-          <ManagerResponseBuilder
-            hideModal={hideModal}
-            request={request}
-            property={request.fields.property}
-          />
-        </Form>
-      </>
-    );
-  };
+          ) : null}
+          <Button onClick={hideModal}>Close</Button>
+        </DialogActions>
+        <ManagerResponseBuilder
+          hideModal={hideModal}
+          request={request}
+          property={request.fields.property}
+        />
+      </Form>
+    </>
+  );
+};
 
-  const renderResponseForm = () => {
-    if (
-      isTenant({
-        userEmail: userData.email,
-        tenant: request.fields.property.fields.tenant[0]
-      })
-    ) {
-      return <TenantResponseForm />;
-    } else return <ManagerResponseForm />;
-  };
+const renderResponseForm = (request, hideModal, userEmail) => {
+  if (
+    isTenant({
+      userEmail,
+      tenant: request.fields.property.fields.tenant[0]
+    })
+  ) {
+    return <TenantResponseForm request={request} hideModal={hideModal} />;
+  } else return <ManagerResponseForm request={request} hideModal={hideModal} />;
+};
+
+const Request = ({ request }) => {
+  const [{ userData }] = useStateValue();
+
+  console.log(request);
 
   const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
     <Dialog fullScreen open={open} onExited={onExited}>
@@ -139,9 +146,27 @@ const Request = ({ request }) => {
         <DialogContentText>
           {getFormattedDate({ date: request.fields.timestamp })}
         </DialogContentText>
-        <DialogContentText>{request.fields.message} </DialogContentText>
-
-        {renderResponseForm()}
+        <DialogContentText>
+          Request Details: {request.fields.message}{" "}
+        </DialogContentText>
+        {request.fields.notifications.length &&
+          request.fields.notifications.map(notificaiton => {
+            console.log(notificaiton);
+            return (
+              <div>
+                <DialogContentText>
+                  {getFormattedDate({ date: notificaiton.fields.timestamp })}
+                </DialogContentText>
+                <DialogContentText>
+                  {notificaiton.fields.subject}
+                </DialogContentText>
+                <DialogContentText>
+                  Repair details: {notificaiton.fields.message}
+                </DialogContentText>
+              </div>
+            );
+          })}
+        {renderResponseForm(request, hideModal, userData.email)}
       </DialogContent>
     </Dialog>
   ));
