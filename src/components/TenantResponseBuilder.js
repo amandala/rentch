@@ -3,14 +3,16 @@
 import React, { useState } from "react";
 import { useFormState } from "informed";
 
+import { sendFixedResponse } from "../helpers/sendFixedResponse";
+
 const TenantResponseBuilder = ({
   hideModal,
   property,
-  notification
+  request
 }: {
   hideModal: any,
   property: any,
-  notification: any
+  request: any
 }) => {
   const [succes, setSuccess] = useState(false);
   const formState = useFormState();
@@ -19,13 +21,13 @@ const TenantResponseBuilder = ({
 
   if (submits === 1 && !errors.length && !succes) {
     console.log("SUBMITTING", formState);
-    // buildManagerResponse(values, property, notification).then(data => {
-    //   if (data.error) {
-    //     console.error("There was an error", data.error);
-    //   }
+    sendFixedResponse(values, property, request).then(data => {
+      if (data.error) {
+        console.error("There was an error", data.error);
+      }
 
-    //   setSuccess(true);
-    // });
+      setSuccess(true);
+    });
   }
 
   if (succes) {

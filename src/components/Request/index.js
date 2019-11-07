@@ -18,7 +18,7 @@ import { validate } from "../../helpers/validation";
 
 import TenantResponseBuilder from "../TenantResponseBuilder";
 
-import { getFormattedDate, getNotificationTitle, isTenant } from "./helpers";
+import { getFormattedDate, isTenant } from "./helpers";
 
 const ManagerResponseBuilder = ({ hideModal, property, request }) => {
   const [succes, setSuccess] = useState(false);
@@ -44,11 +44,12 @@ const ManagerResponseBuilder = ({ hideModal, property, request }) => {
 };
 
 const TenantResponseForm = ({ request, hideModal }) => {
-  const [showForm, setShowForm] = useState(false);
+  const isActionable = request.fields.status === "repair";
+
   return (
     <>
       <Form>
-        {showForm ? (
+        {isActionable ? (
           <label>
             <TextArea
               className={styles.Field}
@@ -58,20 +59,14 @@ const TenantResponseForm = ({ request, hideModal }) => {
           </label>
         ) : null}
         <DialogActions>
-          <Button
-            onClick={() => {
-              setShowForm(false);
-              console.log(
-                "send fixed response and archive request and responses"
-              );
-              hideModal();
-            }}
-          >
-            Fixed
-          </Button>
-          <Button onClick={() => setShowForm(true)}>Not Fixed</Button>
+          {isActionable ? <Button type="submit">Fixed</Button> : null}
           <Button onClick={hideModal}>Close</Button>
         </DialogActions>
+        <TenantResponseBuilder
+          hideModal={hideModal}
+          property={request.fields.property}
+          request={request}
+        />
       </Form>
     </>
   );
@@ -93,17 +88,7 @@ const ManagerResponseForm = ({ request, hideModal }) => {
         ) : null}
         <DialogActions>
           {isActionable ? (
-            <Button
-              type="submit"
-              onClick={() => {
-                console.log(
-                  "send fixed response and archive request and responses"
-                );
-                hideModal();
-              }}
-            >
-              Send repair notification
-            </Button>
+            <Button type="submit">Send repair notification</Button>
           ) : null}
           <Button onClick={hideModal}>Close</Button>
         </DialogActions>
@@ -136,20 +121,19 @@ const Request = ({ request }) => {
   const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
     <Dialog fullScreen open={open} onExited={onExited}>
       <DialogTitle>
-        {getNotificationTitle({
-          type: request.fields.type,
-          status: request.fields.status,
-          propertyName: request.fields.property.fields.name
-        })}
+        {`${request.fields.type} request at ${request.fields.property.fields.name}`}
+        <DialogContentText>{request.fields.status}</DialogContentText>
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
           {getFormattedDate({ date: request.fields.timestamp })}
         </DialogContentText>
+
         <DialogContentText>
-          Request Details: {request.fields.message}{" "}
+          Request Details: {request.fields.message}
         </DialogContentText>
-        {request.fields.notifications.length &&
+        {request.fields.notifications &&
+          request.fields.notifications.length &&
           request.fields.notifications.map(notificaiton => {
             console.log(notificaiton);
             return (
