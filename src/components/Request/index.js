@@ -116,8 +116,6 @@ const renderResponseForm = (request, hideModal, userEmail) => {
 const Request = ({ request }) => {
   const [{ userData }] = useStateValue();
 
-  console.log(request);
-
   const [showModal, hideModal] = useModal(({ in: open, onExited }) => (
     <Dialog fullScreen open={open} onExited={onExited}>
       <DialogTitle>
@@ -135,7 +133,6 @@ const Request = ({ request }) => {
         {request.fields.notifications &&
           request.fields.notifications.length &&
           request.fields.notifications.map(notificaiton => {
-            console.log(notificaiton);
             return (
               <div>
                 <DialogContentText>

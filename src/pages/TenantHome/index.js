@@ -61,8 +61,6 @@ const TenantHome = ({ property }) => {
             }
           });
 
-          console.log(filteredRequests);
-
           return (
             <div className={styles.Home}>
               {filteredRequests.map(request => {

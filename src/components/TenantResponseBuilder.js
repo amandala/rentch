@@ -20,7 +20,6 @@ const TenantResponseBuilder = ({
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    console.log("SUBMITTING", formState);
     sendFixedResponse(values, property, request).then(data => {
       if (data.error) {
         console.error("There was an error", data.error);
