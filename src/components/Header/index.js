@@ -26,6 +26,7 @@ const Header = props => {
             dispatch({
               type: "LOGOUT"
             });
+            localStorage.removeItem("profile");
           }}
         />
       ) : null}

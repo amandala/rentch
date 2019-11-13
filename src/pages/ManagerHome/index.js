@@ -1,17 +1,21 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { Query } from "react-contentful";
+import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
 
 import { useStateValue } from "../../StateProvider";
 
 import { Button } from "../../components/Button";
-import Request from "../../components/Request";
+import RequestNotification from "../../components/RequestNotification";
 import Property from "./Property";
 import { HeadingMedium, HeadingLarge } from "../../components/Heading";
 
 import styles from "./index.module.scss";
 
 const ManagerHome = ({ properties }) => {
+  const contentfulClient = new ContentfulClient({
+    accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
+    space: process.env.REACT_APP_CONTENTFUL_SPACE
+  });
   const [{ userData }, dispatch] = useStateValue();
 
   const renderNotifications = () => {
@@ -41,7 +45,10 @@ const ManagerHome = ({ properties }) => {
           const requests = data.items;
 
           const filteredRequests = requests.filter(notification => {
-            if (!notification.fields.archived) {
+            if (
+              !notification.fields.archived &&
+              notification.fields.status !== "fixed"
+            ) {
               return notification;
             }
           });
@@ -50,7 +57,7 @@ const ManagerHome = ({ properties }) => {
             <div className={styles.Home}>
               {filteredRequests.map(request => {
                 return (
-                  <Request
+                  <RequestNotification
                     key={request.sys.id}
                     request={{ ...Object.assign({}, request) }}
                   />
