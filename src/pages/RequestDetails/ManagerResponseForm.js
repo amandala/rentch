@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, TextArea, useFormState, Select, Option } from "informed";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 
@@ -39,7 +40,9 @@ const ManagerResponseForm = ({ request, hideModal }) => {
   );
 };
 
-const ManagerResponseBuilder = ({ hideModal, property, request }) => {
+const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
+  let history = useHistory();
+
   const [succes, setSuccess] = useState(false);
   const formState = useFormState();
 
@@ -52,8 +55,11 @@ const ManagerResponseBuilder = ({ hideModal, property, request }) => {
       }
 
       setSuccess(true);
-      console.log("SUCCESS");
     });
+  }
+
+  if (succes) {
+    history.replace("/");
   }
 
   return null;
