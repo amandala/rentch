@@ -4,19 +4,19 @@ import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
 import { useStateValue } from "../../StateProvider";
 
-import TenantHome from "../../pages/TenantHome";
-import ManagerHome from "../../pages/ManagerHome";
+import TenantHome from "../TenantHome";
+import ManagerHome from "../ManagerHome";
 
-import Property from "../../pages/TenantHome/Property";
+import Property from "../TenantHome/Property";
 
 import styles from "./index.module.scss";
 
-const contentfulClient = new ContentfulClient({
-  accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
-  space: process.env.REACT_APP_CONTENTFUL_SPACE
-});
-
 const Home = () => {
+  const contentfulClient = new ContentfulClient({
+    accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
+    space: process.env.REACT_APP_CONTENTFUL_SPACE
+  });
+
   const [{ userData, loggedIn }, dispatch] = useStateValue();
 
   if (!loggedIn) {

@@ -1,6 +1,5 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { Query } from "react-contentful";
 
 import { getPropertyGreeting } from "../../../helpers/user";
 import { HeadingMedium, HeadingSmall } from "../../../components/Heading";

@@ -4,9 +4,10 @@ import { TransitionGroup } from "react-transition-group";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Login from "../components/Login";
-import Home from "../components/Home";
+import Home from "../pages/Home";
 import Header from "../components/Header";
 import TenantRequest from "../pages/TenantRequest";
+import RequestDetails from "../pages/RequestDetails";
 import { StateProvider } from "../StateProvider";
 
 import styles from "./index.module.scss";
@@ -64,7 +65,8 @@ function App() {
             <ModalProvider container={TransitionGroup}>
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
-              <Route path="/request" component={TenantRequest} />
+              <Route path="/request/:id" component={RequestDetails} />
+              <Route exact path="/request" component={TenantRequest} />
             </ModalProvider>
           </div>
         </Router>
