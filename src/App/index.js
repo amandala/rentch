@@ -2,14 +2,21 @@ import React from "react";
 import { ModalProvider } from "react-modal-hook";
 import { TransitionGroup } from "react-transition-group";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
 import Login from "../components/Login";
-import Home from "../components/Home";
+import Home from "../pages/Home";
 import Header from "../components/Header";
 import TenantRequest from "../pages/TenantRequest";
+import RequestDetails from "../pages/RequestDetails";
 import { StateProvider } from "../StateProvider";
 
 import styles from "./index.module.scss";
+
+const contentfulClient = new ContentfulClient({
+  accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
+  space: process.env.REACT_APP_CONTENTFUL_SPACE
+});
 
 function App() {
   const profileData = JSON.parse(localStorage.getItem("profile"));
@@ -59,14 +66,17 @@ function App() {
     <StateProvider initialState={initialState} reducer={reducer}>
       <div>
         <Router>
-          <Header />
-          <div className={styles.App}>
-            <ModalProvider container={TransitionGroup}>
-              <Route exact path="/" component={Home} />
-              <Route path="/login" component={Login} />
-              <Route path="/request" component={TenantRequest} />
-            </ModalProvider>
-          </div>
+          <ContentfulProvider client={contentfulClient}>
+            <Header />
+            <div className={styles.App}>
+              <ModalProvider container={TransitionGroup}>
+                <Route exact path="/" component={Home} />
+                <Route path="/login" component={Login} />
+                <Route path="/request/:id" component={RequestDetails} />
+                <Route exact path="/request" component={TenantRequest} />
+              </ModalProvider>
+            </div>
+          </ContentfulProvider>
         </Router>
       </div>
     </StateProvider>
