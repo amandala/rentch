@@ -16,7 +16,7 @@ const RequestNotification = ({ request }) => {
     >
       <span
         className={styles.Subject}
-      >{`${request.fields.type} ${request.fields.property.fields.name}`}</span>
+      >{`${request.fields.status} ${request.fields.type} ${request.fields.property.fields.name}`}</span>
       <span className={styles.Date}>
         {getFormattedDate({ date: request.fields.timestamp })}
       </span>
