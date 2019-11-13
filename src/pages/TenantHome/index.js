@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { Query } from "react-contentful";
+import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
+import { Link } from "react-router-dom";
 
 import { useStateValue } from "../../StateProvider";
 
@@ -13,7 +14,6 @@ import styles from "./index.module.scss";
 
 const TenantHome = ({ property }) => {
   const [{ userData }, dispatch] = useStateValue();
-  const [navigateToRequestForm, setNavigateToRequestForm] = React.useState();
 
   useEffect(() => {
     dispatch({
@@ -26,55 +26,61 @@ const TenantHome = ({ property }) => {
     });
   }, []);
 
-  if (navigateToRequestForm) {
-    return <Redirect to="/request" />;
-  }
-
   const renderNotifications = () => {
+    const contentfulClient = new ContentfulClient({
+      accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
+      space: process.env.REACT_APP_CONTENTFUL_SPACE
+    });
+
     return (
-      <Query
-        contentType="request"
-        include={4}
-        query={{
-          "fields.propertyId": property.sys.id
-        }}
-      >
-        {({ data, error, fetched, loading }) => {
-          if (loading || !fetched) {
-            return null;
-          }
-
-          if (error) {
-            console.error(error);
-            return null;
-          }
-
-          if (!data.items.length || !data.items[0]) {
-            return <p>Awesome! No active requests at this time</p>;
-          }
-
-          const requests = data.items;
-
-          const filteredRequests = requests.filter(notification => {
-            if (!notification.fields.archived) {
-              return notification;
+      <ContentfulProvider client={contentfulClient}>
+        <Query
+          contentType="request"
+          include={4}
+          query={{
+            "fields.propertyId": property.sys.id
+          }}
+        >
+          {({ data, error, fetched, loading }) => {
+            if (loading || !fetched) {
+              return null;
             }
-          });
 
-          return (
-            <div className={styles.Home}>
-              {filteredRequests.map(request => {
-                return (
-                  <RequestNotification
-                    key={request.fields.date}
-                    request={{ ...Object.assign({}, request) }}
-                  />
-                );
-              })}
-            </div>
-          );
-        }}
-      </Query>
+            if (error) {
+              console.error(error);
+              return null;
+            }
+
+            if (!data.items.length || !data.items[0]) {
+              return <p>Awesome! No active requests at this time</p>;
+            }
+
+            const requests = data.items;
+
+            const filteredRequests = requests.filter(notification => {
+              if (
+                !notification.fields.archived &&
+                notification.fields.status !== "fixed"
+              ) {
+                return notification;
+              }
+            });
+
+            return (
+              <div className={styles.Home}>
+                {filteredRequests.map(request => {
+                  return (
+                    <RequestNotification
+                      key={request.fields.date}
+                      request={{ ...Object.assign({}, request) }}
+                    />
+                  );
+                })}
+              </div>
+            );
+          }}
+        </Query>
+      </ContentfulProvider>
     );
   };
 
@@ -82,7 +88,9 @@ const TenantHome = ({ property }) => {
     <div className={styles.Home}>
       <div className={styles.Greeting}>
         <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
-        <Button onClick={() => setNavigateToRequestForm(true)}>Get Help</Button>
+        <Button>
+          <Link to="request">Get Help</Link>
+        </Button>
       </div>
       <div className={styles.Notifications}>{renderNotifications()}</div>
       <div>

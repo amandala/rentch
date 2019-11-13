@@ -9,7 +9,7 @@ import {
   DialogContentText
 } from "@material-ui/core";
 import { Form, TextArea, useFormState, Select, Option } from "informed";
-import { Query } from "react-contentful";
+import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
 
 import { useStateValue } from "../../StateProvider";
 
@@ -37,66 +37,71 @@ const renderResponseForm = (request, userEmail) => {
 const RequestDetails = props => {
   const [{ userData }] = useStateValue();
 
-  console.log("requst details props", props);
+  const contentfulClient = new ContentfulClient({
+    accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
+    space: process.env.REACT_APP_CONTENTFUL_SPACE
+  });
 
   return (
-    <Query
-      contentType="request"
-      include={4}
-      query={{
-        "sys.id": props.match.params.id
-      }}
-    >
-      {({ data, error, fetched, loading }) => {
-        if (loading || !fetched) {
-          return null;
-        }
+    <ContentfulProvider client={contentfulClient}>
+      <Query
+        contentType="request"
+        include={4}
+        query={{
+          "sys.id": props.match.params.id
+        }}
+      >
+        {({ data, error, fetched, loading }) => {
+          if (loading || !fetched) {
+            return null;
+          }
 
-        if (error) {
-          console.error(error);
-          return null;
-        }
+          if (error) {
+            console.error(error);
+            return null;
+          }
 
-        if (!data.items.length || !data.items[0]) {
-          return <p>No user data exists.</p>;
-        }
+          if (!data.items.length || !data.items[0]) {
+            return <p>No user data exists.</p>;
+          }
 
-        console.log(data);
+          const request = data.items[0];
 
-        const request = data.items[0];
-
-        return (
-          <div>
-            {request.fields.status}
-            <h1>{`${request.fields.type} request at ${request.fields.property.fields.name}`}</h1>
-            <span>{getFormattedDate({ date: request.fields.timestamp })}</span>
-            <h2>Request Details: {request.fields.message}</h2>
+          return (
             <div>
-              {request.fields.notifications &&
-                request.fields.notifications.length &&
-                request.fields.notifications.map(notificaiton => {
-                  return (
-                    <div>
-                      <DialogContentText>
-                        {getFormattedDate({
-                          date: notificaiton.fields.timestamp
-                        })}
-                      </DialogContentText>
-                      <DialogContentText>
-                        {notificaiton.fields.subject}
-                      </DialogContentText>
-                      <DialogContentText>
-                        Repair details: {notificaiton.fields.message}
-                      </DialogContentText>
-                    </div>
-                  );
-                })}
-              {renderResponseForm(request, userData.email)}
+              {request.fields.status}
+              <h1>{`${request.fields.type} request at ${request.fields.property.fields.name}`}</h1>
+              <span>
+                {getFormattedDate({ date: request.fields.timestamp })}
+              </span>
+              <h2>Request Details: {request.fields.message}</h2>
+              <div>
+                {request.fields.notifications &&
+                  request.fields.notifications.length &&
+                  request.fields.notifications.map(notificaiton => {
+                    return (
+                      <div>
+                        <DialogContentText>
+                          {getFormattedDate({
+                            date: notificaiton.fields.timestamp
+                          })}
+                        </DialogContentText>
+                        <DialogContentText>
+                          {notificaiton.fields.subject}
+                        </DialogContentText>
+                        <DialogContentText>
+                          Repair details: {notificaiton.fields.message}
+                        </DialogContentText>
+                      </div>
+                    );
+                  })}
+                {renderResponseForm(request, userData.email)}
+              </div>
             </div>
-          </div>
-        );
-      }}
-    </Query>
+          );
+        }}
+      </Query>
+    </ContentfulProvider>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { Query } from "react-contentful";
+import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
 
 import { useStateValue } from "../../StateProvider";
 
@@ -12,6 +12,10 @@ import { HeadingMedium, HeadingLarge } from "../../components/Heading";
 import styles from "./index.module.scss";
 
 const ManagerHome = ({ properties }) => {
+  const contentfulClient = new ContentfulClient({
+    accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
+    space: process.env.REACT_APP_CONTENTFUL_SPACE
+  });
   const [{ userData }, dispatch] = useStateValue();
 
   const renderNotifications = () => {
@@ -41,7 +45,10 @@ const ManagerHome = ({ properties }) => {
           const requests = data.items;
 
           const filteredRequests = requests.filter(notification => {
-            if (!notification.fields.archived) {
+            if (
+              !notification.fields.archived &&
+              notification.fields.status !== "fixed"
+            ) {
               return notification;
             }
           });
