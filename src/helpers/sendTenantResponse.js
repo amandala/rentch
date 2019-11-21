@@ -6,7 +6,7 @@ var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postFixedResponse = (response, property, request) => {
+const postTenantResponse = (response, property, request, status) => {
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
@@ -28,19 +28,22 @@ const postFixedResponse = (response, property, request) => {
                     }
                   ]
                 };
-                requestToUpdate.fields.status["en-US"] = "fixed";
+                requestToUpdate.fields.status["en-US"] = status;
                 return requestToUpdate.update();
               })
               .then(requestToUpdate => requestToUpdate.publish())
+              .then(updatedRequest => {
+                console.log(updatedRequest);
+                console.log(newNotification);
+              })
               .catch(error => {
                 console.log("Error updating request", error);
               });
 
-            return newNotification;
+            return newNotification.publish();
           })
           .catch(error => console.log("Error creating entry", error));
       })
-      .then(newNotification => newNotification.publish())
       .then(newNotification => {
         const template_params = {
           reply_to: property.fields.tenant[0].fields.email,
@@ -65,7 +68,7 @@ const postFixedResponse = (response, property, request) => {
   );
 };
 
-export const sendFixedResponse = (values, property, request) => {
+export const sendTenantResponse = (values, property, request, status) => {
   const date = new Date();
   const response = {
     fields: {
@@ -82,7 +85,7 @@ export const sendFixedResponse = (values, property, request) => {
       propertyId: { "en-US": property.sys.id },
       requestId: { "en-US": request.sys.id },
       subject: {
-        "en-US": `The ${request.fields.type} request at ${request.fields.property.fields.name} has been fixed fixed`
+        "en-US": `Update: ${request.fields.type} request at ${request.fields.property.fields.name} has been updated to ${status}`
       },
       message: {
         "en-US": values.response
@@ -93,5 +96,5 @@ export const sendFixedResponse = (values, property, request) => {
     }
   };
 
-  return postFixedResponse(response, property, request);
+  return postTenantResponse(response, property, request, status);
 };
