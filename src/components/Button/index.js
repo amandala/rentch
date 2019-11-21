@@ -17,3 +17,11 @@ export const ButtonHollow = ({ onClick, children, ...rest }) => {
     </button>
   );
 };
+
+export const ButtonText = ({ onClick, children, ...rest }) => {
+  return (
+    <button className={styles.ButtonText} onClick={onClick} {...rest}>
+      {children}
+    </button>
+  );
+};
