@@ -1,6 +1,6 @@
 import { createClient } from "contentful-management";
 import { request } from "https";
-import emailjs from "emailjs-com";
+import { sendRequestUpdateEmail } from "./sendRequestUpdateEmail";
 
 var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
@@ -63,19 +63,7 @@ const postManagerResponse = (response, property, request) => {
       })
       .then(newNotification => newNotification.publish())
       .then(newNotification => {
-        const template_params = {
-          reply_to: property.fields.manager.fields.email,
-          to_name: property.fields.tenant[0].fields.name,
-          to_email: property.fields.tenant[0].fields.email,
-          property_name: property.fields.name,
-          message: response.fields.message["en-US"],
-          subject: response.fields.subject["en-US"]
-        };
-
-        const service_id = "default_service";
-        const template_id = "managerResponse";
-        const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
-        emailjs.send(service_id, template_id, template_params, user_id);
+        sendRequestUpdateEmail(property, response);
 
         return newNotification;
       })
