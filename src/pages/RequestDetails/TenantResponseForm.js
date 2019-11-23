@@ -10,7 +10,9 @@ import { validate } from "../../helpers/validation";
 
 const TenantResponseForm = ({ request, hideModal }) => {
   const [status, setStatus] = useState(undefined);
+  const [succes, setSuccess] = useState(false);
   const isActionable = request.fields.status === "repair";
+  let history = useHistory();
 
   const TenantResponseBuilder = ({
     hideModal,
@@ -21,13 +23,13 @@ const TenantResponseForm = ({ request, hideModal }) => {
     property: any,
     request: any
   }) => {
-    let history = useHistory();
-    const [succes, setSuccess] = useState(false);
     const formState = useFormState();
 
     const { submits, errors, values } = formState;
 
     if (status) {
+      setStatus(undefined);
+
       sendTenantResponse(values, property, request, status).then(data => {
         if (data.error) {
           console.error("There was an error", data.error);
@@ -37,12 +39,12 @@ const TenantResponseForm = ({ request, hideModal }) => {
       });
     }
 
-    if (succes) {
-      history.replace("/");
-    }
-
     return null;
   };
+
+  if (succes) {
+    history.replace("/");
+  }
 
   return (
     <>
