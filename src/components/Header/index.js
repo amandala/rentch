@@ -1,8 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router";
-import { GoogleLogout, GoogleLogin } from "react-google-login";
+import { GoogleLogin } from "react-google-login";
 
 import { useStateValue } from "../../StateProvider";
+import { ButtonText } from "../Button";
 
 import styles from "./index.module.scss";
 
@@ -12,23 +13,17 @@ const Header = props => {
     <header className={styles.Header}>
       <div className={styles.Logo} onClick={() => props.history.push("/")} />
       {loggedIn ? (
-        <GoogleLogout
-          clientId="509100598048-ahu311l4ugtmf68q093g8po4oqubc38s.apps.googleusercontent.com"
-          buttonText="Logout"
-          onLogoutSuccess={() => {
+        <ButtonText
+          onClick={() => {
+            props.history.push("/login");
             dispatch({
               type: "LOGOUT"
             });
             localStorage.removeItem("profile");
           }}
-          onLogoutFailure={e => {
-            console.error(e);
-            dispatch({
-              type: "LOGOUT"
-            });
-            localStorage.removeItem("profile");
-          }}
-        />
+        >
+          Logout
+        </ButtonText>
       ) : null}
     </header>
   );

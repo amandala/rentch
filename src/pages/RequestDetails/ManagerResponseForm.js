@@ -9,7 +9,8 @@ import { buildManagerResponse } from "../../helpers/sendManagerResponse";
 import { validate } from "../../helpers/validation";
 
 const ManagerResponseForm = ({ request, hideModal }) => {
-  const isActionable = request.fields.status === "new";
+  const isActionable =
+    request.fields.status === "new" || request.fields.status === "followup";
   return (
     <>
       <Form>
