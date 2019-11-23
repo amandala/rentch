@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useModal } from "react-modal-hook";
 import {
   Button,
@@ -80,19 +80,23 @@ const RequestDetails = props => {
                   request.fields.notifications.length &&
                   request.fields.notifications.map(notificaiton => {
                     return (
-                      <div>
-                        <DialogContentText>
-                          {getFormattedDate({
-                            date: notificaiton.fields.timestamp
-                          })}
-                        </DialogContentText>
-                        <DialogContentText>
-                          {notificaiton.fields.subject}
-                        </DialogContentText>
-                        <DialogContentText>
-                          Repair details: {notificaiton.fields.message}
-                        </DialogContentText>
-                      </div>
+                      notificaiton.fields && (
+                        <div>
+                          <DialogContentText>
+                            {getFormattedDate({
+                              date: notificaiton.fields.timestamp
+                            })}
+                          </DialogContentText>
+                          <DialogContentText>
+                            {notificaiton.fields.subject}
+                          </DialogContentText>
+                          <DialogContentText>
+                            Repair details:{" "}
+                            {notificaiton.fields.message ||
+                              "No message was provided"}
+                          </DialogContentText>
+                        </div>
+                      )
                     );
                   })}
                 {renderResponseForm(request, userData.email)}

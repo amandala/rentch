@@ -5,11 +5,46 @@ import { useHistory } from "react-router-dom";
 
 import { Button } from "../../components/Button";
 
-import { sendFixedResponse } from "../../helpers/sendFixedResponse";
+import { sendTenantResponse } from "../../helpers/sendTenantResponse";
 import { validate } from "../../helpers/validation";
 
 const TenantResponseForm = ({ request, hideModal }) => {
+  const [status, setStatus] = useState(undefined);
+  const [succes, setSuccess] = useState(false);
   const isActionable = request.fields.status === "repair";
+  let history = useHistory();
+
+  const TenantResponseBuilder = ({
+    hideModal,
+    property,
+    request
+  }: {
+    hideModal: any,
+    property: any,
+    request: any
+  }) => {
+    const formState = useFormState();
+
+    const { submits, errors, values } = formState;
+
+    if (status) {
+      setStatus(undefined);
+
+      sendTenantResponse(values, property, request, status).then(data => {
+        if (data.error) {
+          console.error("There was an error", data.error);
+        } else {
+          setSuccess(true);
+        }
+      });
+    }
+
+    return null;
+  };
+
+  if (succes) {
+    history.replace("/");
+  }
 
   return (
     <>
@@ -24,7 +59,12 @@ const TenantResponseForm = ({ request, hideModal }) => {
           </label>
         ) : null}
         <div>
-          {isActionable ? <Button type="submit">Fixed</Button> : null}
+          {isActionable ? (
+            <>
+              <Button onClick={() => setStatus("fixed")}>Fixed</Button>
+              <Button onClick={() => setStatus("followup")}>Not Fixed</Button>
+            </>
+          ) : null}
           <Button>
             <Link to="/">Close</Link>
           </Button>
@@ -37,38 +77,6 @@ const TenantResponseForm = ({ request, hideModal }) => {
       </Form>
     </>
   );
-};
-
-const TenantResponseBuilder = ({
-  hideModal,
-  property,
-  request
-}: {
-  hideModal: any,
-  property: any,
-  request: any
-}) => {
-  let history = useHistory();
-  const [succes, setSuccess] = useState(false);
-  const formState = useFormState();
-
-  const { submits, errors, values } = formState;
-
-  if (submits === 1 && !errors.length && !succes) {
-    sendFixedResponse(values, property, request).then(data => {
-      if (data.error) {
-        console.error("There was an error", data.error);
-      }
-
-      setSuccess(true);
-    });
-  }
-
-  if (succes) {
-    history.replace("/");
-  }
-
-  return null;
 };
 
 export default TenantResponseForm;

@@ -6,7 +6,7 @@ var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postManagerResponse = (response, property, request) => {
+const postTenantResponse = (response, property, request, status) => {
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
@@ -18,7 +18,7 @@ const postManagerResponse = (response, property, request) => {
               .getEntry(request.sys.id)
               .then(requestToUpdate => {
                 let ids = [];
-                if (requestToUpdate.fields.notifications) {
+                if (requestToUpdate.fields.notifications["en-US"]) {
                   ids = requestToUpdate.fields.notifications["en-US"].map(
                     notification => {
                       return notification.sys.id;
@@ -49,22 +49,23 @@ const postManagerResponse = (response, property, request) => {
                 });
 
                 requestToUpdate.fields.notifications = allNotifications;
-                requestToUpdate.fields.status["en-US"] = "repair";
+                requestToUpdate.fields.status["en-US"] = status;
                 return requestToUpdate.update();
               })
               .then(requestToUpdate => requestToUpdate.publish())
+              .then(updatedRequest => {
+                sendRequestUpdateEmail(property, response);
+                return updatedRequest;
+              })
               .catch(error => {
                 console.log("Error updating request", error);
               });
 
-            return newNotification;
+            return newNotification.publish();
           })
           .catch(error => console.log("Error creating entry", error));
       })
-      .then(newNotification => newNotification.publish())
       .then(newNotification => {
-        sendRequestUpdateEmail(property, response);
-
         return newNotification;
       })
       .catch(e => {
@@ -74,7 +75,7 @@ const postManagerResponse = (response, property, request) => {
   );
 };
 
-export const buildManagerResponse = (values, property, request) => {
+export const sendTenantResponse = (values, property, request, status) => {
   const date = new Date();
   const response = {
     fields: {
@@ -84,14 +85,14 @@ export const buildManagerResponse = (values, property, request) => {
           sys: {
             type: "Link",
             linkType: "Entry",
-            id: property.fields.manager.sys.id
+            id: property.fields.tenant[0].sys.id
           }
         }
       },
       propertyId: { "en-US": property.sys.id },
       requestId: { "en-US": request.sys.id },
       subject: {
-        "en-US": `A repair has been scheduled for ${request.fields.property.fields.name}`
+        "en-US": `Update: ${request.fields.type} request at ${request.fields.property.fields.name} has been updated to ${status}`
       },
       message: {
         "en-US": values.response
@@ -102,5 +103,5 @@ export const buildManagerResponse = (values, property, request) => {
     }
   };
 
-  return postManagerResponse(response, property, request);
+  return postTenantResponse(response, property, request, status);
 };

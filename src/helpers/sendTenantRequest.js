@@ -20,9 +20,7 @@ const postTenantRequest = (request, property) => {
           tenant_name: property.fields.tenant[0].fields.name["en-US"],
           property_name: property.fields.name,
           message: request.fields.message["en-US"],
-          subject: `There's a new ${request.fields.type["en-US"]} request at ${
-            property.fields.name["en-US"]
-          }`
+          subject: `New ${request.fields.type["en-US"]} request at ${property.fields.name["en-US"]}`
         };
 
         const service_id = "default_service";
