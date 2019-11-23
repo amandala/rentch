@@ -17,24 +17,45 @@ const postTenantResponse = (response, property, request, status) => {
             space
               .getEntry(request.sys.id)
               .then(requestToUpdate => {
-                requestToUpdate.fields.notifications = {
-                  ["en-US"]: [
-                    {
-                      sys: {
-                        type: "Link",
-                        linkType: "Entry",
-                        id: newNotification.sys.id
-                      }
+                let ids = [];
+                if (requestToUpdate.fields.notifications["en-US"]) {
+                  ids = requestToUpdate.fields.notifications["en-US"].map(
+                    notification => {
+                      return notification.sys.id;
                     }
+                  );
+                }
+
+                const allNotifications = {
+                  ["en-US"]: [
+                    ...ids.map(id => {
+                      return {
+                        sys: {
+                          type: "Link",
+                          linkType: "Entry",
+                          id: id
+                        }
+                      };
+                    })
                   ]
                 };
+
+                allNotifications["en-US"].push({
+                  sys: {
+                    type: "Link",
+                    linkType: "Entry",
+                    id: newNotification.sys.id
+                  }
+                });
+
+                requestToUpdate.fields.notifications = allNotifications;
                 requestToUpdate.fields.status["en-US"] = status;
                 return requestToUpdate.update();
               })
               .then(requestToUpdate => requestToUpdate.publish())
               .then(updatedRequest => {
-                console.log(updatedRequest);
-                console.log(newNotification);
+                sendEmail(property, response);
+                return updatedRequest;
               })
               .catch(error => {
                 console.log("Error updating request", error);
@@ -45,20 +66,7 @@ const postTenantResponse = (response, property, request, status) => {
           .catch(error => console.log("Error creating entry", error));
       })
       .then(newNotification => {
-        const template_params = {
-          reply_to: property.fields.tenant[0].fields.email,
-          to_name: property.fields.manager.fields.name,
-          to_email: property.fields.manager.fields.email,
-          property_name: property.fields.name,
-          message: response.fields.message["en-US"],
-          subject: response.fields.subject["en-US"]
-        };
-
-        const service_id = "default_service";
-        const template_id = "managerResponse";
-        const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
-        emailjs.send(service_id, template_id, template_params, user_id);
-
+        sendEmail(property, response);
         return newNotification;
       })
       .catch(e => {
@@ -66,6 +74,22 @@ const postTenantResponse = (response, property, request, status) => {
         return { error: e };
       })
   );
+};
+
+const sendEmail = (property, response) => {
+  const template_params = {
+    reply_to: property.fields.tenant[0].fields.email,
+    to_name: property.fields.manager.fields.name,
+    to_email: property.fields.manager.fields.email,
+    property_name: property.fields.name,
+    message: response.fields.message["en-US"],
+    subject: response.fields.subject["en-US"]
+  };
+
+  const service_id = "default_service";
+  const template_id = "managerResponse";
+  const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
+  emailjs.send(service_id, template_id, template_params, user_id);
 };
 
 export const sendTenantResponse = (values, property, request, status) => {

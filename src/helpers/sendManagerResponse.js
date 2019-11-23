@@ -17,17 +17,38 @@ const postManagerResponse = (response, property, request) => {
             space
               .getEntry(request.sys.id)
               .then(requestToUpdate => {
-                requestToUpdate.fields.notifications = {
-                  ["en-US"]: [
-                    {
-                      sys: {
-                        type: "Link",
-                        linkType: "Entry",
-                        id: newNotification.sys.id
-                      }
+                let ids = [];
+                if (requestToUpdate.fields.notifications) {
+                  ids = requestToUpdate.fields.notifications["en-US"].map(
+                    notification => {
+                      return notification.sys.id;
                     }
+                  );
+                }
+
+                const allNotifications = {
+                  ["en-US"]: [
+                    ...ids.map(id => {
+                      return {
+                        sys: {
+                          type: "Link",
+                          linkType: "Entry",
+                          id: id
+                        }
+                      };
+                    })
                   ]
                 };
+
+                allNotifications["en-US"].push({
+                  sys: {
+                    type: "Link",
+                    linkType: "Entry",
+                    id: newNotification.sys.id
+                  }
+                });
+
+                requestToUpdate.fields.notifications = allNotifications;
                 requestToUpdate.fields.status["en-US"] = "repair";
                 return requestToUpdate.update();
               })
