@@ -3,12 +3,22 @@
 }
 
 .Notifications {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  flex: 1;
+  min-width: 425px;
 }
 
 .Greeting {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.PropertyDetails {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: space-between;
+}
+
+.Property {
+  margin-right: 24px;
 }
