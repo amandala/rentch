@@ -7,7 +7,7 @@ import { useStateValue } from "../../StateProvider";
 import TenantHome from "../TenantHome";
 import ManagerHome from "../ManagerHome";
 
-import Property from "../TenantHome/Property";
+import Property from "../../components/Property";
 
 import styles from "./index.module.scss";
 
@@ -26,7 +26,7 @@ const Home = () => {
   const renderHomeView = (role, properties) => {
     if (role === "tenant") {
       return <TenantHome property={properties[0]} />;
-    } else if (role === "manager") {
+    } else {
       return <ManagerHome properties={properties} />;
     }
   };

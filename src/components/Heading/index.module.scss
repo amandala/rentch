@@ -4,16 +4,28 @@
   font-weight: 400;
   margin: 0;
   margin-bottom: 5px;
+  letter-spacing: 0.5px;
 }
 
 .HeadingLarge {
   margin-bottom: 20px;
 }
 
-.HeadingMedium,
+.HeadingMedium {
+  font-weight: 400;
+  margin-bottom: 16px;
+  letter-spacing: 0.2px;
+}
+
 .HeadingSmall {
   font-weight: 300;
   margin-bottom: 16px;
+}
+
+.HeadingXSmall {
+  font-weight: 300;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 .Text {

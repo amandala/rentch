@@ -3,27 +3,35 @@ import cx from "classnames";
 
 import styles from "./index.module.scss";
 
-export const HeadingLarge = ({ children }) => {
+export const HeadingLarge = ({ children, className = "" }) => {
   return (
-    <h1 className={cx(styles.Heading, styles.HeadingLarge)}>{children}</h1>
+    <h1 className={cx(styles.Heading, styles.HeadingLarge, className)}>
+      {children}
+    </h1>
   );
 };
 
-export const HeadingMedium = ({ children }) => {
+export const HeadingMedium = ({ children, className }) => {
   return (
-    <h2 className={cx(styles.Heading, styles.HeadingMedium)}>{children}</h2>
+    <h2 className={cx(styles.Heading, styles.HeadingMedium, className)}>
+      {children}
+    </h2>
   );
 };
 
-export const HeadingSmall = ({ children }) => {
+export const HeadingSmall = ({ children, className }) => {
   return (
-    <h3 className={cx(styles.Heading, styles.HeadingSmall)}>{children}</h3>
+    <h3 className={cx(styles.Heading, styles.HeadingSmall, className)}>
+      {children}
+    </h3>
   );
 };
 
-export const HeadingXSmall = ({ children }) => {
+export const HeadingXSmall = ({ children, className }) => {
   return (
-    <h4 className={cx(styles.Heading, styles.HeadingXSmall)}>{children}</h4>
+    <h4 className={cx(styles.Heading, styles.HeadingXSmall, className)}>
+      {children}
+    </h4>
   );
 };
 
