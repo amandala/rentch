@@ -3,10 +3,12 @@ import { Form, TextArea, useFormState, Select, Option } from "informed";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-import { Button } from "../../components/Button";
+import { Button } from "../../../components/Button";
 
-import { buildManagerResponse } from "../../helpers/sendManagerResponse";
-import { validate } from "../../helpers/validation";
+import { buildManagerResponse } from "../../../helpers/sendManagerResponse";
+import { validate } from "../../../helpers/validation";
+
+import styles from "./index.module.scss";
 
 const ManagerResponseForm = ({ request, hideModal }) => {
   const isActionable =
@@ -15,15 +17,15 @@ const ManagerResponseForm = ({ request, hideModal }) => {
     <>
       <Form>
         {isActionable ? (
-          <label>
+          <label className={styles.Label}>
             <TextArea
-              //className={styles.Field}
+              className={styles.Field}
               field="response"
               validate={validate}
             />
           </label>
         ) : null}
-        <div>
+        <div className={styles.Buttons}>
           {isActionable ? (
             <Button type="submit">Send repair notification</Button>
           ) : null}

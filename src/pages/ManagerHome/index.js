@@ -6,8 +6,8 @@ import { useStateValue } from "../../StateProvider";
 
 import { Button } from "../../components/Button";
 import RequestNotification from "../../components/RequestNotification";
-import Property from "./Property";
-import { HeadingMedium, HeadingLarge } from "../../components/Heading";
+import Property from "../../components/Property";
+import { HeadingSmall, HeadingLarge, Text } from "../../components/Heading";
 
 import styles from "./index.module.scss";
 
@@ -39,7 +39,7 @@ const ManagerHome = ({ properties }) => {
           }
 
           if (!data.items.length || !data.items[0]) {
-            return <p>Awesome! No active requests at this time</p>;
+            return <Text>Awesome! No active requests at this time</Text>;
           }
 
           const requests = data.items;
@@ -75,13 +75,19 @@ const ManagerHome = ({ properties }) => {
       <div className={styles.Greeting}>
         <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
       </div>
-
-      {renderNotifications(properties)}
-
+      <div className={styles.Notifications}>
+        <HeadingSmall>Active Requests</HeadingSmall>
+        {renderNotifications(properties)}
+      </div>
       <div>
-        {properties.map(property => (
-          <Property key={property.sys.id} property={property} />
-        ))}
+        <HeadingSmall>Your Properties</HeadingSmall>
+        <div className={styles.Properties}>
+          {properties.map(property => (
+            <div className={styles.Property}>
+              <Property key={property.sys.id} property={property} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

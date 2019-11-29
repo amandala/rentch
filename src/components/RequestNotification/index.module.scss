@@ -2,12 +2,15 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  color: #202020;
   background-color: #f4f7f8;
   padding: 5px 10px;
   margin-bottom: 10px;
-  width: 100%;
   border: none;
   font-size: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-decoration: none;
 
   :last-child {
     margin-bottom: 0;
@@ -16,6 +19,12 @@
   &:hover,
   &:focus {
     background-color: darken(#f4f7f8, 4);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    outline-color: #0eaaa6;
+  }
+
+  &:visited {
+    color: #505050;
   }
 }
 

@@ -9,11 +9,21 @@
 }
 
 .Notifications {
-  margin-bottom: 20px;
+  margin-bottom: 36px;
 }
 
 .Greeting {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.Properties {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Property {
+  padding: 10px;
 }

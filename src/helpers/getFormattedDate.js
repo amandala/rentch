@@ -5,3 +5,9 @@ export const getFormattedDate = ({ date }) => {
 
   return formattedDate;
 };
+
+export const getFormattedDay = ({ date }) => {
+  const formattedDate = moment(date).format("ll");
+
+  return formattedDate;
+};

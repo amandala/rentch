@@ -1,14 +1,18 @@
 import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
-import { Link } from "react-router-dom";
 
 import { useStateValue } from "../../StateProvider";
 
-import { Button } from "../../components/Button";
+import { ButtonLink } from "../../components/Button";
 import RequestNotification from "../../components/RequestNotification";
-import Property from "./Property";
-import { HeadingMedium, HeadingLarge } from "../../components/Heading";
+import Property from "../../components/Property";
+import {
+  HeadingMedium,
+  HeadingLarge,
+  Text,
+  HeadingSmall
+} from "../../components/Heading";
 
 import styles from "./index.module.scss";
 
@@ -52,7 +56,7 @@ const TenantHome = ({ property }) => {
             }
 
             if (!data.items.length || !data.items[0]) {
-              return <p>Awesome! No active requests at this time</p>;
+              return <Text>Awesome! No active requests at this time</Text>;
             }
 
             const requests = data.items;
@@ -88,13 +92,19 @@ const TenantHome = ({ property }) => {
     <div className={styles.Home}>
       <div className={styles.Greeting}>
         <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
-        <Button>
-          <Link to="request">Get Help</Link>
-        </Button>
+        <ButtonLink url="request">Get Help</ButtonLink>
       </div>
-      <div className={styles.Notifications}>{renderNotifications()}</div>
-      <div>
-        <Property property={property} />
+      <div className={styles.PropertyDetails}>
+        <div>
+          <HeadingSmall>Your Home</HeadingSmall>
+          <div className={styles.Property}>
+            <Property property={property} />
+          </div>
+        </div>
+        <div className={styles.Notifications}>
+          <HeadingSmall>Active Requests</HeadingSmall>
+          {renderNotifications()}
+        </div>
       </div>
     </div>
   );

@@ -3,10 +3,12 @@ import { Form, TextArea, useFormState, Select, Option } from "informed";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
-import { Button } from "../../components/Button";
+import { Button } from "../../../components/Button";
 
-import { sendTenantResponse } from "../../helpers/sendTenantResponse";
-import { validate } from "../../helpers/validation";
+import { sendTenantResponse } from "../../../helpers/sendTenantResponse";
+import { validate } from "../../../helpers/validation";
+
+import styles from "./index.module.scss";
 
 const TenantResponseForm = ({ request, hideModal }) => {
   const [status, setStatus] = useState(undefined);
@@ -50,24 +52,26 @@ const TenantResponseForm = ({ request, hideModal }) => {
     <>
       <Form>
         {isActionable ? (
-          <label>
+          <label className={styles.Label}>
             <TextArea
-              //className={styles.Field}
+              className={styles.Field}
               field="response"
               validate={validate}
             />
           </label>
         ) : null}
-        <div>
+        <div className={styles.Buttons}>
           {isActionable ? (
-            <>
+            <div className={styles.Actions}>
               <Button onClick={() => setStatus("fixed")}>Fixed</Button>
               <Button onClick={() => setStatus("followup")}>Not Fixed</Button>
-            </>
+            </div>
           ) : null}
-          <Button>
-            <Link to="/">Close</Link>
-          </Button>
+          <span>
+            <Button>
+              <Link to="/">Close</Link>
+            </Button>
+          </span>
         </div>
         <TenantResponseBuilder
           hideModal={hideModal}
