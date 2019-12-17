@@ -6,6 +6,7 @@ import { Button } from "../../components/Button";
 import { useStateValue } from "../../StateProvider";
 import { buildTenantRequest } from "../../helpers/sendTenantRequest";
 import { validate } from "../../helpers/validation";
+import Dropzone from "../../components/Dropzone";
 
 import styles from "./index.module.scss";
 
@@ -84,6 +85,7 @@ const TenantRequest = () => {
         />
         <Validation field="details" />
       </label>
+      <Dropzone />
       <RequestBuilder property={properties[0]} />
       <Button type="submit">Send Rentch</Button>
     </Form>
