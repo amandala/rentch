@@ -26,7 +26,7 @@ const processFile = (file, setUploadState) => {
     })
     .then(upload => {
       setUploadState("Uploading files");
-      console.log("creating asset...", upload);
+
       return client
         .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
         .then(space => {
@@ -52,21 +52,17 @@ const processFile = (file, setUploadState) => {
           });
         })
         .then(asset => {
-          console.log("Processing");
           setUploadState("Processing");
           return asset.processForLocale("en-US", {
             processingCheckWait: 2000
           });
         })
         .then(asset => {
-          console.log("Publishing");
           setUploadState("Publishing");
 
           return asset.publish();
         })
         .then(asset => {
-          console.log("ASSET", asset);
-
           setUploadState("Success", asset.fields.title["en-US"]);
           return asset;
         });
@@ -87,13 +83,11 @@ const MyDropzone = () => {
 
     acceptedFiles.forEach(file => {
       const reader = new FileReader();
-      console.log(file);
 
       reader.onabort = () => console.log("file reading was aborted");
       reader.onerror = () => console.log("file reading has failed");
       reader.onload = () => {
         processFile(file, setUploadState).then(result => {
-          console.log("RESULT", result);
           dispatch({
             type: "UPLOAD_SUCCESS",
             data: {
@@ -128,19 +122,23 @@ const MyDropzone = () => {
       return <p>Drop those files here</p>;
     }
 
-    return <p>Drag n drop your photos or click here to upload</p>;
+    return <p>Drag n drop your photos here or click to upload</p>;
   };
 
   return (
-    <div {...getRootProps()} className={styles.Dropzone}>
-      <input {...getInputProps()} />
-      {renderContent()}
-      {uploads.map(asset =>
-        <span className={styles.Upload}>
-          <span className={styles.Check}>&#10003;</span>
-          {asset.name}
-        </span>
-      )}
+    <div>
+      <div {...getRootProps()} className={styles.Dropzone}>
+        <input {...getInputProps()} />
+        {renderContent()}
+      </div>
+      <div className={styles.Uploads}>
+        {uploads.map(asset =>
+          <span className={styles.Upload}>
+            <span className={styles.Check}>&#10003;</span>
+            {asset.name}
+          </span>
+        )}
+      </div>
     </div>
   );
 };

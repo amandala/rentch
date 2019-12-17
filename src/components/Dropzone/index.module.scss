@@ -9,7 +9,7 @@
   flex-direction: column;
   font-size: 16px;
   margin-bottom: 16px;
-  padding: 20px;
+  padding: 5px 20px;
   margin-top: 10px;
 
   &:hover {
@@ -18,10 +18,16 @@
   }
 }
 
+.Uploads {
+  display: flex;
+  flex-direction: column;
+}
+
 .Upload {
   width: 100%;
   justify-self: flex-start;
   color: #606060;
+  font-size: 12px;
 }
 
 .Check {

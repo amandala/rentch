@@ -20,7 +20,8 @@ const postTenantRequest = (request, property) => {
           tenant_name: property.fields.tenant[0].fields.name["en-US"],
           property_name: property.fields.name,
           message: request.fields.message["en-US"],
-          subject: `New ${request.fields.type["en-US"]} request at ${property.fields.name["en-US"]}`
+          subject: `New ${request.fields.type["en-US"]} request at ${property
+            .fields.name["en-US"]}`
         };
 
         const service_id = "default_service";
@@ -37,8 +38,19 @@ const postTenantRequest = (request, property) => {
   );
 };
 
-export const buildTenantRequest = (property, values) => {
+export const buildTenantRequest = (property, values, uploads) => {
   const date = new Date();
+
+  const uploadLinks = uploads.map(upload => {
+    return {
+      sys: {
+        type: "Link",
+        linkType: "Asset",
+        id: upload.id
+      }
+    };
+  });
+
   const request = {
     fields: {
       timestamp: { "en-US": date.getTime() },
@@ -53,6 +65,7 @@ export const buildTenantRequest = (property, values) => {
           }
         }
       },
+      photos: { "en-US": [...uploadLinks] },
       status: { "en-US": "new" },
       message: {
         "en-US": values.details

@@ -25,13 +25,15 @@ const Validation = field => {
 };
 
 const RequestBuilder = property => {
+  const [{ uploads }] = useStateValue();
+
   const [succes, setSuccess] = useState(false);
   const formState = useFormState();
 
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    buildTenantRequest(property.property, values).then(data => {
+    buildTenantRequest(property.property, values, uploads).then(data => {
       if (data.error) {
         // error notification
         console.error("There was an error", data.error);
@@ -51,7 +53,7 @@ const RequestBuilder = property => {
 };
 
 const TenantRequest = () => {
-  const [{ userData, properties }] = useStateValue();
+  const [{ userData, properties, uploads }] = useStateValue();
 
   if (!properties.length) {
     return <Redirect to="/" />;
