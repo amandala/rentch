@@ -1,0 +1,36 @@
+.Dropzone {
+  background-color: #fff;
+  color: #bbbaba;
+  border: 2px dashed #bbbaba;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 16px;
+  margin-bottom: 16px;
+  padding: 5px 20px;
+  margin-top: 10px;
+
+  &:hover {
+    border: 2px dashed #0eaaa6;
+    cursor: pointer;
+  }
+}
+
+.Uploads {
+  display: flex;
+  flex-direction: column;
+}
+
+.Upload {
+  width: 100%;
+  justify-self: flex-start;
+  color: #606060;
+  font-size: 12px;
+}
+
+.Check {
+  color: #0eaaa6;
+  padding-right: 5px;
+}

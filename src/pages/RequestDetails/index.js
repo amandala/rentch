@@ -95,26 +95,35 @@ const RequestDetails = props => {
                 {getFormattedDate({ date: request.fields.timestamp })}
               </HeadingXSmall>
               <HeadingMedium className={styles.RequestTitle}>
-                {`${getRequestType(request.fields.type)} request at ${
-                  request.fields.property.fields.name
-                }`}
+                {`${getRequestType(request.fields.type)} request at ${request
+                  .fields.property.fields.name}`}
               </HeadingMedium>
 
               <HeadingSmall className={styles.Details}>
                 {request.fields.message}
               </HeadingSmall>
               <div>
+                {request.fields.photos &&
+                  request.fields.photos.map(photo => {
+                    console.log(photo);
+                    if (photo.fields) {
+                      return (
+                        <img key={photo.sys.id} src={photo.fields.file.url} />
+                      );
+                    }
+                  })}
+              </div>
+              <div>
                 {request.fields.notifications &&
                   request.fields.notifications.length &&
                   request.fields.notifications.map(notificaiton => {
                     return (
-                      notificaiton.fields && (
-                        <Notification
-                          date={notificaiton.fields.timestamp}
-                          subject={notificaiton.fields.subject}
-                          message={notificaiton.fields.message}
-                        />
-                      )
+                      notificaiton.fields &&
+                      <Notification
+                        date={notificaiton.fields.timestamp}
+                        subject={notificaiton.fields.subject}
+                        message={notificaiton.fields.message}
+                      />
                     );
                   })}
               </div>
