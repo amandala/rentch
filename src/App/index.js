@@ -19,7 +19,8 @@ function App() {
     loggedIn: !!profileData,
     userData: profileData,
     properties: [],
-    role: undefined
+    role: undefined,
+    uploads: []
   };
 
   const reducer = (state, action) => {
@@ -49,6 +50,12 @@ function App() {
         return {
           ...state,
           role: action.data
+        };
+
+      case "UPLOAD_SUCCESS":
+        return {
+          ...state,
+          uploads: [...state.uploads, action.data]
         };
 
       default:

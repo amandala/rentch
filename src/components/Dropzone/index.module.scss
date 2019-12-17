@@ -1,5 +1,4 @@
 .Dropzone {
-  height: 200px;
   background-color: #fff;
   color: #bbbaba;
   border: 2px dashed #bbbaba;
@@ -10,9 +9,21 @@
   flex-direction: column;
   font-size: 16px;
   margin-bottom: 16px;
+  padding: 20px;
 
   &:hover {
     border: 2px dashed #0eaaa6;
     cursor: pointer;
   }
+}
+
+.Upload {
+  width: 100%;
+  justify-self: flex-start;
+  color: #606060;
+}
+
+.Check {
+  color: #0eaaa6;
+  padding-right: 5px;
 }
