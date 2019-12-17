@@ -78,6 +78,10 @@ const TenantRequest = () => {
       </label>
       <label className={styles.Label}>
         Details
+        <span className={styles.DetailsNote}>
+          Please provide as much detail as possible. Include model and serial
+          numbers for appliance and heating repair requests.
+        </span>
         <TextArea
           className={styles.Field}
           field="details"
