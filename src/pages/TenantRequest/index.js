@@ -89,9 +89,12 @@ const TenantRequest = () => {
         />
         <Validation field="details" />
       </label>
-      <Dropzone />
+      <label className={styles.Label}>
+        Photos
+        <Dropzone />
+      </label>
       <RequestBuilder property={properties[0]} />
-      <Button type="submit">Send Rentch</Button>
+      <Button type="submit">Send request</Button>
     </Form>
   );
 };
