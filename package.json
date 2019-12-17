@@ -23,6 +23,7 @@
     "react": "^16.8.6",
     "react-contentful": "^1.4.5",
     "react-dom": "^16.8.6",
+    "react-dropzone": "^10.2.1",
     "react-google-login": "^5.0.5",
     "react-modal-hook": "^2.0.0",
     "react-router-dom": "^5.0.1",
