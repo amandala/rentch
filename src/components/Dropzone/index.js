@@ -5,6 +5,8 @@ import { createClient } from "contentful-management";
 import styles from "./index.module.scss";
 
 const MyDropzone = () => {
+  const [uploadState, setUploadState] = React.useState(undefined);
+
   var client = createClient({
     accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
   });
@@ -31,7 +33,8 @@ const MyDropzone = () => {
             });
           })
           .then(upload => {
-            console.log("creating asset...");
+            setUploadState("Uploading files");
+            console.log("creating asset...", upload);
             client
               .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
               .then(space => {
@@ -57,36 +60,74 @@ const MyDropzone = () => {
                 });
               })
               .then(asset => {
-                console.log("prcessing...");
+                console.log("Processing");
+                setUploadState("Processing");
                 return asset.processForLocale("en-US", {
                   processingCheckWait: 2000
                 });
               })
               .then(asset => {
-                console.log("publishing...");
+                console.log("Publishing");
+                setUploadState("Publishing");
+
                 return asset.publish();
               })
               .then(asset => {
-                console.log(asset);
+                setUploadState("Success", asset.fields.title["en-US"]);
                 return asset;
               });
           })
           .catch(err => {
+            setUploadState("Error");
             console.log(err);
           });
       };
+
       reader.readAsArrayBuffer(file);
     });
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    acceptedFiles
+  } = useDropzone({ onDrop });
+
+  const renderContent = () => {
+    if (uploadState && uploadState !== "Success") {
+      return (
+        <p>
+          {uploadState}
+        </p>
+      );
+    }
+
+    if (acceptedFiles.length && uploadState && uploadState !== "Error") {
+      return (
+        <div>
+          <ul>
+            {acceptedFiles.map(asset => {
+              return (
+                <li>
+                  uploading {asset.name}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    }
+
+    return isDragActive
+      ? <p>Drop those files here</p>
+      : <p>Drag n drop your photos or click here to upload</p>;
+  };
 
   return (
     <div {...getRootProps()} className={styles.Dropzone}>
       <input {...getInputProps()} />
-      {isDragActive
-        ? <p>Drop the files here ...</p>
-        : <p>Drag 'n' drop some files here, or click to select files</p>}
+      {renderContent()}
     </div>
   );
 };
