@@ -88,8 +88,6 @@ const RequestDetails = props => {
             }
           };
 
-          console.log(request);
-
           return (
             <div className={styles.Wrapper}>
               <Pill status={request.fields.status} />
@@ -107,7 +105,9 @@ const RequestDetails = props => {
               <div>
                 {request.fields.photos &&
                   request.fields.photos.map(photo => {
-                    return <img src={photo.fields.file.url} />;
+                    return (
+                      <img key={photo.sys.id} src={photo.fields.file.url} />
+                    );
                   })}
               </div>
               <div>

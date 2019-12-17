@@ -91,7 +91,9 @@ const TenantHome = ({ property }) => {
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
+        <HeadingLarge>
+          Welcome, {userData.givenName}
+        </HeadingLarge>
         <ButtonLink url="request">Get Help</ButtonLink>
       </div>
       <div className={styles.PropertyDetails}>

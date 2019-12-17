@@ -133,7 +133,7 @@ const MyDropzone = () => {
       </div>
       <div className={styles.Uploads}>
         {uploads.map(asset =>
-          <span className={styles.Upload}>
+          <span key={asset.id} className={styles.Upload}>
             <span className={styles.Check}>&#10003;</span>
             {asset.name}
           </span>
