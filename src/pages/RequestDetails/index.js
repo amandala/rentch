@@ -105,9 +105,12 @@ const RequestDetails = props => {
               <div>
                 {request.fields.photos &&
                   request.fields.photos.map(photo => {
-                    return (
-                      <img key={photo.sys.id} src={photo.fields.file.url} />
-                    );
+                    console.log(photo);
+                    if (photo.fields) {
+                      return (
+                        <img key={photo.sys.id} src={photo.fields.file.url} />
+                      );
+                    }
                   })}
               </div>
               <div>
