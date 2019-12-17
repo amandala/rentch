@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import cx from "classnames";
 import { Redirect } from "react-router-dom";
 import { Form, TextArea, useFormState, Select, Option } from "informed";
 
@@ -68,11 +69,10 @@ const TenantRequest = () => {
           <Option disabled value="">
             Select one
           </Option>
+          <Option value="other">General repair</Option>
           <Option value="appliance">Appliance repair</Option>
           <Option value="heat">Heating issues</Option>
           <Option value="plumbing">Plumbing issues</Option>
-          <Option value="lease">Lease negotiation</Option>
-          <Option value="other">Other</Option>
         </Select>
         <Validation field="requestType" />
       </label>
@@ -83,7 +83,7 @@ const TenantRequest = () => {
           numbers for appliance and heating repair requests.
         </span>
         <TextArea
-          className={styles.Field}
+          className={cx(styles.Field, styles.TextArea)}
           field="details"
           validate={validate}
         />
