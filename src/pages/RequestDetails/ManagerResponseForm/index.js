@@ -22,6 +22,7 @@ const ManagerResponseForm = ({ request, hideModal }) => {
               className={styles.Field}
               field="response"
               validate={validate}
+              placeholder="Enter message here"
             />
           </label>
         ) : null}

@@ -88,6 +88,7 @@ const TenantRequest = () => {
           className={cx(styles.Field, styles.TextArea)}
           field="details"
           validate={validate}
+          placeholder="Enter request details here"
         />
         <Validation field="details" />
       </label>
