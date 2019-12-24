@@ -2,16 +2,16 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
 
-import { useStateValue } from "../../StateProvider";
+import { useStateValue } from "../../../StateProvider";
 
-import { Button } from "../../components/Button";
-import RequestNotification from "../../components/RequestNotification";
-import Property from "../../components/Property";
-import { HeadingSmall, HeadingLarge, Text } from "../../components/Heading";
+import { Button } from "../../../components/Button";
+import RequestNotification from "../../../components/RequestNotification";
+import Property from "../../../components/Property";
+import { HeadingSmall, HeadingLarge, Text } from "../../../components/Heading";
 
 import styles from "./index.module.scss";
 
-const ManagerHome = ({ properties }) => {
+const LandlordHome = ({ properties }) => {
   const contentfulClient = new ContentfulClient({
     accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
     space: process.env.REACT_APP_CONTENTFUL_SPACE
@@ -73,7 +73,9 @@ const ManagerHome = ({ properties }) => {
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
+        <HeadingLarge>
+          Welcome, {userData.givenName}
+        </HeadingLarge>
       </div>
       <div className={styles.Notifications}>
         <HeadingSmall>Active Requests</HeadingSmall>
@@ -82,15 +84,15 @@ const ManagerHome = ({ properties }) => {
       <div>
         <HeadingSmall>Your Properties</HeadingSmall>
         <div className={styles.Properties}>
-          {properties.map(property => (
+          {properties.map(property =>
             <div className={styles.Property}>
               <Property key={property.sys.id} property={property} />
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default ManagerHome;
+export default LandlordHome;
