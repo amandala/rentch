@@ -10,15 +10,25 @@ import { validate } from "../../../helpers/validation";
 
 import styles from "./index.module.scss";
 
-const ManagerResponseForm = ({ request, hideModal }) => {
+const LandlordResponseForm = ({ request, hideModal }) => {
   const isActionable =
     request.fields.status === "new" || request.fields.status === "followup";
   return (
     <>
       <Form>
+        {isActionable ? (
+          <label className={styles.Label}>
+            <TextArea
+              className={styles.Field}
+              field="response"
+              validate={validate}
+              placeholder="Enter message here"
+            />
+          </label>
+        ) : null}
         <div className={styles.Buttons}>
           {isActionable ? (
-            <Button type="submit">Mark as fixed</Button>
+            <Button type="submit">Send repair notification</Button>
           ) : null}
         </div>
         <ManagerResponseBuilder
@@ -56,4 +66,4 @@ const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
   return null;
 };
 
-export default ManagerResponseForm;
+export default LandlordResponseForm;

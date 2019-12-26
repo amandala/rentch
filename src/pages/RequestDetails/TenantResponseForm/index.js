@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { Button } from "../../../components/Button";
 
-import { sendTenantResponse } from "../../../helpers/sendTenantResponse";
+import { sendRequestUpdate } from "../../../helpers/sendRequestUpdate";
 import { validate } from "../../../helpers/validation";
 
 import styles from "./index.module.scss";
@@ -32,9 +32,9 @@ const TenantResponseForm = ({ request, hideModal }) => {
     if (status) {
       setStatus(undefined);
 
-      sendTenantResponse(values, property, request, status).then(data => {
+      sendRequestUpdate(values, property, request, status).then(data => {
         if (data.error) {
-          console.error("There was an error", data.error);
+          console.error("There was an error sending the request update", data.error);
         } else {
           setSuccess(true);
         }

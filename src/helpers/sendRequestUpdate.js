@@ -6,7 +6,7 @@ var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postTenantResponse = (response, property, request, status) => {
+const postRequestUpdate = (response, property, request, status) => {
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
@@ -18,12 +18,13 @@ const postTenantResponse = (response, property, request, status) => {
               .getEntry(request.sys.id)
               .then(requestToUpdate => {
                 let ids = [];
-                if (requestToUpdate.fields.notifications["en-US"]) {
-                  ids = requestToUpdate.fields.notifications["en-US"].map(
-                    notification => {
-                      return notification.sys.id;
-                    }
-                  );
+
+                if (requestToUpdate.fields.notifications) {
+                  ids = requestToUpdate.fields.notifications[
+                    "en-US"
+                  ].map(notification => {
+                    return notification.sys.id;
+                  });
                 }
 
                 const allNotifications = {
@@ -50,11 +51,13 @@ const postTenantResponse = (response, property, request, status) => {
 
                 requestToUpdate.fields.notifications = allNotifications;
                 requestToUpdate.fields.status["en-US"] = status;
+
                 return requestToUpdate.update();
               })
               .then(requestToUpdate => requestToUpdate.publish())
               .then(updatedRequest => {
                 sendRequestUpdateEmail(property, response);
+
                 return updatedRequest;
               })
               .catch(error => {
@@ -75,7 +78,7 @@ const postTenantResponse = (response, property, request, status) => {
   );
 };
 
-export const sendTenantResponse = (values, property, request, status) => {
+export const sendRequestUpdate = (values, property, request, status) => {
   const date = new Date();
   const response = {
     fields: {
@@ -92,7 +95,8 @@ export const sendTenantResponse = (values, property, request, status) => {
       propertyId: { "en-US": property.sys.id },
       requestId: { "en-US": request.sys.id },
       subject: {
-        "en-US": `Update: ${request.fields.type} request at ${request.fields.property.fields.name} has been updated to ${status}`
+        "en-US": `Update: ${request.fields.type} request at ${request.fields
+          .property.fields.name} has been updated to ${status}`
       },
       message: {
         "en-US": values.response
@@ -103,5 +107,5 @@ export const sendTenantResponse = (values, property, request, status) => {
     }
   };
 
-  return postTenantResponse(response, property, request, status);
+  return postRequestUpdate(response, property, request, status);
 };

@@ -115,7 +115,11 @@ const RequestDetails = props => {
                     console.log(photo);
                     if (photo.fields) {
                       return (
-                        <img key={photo.sys.id} src={photo.fields.file.url} />
+                        <img
+                          className={styles.Image}
+                          key={photo.sys.id}
+                          src={photo.fields.file.url}
+                        />
                       );
                     }
                   })}
