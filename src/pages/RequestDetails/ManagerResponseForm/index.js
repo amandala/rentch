@@ -30,9 +30,6 @@ const ManagerResponseForm = ({ request, hideModal }) => {
           {isActionable ? (
             <Button type="submit">Send repair notification</Button>
           ) : null}
-          <Button>
-            <Link to="/">Go home</Link>
-          </Button>
         </div>
         <ManagerResponseBuilder
           hideModal={hideModal}

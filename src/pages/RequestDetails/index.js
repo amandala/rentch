@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useModal } from "react-modal-hook";
+import { Link } from "react-router-dom";
+
 import {
   Button,
   Dialog,
@@ -90,7 +92,12 @@ const RequestDetails = props => {
 
           return (
             <div className={styles.Wrapper}>
-              <Pill status={request.fields.status} />
+              <div className={styles.Header}>
+                <Pill status={request.fields.status} />
+                <Link className={styles.CloseLink} to="/">
+                  X
+                </Link>
+              </div>
               <HeadingXSmall className={styles.Date}>
                 {getFormattedDate({ date: request.fields.timestamp })}
               </HeadingXSmall>

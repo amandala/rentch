@@ -68,11 +68,6 @@ const TenantResponseForm = ({ request, hideModal }) => {
               <Button onClick={() => setStatus("followup")}>Not Fixed</Button>
             </div>
           ) : null}
-          <span>
-            <Button>
-              <Link to="/">Close</Link>
-            </Button>
-          </span>
         </div>
         <TenantResponseBuilder
           hideModal={hideModal}
