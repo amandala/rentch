@@ -19,7 +19,7 @@ const postTenantRequest = (request, property) => {
           reply_to: property.fields.tenant[0].fields.email,
           to_name: property.fields.landlord.fields.name,
           to_email: property.fields.landlord.fields.email,
-          tenant_name: property.fields.tenant[0].fields.name["en-US"],
+          tenant_name: property.fields.tenant[0].fields.name,
           property_name: property.fields.name,
           message: request.fields.message["en-US"],
           subject: `New ${request.fields.type["en-US"]} request at ${property
