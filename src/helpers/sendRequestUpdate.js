@@ -84,8 +84,11 @@ const getSubject = (status, type, propertyName) => {
     case "fixed":
       return `The ${type} request at ${propertyName} has been fixed`;
     case "followup":
-    case "repair":
-      return `The ${type} request at ${propertyName} has been updated to ${status}`;
+      return `The ${type} request at ${propertyName} hasn't been property fixed`;
+    case "repair-rentch":
+      return `The ${type} request at ${propertyName} will be handled by Rentch`;
+    case "repair-owner":
+      return `The ${type} request at ${propertyName} will be handled by the property owner`;
   }
 };
 

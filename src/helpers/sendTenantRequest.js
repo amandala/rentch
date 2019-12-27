@@ -14,7 +14,6 @@ const postTenantRequest = (request, property) => {
       .then(entry => entry.publish())
       .then(entry => {
         // Send email to landlord
-        console.log(property.fields);
         const template_params = {
           reply_to: property.fields.tenant[0].fields.email,
           to_name: property.fields.landlord.fields.name,
@@ -30,7 +29,6 @@ const postTenantRequest = (request, property) => {
         const template_id = "tenantRequest";
         const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
 
-        console.log(template_params);
         emailjs.send(service_id, template_id, template_params, user_id);
 
         return entry;

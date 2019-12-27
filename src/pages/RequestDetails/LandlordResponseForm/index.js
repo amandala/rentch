@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, useFormState, Select, Option } from "informed";
+import { Form, useFormState, Select, Option, Text, TextArea, Radio, RadioGroup, useFormApi } from "informed";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
@@ -10,6 +10,16 @@ import { validate } from "../../../helpers/validation";
 
 import styles from "./index.module.scss";
 
+const SubmitButtons = () => {
+  const formApi = useFormApi();
+  return (
+    <>
+      <Button type="submit" value="owner-fix" onClick={()=>formApi.setValue('status', "repair-owner")}>I'll fix it</Button>
+      <Button type="submit" value="rentch-fix" onClick={()=> formApi.setValue('status', "repair-rentch")}>Send Rentch</Button>
+    </>
+  );
+};
+
 const LandlordResponseForm = ({ request, hideModal }) => {
   const isActionable =
     request.fields.status === "new" || request.fields.status === "followup";
@@ -17,21 +27,24 @@ const LandlordResponseForm = ({ request, hideModal }) => {
     <>
       <Form>
         {isActionable ? (
+          <>
           <label className={styles.Label}>
+            <Text className={styles.Hidden} field="status"/>
             <TextArea
               className={styles.Field}
               field="response"
               validate={validate}
-              placeholder="Enter message here"
+              placeholder="Enter a message here. It will appear in the request history and send an email notificaiton."
             />
           </label>
+        </>
         ) : null}
         <div className={styles.Buttons}>
           {isActionable ? (
-            <Button type="submit">Send repair notification</Button>
+            <SubmitButtons />
           ) : null}
         </div>
-        <LandlordResponseForm
+        <LandlordResponseBuilder
           hideModal={hideModal}
           request={request}
           property={request.fields.property}
@@ -41,7 +54,7 @@ const LandlordResponseForm = ({ request, hideModal }) => {
   );
 };
 
-const LandlordResponseForm = ({ hideModal, property, request, router }) => {
+const LandlordResponseBuilder = ({ hideModal, property, request, router }) => {
   let history = useHistory();
 
   const [succes, setSuccess] = useState(false);
@@ -50,7 +63,7 @@ const LandlordResponseForm = ({ hideModal, property, request, router }) => {
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    sendRequestUpdate(values, property, request, "fixed", property.fields.landlord.sys.id).then(data => {
+    sendRequestUpdate(values, property, request, values.status, property.fields.landlord.sys.id).then(data => {
       if (data.error) {
         console.error("There was an error", data.error);
       }
