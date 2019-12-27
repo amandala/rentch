@@ -82,13 +82,13 @@ const postRequestUpdate = (response, property, request, status) => {
 const getSubject = (status, type, propertyName) => {
   switch (status) {
     case "fixed":
-      return `The ${type} request at ${propertyName} has been fixed`;
+      return `${propertyName}: ${type} request - has been fixed`;
     case "followup":
-      return `The ${type} request at ${propertyName} hasn't been property fixed`;
+      return `${propertyName}: ${type} request - requires follow-up`;
     case "repair-rentch":
-      return `The ${type} request at ${propertyName} will be handled by Rentch`;
+      return `${propertyName}: ${type} request - will be handled by Rentch`;
     case "repair-owner":
-      return `The ${type} request at ${propertyName} will be handled by the property owner`;
+      return `${propertyName}: ${type} request - will be handled by the property owner`;
   }
 };
 
