@@ -18,7 +18,7 @@ const ManagerResponseForm = ({ request, hideModal }) => {
       <Form>
         <div className={styles.Buttons}>
           {isActionable ? (
-            <Button type="submit">Mark as fixed</Button>
+            <Button type="submit">Dismiss</Button>
           ) : null}
         </div>
         <ManagerResponseBuilder
