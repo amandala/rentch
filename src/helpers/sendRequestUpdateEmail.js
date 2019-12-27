@@ -1,13 +1,14 @@
 import emailjs from "emailjs-com";
 
-export const sendRequestUpdateEmail = (property, response) => {
+export const sendRequestUpdateEmail = (property, response, status) => {
   const template_params = {
     reply_to: property.fields.manager.fields.email,
     to_name: property.fields.tenant[0].fields.name,
     to_email: property.fields.tenant[0].fields.email,
     property_name: property.fields.name,
     message: response.fields.message["en-US"],
-    subject: response.fields.subject["en-US"]
+    subject: response.fields.subject["en-US"],
+    status: status
   };
 
   const service_id = "default_service";

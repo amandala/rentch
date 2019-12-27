@@ -31,7 +31,7 @@ const LandlordResponseForm = ({ request, hideModal }) => {
             <Button type="submit">Send repair notification</Button>
           ) : null}
         </div>
-        <ManagerResponseBuilder
+        <LandlordResponseForm
           hideModal={hideModal}
           request={request}
           property={request.fields.property}
@@ -41,7 +41,7 @@ const LandlordResponseForm = ({ request, hideModal }) => {
   );
 };
 
-const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
+const LandlordResponseForm = ({ hideModal, property, request, router }) => {
   let history = useHistory();
 
   const [succes, setSuccess] = useState(false);
@@ -50,7 +50,7 @@ const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    sendRequestUpdate(values, property, request, "fixed").then(data => {
+    sendRequestUpdate(values, property, request, "fixed", property.fields.landlord.sys.id).then(data => {
       if (data.error) {
         console.error("There was an error", data.error);
       }

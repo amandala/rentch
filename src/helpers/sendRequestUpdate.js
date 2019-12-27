@@ -1,6 +1,7 @@
 import { createClient } from "contentful-management";
 import { request } from "https";
 import { sendRequestUpdateEmail } from "./sendRequestUpdateEmail";
+import { stat } from "fs";
 
 var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
@@ -56,7 +57,7 @@ const postRequestUpdate = (response, property, request, status) => {
               })
               .then(requestToUpdate => requestToUpdate.publish())
               .then(updatedRequest => {
-                sendRequestUpdateEmail(property, response);
+                sendRequestUpdateEmail(property, response, status);
 
                 return updatedRequest;
               })
@@ -78,7 +79,23 @@ const postRequestUpdate = (response, property, request, status) => {
   );
 };
 
-export const sendRequestUpdate = (values, property, request, status) => {
+const getSubject = (status, type, propertyName) => {
+  switch (status) {
+    case "fixed":
+      return `The ${type} request at ${propertyName} has been fixed`;
+    case "followup":
+    case "repair":
+      return `The ${type} request at ${propertyName} has been updated to ${status}`;
+  }
+};
+
+export const sendRequestUpdate = (
+  values,
+  property,
+  request,
+  status,
+  creatorId
+) => {
   const date = new Date();
   const response = {
     fields: {
@@ -88,18 +105,21 @@ export const sendRequestUpdate = (values, property, request, status) => {
           sys: {
             type: "Link",
             linkType: "Entry",
-            id: property.fields.tenant[0].sys.id
+            id: creatorId
           }
         }
       },
       propertyId: { "en-US": property.sys.id },
       requestId: { "en-US": request.sys.id },
       subject: {
-        "en-US": `Update: ${request.fields.type} request at ${request.fields
-          .property.fields.name} has been updated to ${status}`
+        "en-US": getSubject(
+          status,
+          request.fields.type,
+          request.fields.property.fields.name
+        )
       },
       message: {
-        "en-US": values.response
+        "en-US": values.response ? values.response : "No message was provided"
       },
       archived: {
         "en-US": false
