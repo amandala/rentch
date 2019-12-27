@@ -135,7 +135,7 @@ const RequestDetails = props => {
                     return (
                       notificaiton.fields &&
                       <Notification
-                        date={notificaiton.fields.timestamp}
+                        date={notificaiton.sys.createdAt}
                         subject={notificaiton.fields.subject}
                         message={notificaiton.fields.message}
                       />
