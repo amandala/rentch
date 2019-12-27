@@ -40,7 +40,7 @@ const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    sendRequestUpdate(values, property, request, "fixed", property.fields.manager.sys.id).then(data => {
+    sendRequestUpdate(values, property, request, "fixed", property.fields.manager).then(data => {
 
       console.log("DATA", data);
       if (data.error) {

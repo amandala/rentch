@@ -7,7 +7,7 @@ var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postRequestUpdate = (response, property, request, status) => {
+const postRequestUpdate = (response, property, request, status, creator) => {
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
@@ -57,7 +57,7 @@ const postRequestUpdate = (response, property, request, status) => {
               })
               .then(requestToUpdate => requestToUpdate.publish())
               .then(updatedRequest => {
-                sendRequestUpdateEmail(property, response, status);
+                sendRequestUpdateEmail(property, response, status, creator);
 
                 return updatedRequest;
               })
@@ -97,7 +97,7 @@ export const sendRequestUpdate = (
   property,
   request,
   status,
-  creatorId
+  creator,
 ) => {
   const date = new Date();
   const response = {
@@ -108,7 +108,7 @@ export const sendRequestUpdate = (
           sys: {
             type: "Link",
             linkType: "Entry",
-            id: creatorId
+            id: creator.sys.id
           }
         }
       },
@@ -130,5 +130,11 @@ export const sendRequestUpdate = (
     }
   };
 
-  return postRequestUpdate(response, property, request, status);
+  return postRequestUpdate(
+    response,
+    property,
+    request,
+    status,
+    creator,
+  );
 };

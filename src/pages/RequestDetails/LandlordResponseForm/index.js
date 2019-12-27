@@ -63,7 +63,7 @@ const LandlordResponseBuilder = ({ hideModal, property, request, router }) => {
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    sendRequestUpdate(values, property, request, values.status, property.fields.landlord.sys.id).then(data => {
+    sendRequestUpdate(values, property, request, values.status, property.fields.landlord).then(data => {
       if (data.error) {
         console.error("There was an error", data.error);
       }
