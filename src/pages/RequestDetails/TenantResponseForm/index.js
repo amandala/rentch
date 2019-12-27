@@ -13,7 +13,7 @@ import styles from "./index.module.scss";
 const TenantResponseForm = ({ request, hideModal }) => {
   const [status, setStatus] = useState(undefined);
   const [succes, setSuccess] = useState(false);
-  const isActionable = request.fields.status === "repair";
+  const isActionable = request.fields.status === "repair" || request.fields.status === "repair-rentch" || request.fields.status === "repair-owner";
   let history = useHistory();
 
   const TenantResponseBuilder = ({
