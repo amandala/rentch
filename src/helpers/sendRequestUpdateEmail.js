@@ -1,28 +1,39 @@
 import emailjs from "emailjs-com";
 
 const getDetails = (status, creator, repairOwner) => {
+  let details = "DETAILS";
   if (creator.fields.role === "tenant") {
+    if (status === "new") {
+      details =
+        "The tenant has submitted a new repair request. You can choose to manage the repair yourself, or send Rentch! You can view details of the request including any photo attachments the tenant provided in the Rentch dashboard.";
+    }
     if (status === "followup") {
-      return "The tenant has reported the repair was unsuccessful and requires follow-up. You can choose to do the follow-up repair yourself, or send Rentch to do the repair. Either way, you can let the tenant know your decision by logging into the Rentch dahsboard and selecting either 'I'll fix it' or 'Send Rentch'.";
+      details =
+        "The tenant has reported the repair was unsuccessful and requires follow-up. You can choose to do the follow-up repair yourself, or send Rentch to do the repair. Either way, you can let the tenant know your decision by logging into the Rentch dahsboard and selecting either 'I'll fix it' or 'Send Rentch'.";
     }
     if (status === "fixed") {
-      return "The request was marked as complete and has been moved to the archive. You can still view the details of the request in your Rentch dashboard.";
+      details =
+        "The request was marked as complete and has been moved to the archive. You can still view the details of the request in your Rentch dashboard.";
     }
   }
   if (creator.fields.role === "landlord") {
     if (repairOwner === "landlord") {
-      return `The property owner will handle the required request. ${creator
+      details = `The property owner will handle the required request. ${creator
         .fields.name} will be in contact with you shortly to coordinate.`;
     }
     if (repairOwner === "manager") {
-      return "Sit back and relax. Rentch is going to manage your request! We will be in touch soon to coordinate.";
+      details =
+        "Sit back and relax. Rentch is going to manage your request! We will be in touch soon to coordinate.";
     }
   }
   if (creator.fields.role === "manager") {
     if (status === "fixed") {
-      return "Rentch has marked the request as completed. If you are still experiencing issues, please visit the Rentch dashboard and make another request.";
+      details =
+        "Rentch has marked the request as completed. If you are still experiencing issues, please visit the Rentch dashboard and make another request.";
     }
   }
+
+  return details;
 };
 
 const createEmailTemplate = (
@@ -46,14 +57,13 @@ const createEmailTemplate = (
   };
 };
 
-export const sendRequestUpdateEmail = (
-  property,
-  response,
-  status,
-  creator,
-  repairOwner
-) => {
-  const details = getDetails(status, creator);
+export const sendRequestUpdateEmail = (property, response, status, creator) => {
+  const service_id = "default_service";
+  const template_id = "managerResponse";
+  const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
+  const repairOwner = status === "repair-owner" ? "landlord" : "manager";
+
+  const details = getDetails(status, creator, repairOwner);
 
   const tenantEmail = createEmailTemplate(
     creator,
@@ -81,10 +91,6 @@ export const sendRequestUpdateEmail = (
     status,
     details
   );
-
-  const service_id = "default_service";
-  const template_id = "managerResponse";
-  const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
 
   if (creator.fields.role === "manager") {
     emailjs.send(service_id, template_id, tenantEmail, user_id);

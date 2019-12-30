@@ -33,7 +33,7 @@ const TenantResponseForm = ({ request, hideModal }) => {
       setStatus(undefined);
 
       sendRequestUpdate(values, property, request, status, property.fields.tenant[0]).then(data => {
-        console.log("DATA", data);
+        
         if (data.error) {
           console.error("There was an error sending the request update", data.error);
         } else {
