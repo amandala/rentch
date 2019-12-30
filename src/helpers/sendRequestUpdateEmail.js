@@ -25,6 +25,27 @@ const getDetails = (status, creator, repairOwner) => {
   }
 };
 
+const createEmailTemplate = (
+  creator,
+  recipient,
+  property,
+  response,
+  status,
+  details
+) => {
+  return {
+    reply_to: creator.fields.email,
+    to_name: recipient.fields.name,
+    to_email: recipient.fields.email,
+    property_name: property.fields.name,
+    message: response.fields.message["en-US"],
+    subject: response.fields.subject["en-US"],
+    status: status,
+    details: details,
+    creator_role: creator.fields.role
+  };
+};
+
 export const sendRequestUpdateEmail = (
   property,
   response,
@@ -32,42 +53,62 @@ export const sendRequestUpdateEmail = (
   creator,
   repairOwner
 ) => {
-  // if creator is MANAGER and
-  // send to tenant
-  // send to landlord
-  // if creator is LANDLORD
-  // if status is repair-owner
-  // send to tenant
-  // if status is repair-rentch
-  // send to tenant
-  // send to manager
-  // if creator is TENANT
-  // if status is followup
-  // if repairOwner is landlord
-  // send to landlord
-  // if repairOwner is manager
-  // send to manager
-  // if status is fixed
-  // if repairOwner is landlord
-  // send to landlord
-  // if repairOwner is manager
-  // send to manager
-  // send to landlord
+  const details = getDetails(status, creator);
 
-  const template_params = {
-    reply_to: creator.fields.email,
-    to_name: property.fields.tenant[0].fields.name,
-    to_email: property.fields.tenant[0].fields.email,
-    property_name: property.fields.name,
-    message: response.fields.message["en-US"],
-    subject: response.fields.subject["en-US"],
-    status: status,
-    details: getDetails(status, creator),
-    creator_role: creator.fields.role
-  };
+  const tenantEmail = createEmailTemplate(
+    creator,
+    property.fields.tenant[0],
+    property,
+    response,
+    status,
+    details
+  );
+
+  const managerEmail = createEmailTemplate(
+    creator,
+    property.fields.manager,
+    property,
+    response,
+    status,
+    details
+  );
+
+  const landlordEmail = createEmailTemplate(
+    creator,
+    property.fields.landlord,
+    property,
+    response,
+    status,
+    details
+  );
 
   const service_id = "default_service";
   const template_id = "managerResponse";
   const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
-  emailjs.send(service_id, template_id, template_params, user_id);
+
+  if (creator.fields.role === "manager") {
+    emailjs.send(service_id, template_id, tenantEmail, user_id);
+    emailjs.send(service_id, template_id, landlordEmail, user_id);
+  } else if (creator.fields.role === "landlord") {
+    if (status === "repair-owner") {
+      emailjs.send(service_id, template_id, tenantEmail, user_id);
+    }
+    if (status === "repair-rentch") {
+      emailjs.send(service_id, template_id, tenantEmail, user_id);
+      emailjs.send(service_id, template_id, managerEmail, user_id);
+    }
+  } else if (creator.fields.role === "tenant") {
+    if (status === "followup" || status === "fixed") {
+      if (repairOwner === "landlord") {
+        emailjs.send(service_id, template_id, landlordEmail, user_id);
+      }
+      if (repairOwner === "manager") {
+        emailjs.send(service_id, template_id, managerEmail, user_id);
+
+        if (status === "fixed") {
+          emailjs.send(service_id, template_id, landlordEmail, user_id);
+        }
+      }
+    }
+  }
 };
