@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Form, TextArea, useFormState, Select, Option } from "informed";
+import { Form, useFormState, Select, Option } from "informed";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 import { Button } from "../../../components/Button";
 
-import { buildManagerResponse } from "../../../helpers/sendManagerResponse";
+import { sendRequestUpdate } from "../../../helpers/sendRequestUpdate";
 import { validate } from "../../../helpers/validation";
 
 import styles from "./index.module.scss";
@@ -16,23 +16,10 @@ const ManagerResponseForm = ({ request, hideModal }) => {
   return (
     <>
       <Form>
-        {isActionable ? (
-          <label className={styles.Label}>
-            <TextArea
-              className={styles.Field}
-              field="response"
-              validate={validate}
-              placeholder="Enter message here"
-            />
-          </label>
-        ) : null}
         <div className={styles.Buttons}>
           {isActionable ? (
-            <Button type="submit">Send repair notification</Button>
+            <Button type="submit">Dismiss</Button>
           ) : null}
-          <Button>
-            <Link to="/">Go home</Link>
-          </Button>
         </div>
         <ManagerResponseBuilder
           hideModal={hideModal}
@@ -53,7 +40,9 @@ const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    buildManagerResponse(values, property, request).then(data => {
+    sendRequestUpdate(values, property, request, "fixed", property.fields.manager).then(data => {
+
+      
       if (data.error) {
         console.error("There was an error", data.error);
       }

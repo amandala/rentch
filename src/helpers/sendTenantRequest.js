@@ -13,20 +13,22 @@ const postTenantRequest = (request, property) => {
       .then(space => space.createEntry("request", request))
       .then(entry => entry.publish())
       .then(entry => {
+        // Send email to landlord
         const template_params = {
           reply_to: property.fields.tenant[0].fields.email,
-          to_name: property.fields.manager.fields.name,
-          to_email: property.fields.manager.fields.email,
-          tenant_name: property.fields.tenant[0].fields.name["en-US"],
+          to_name: property.fields.landlord.fields.name,
+          to_email: property.fields.landlord.fields.email,
+          tenant_name: property.fields.tenant[0].fields.name,
           property_name: property.fields.name,
           message: request.fields.message["en-US"],
           subject: `New ${request.fields.type["en-US"]} request at ${property
-            .fields.name["en-US"]}`
+            .fields.name}`
         };
 
         const service_id = "default_service";
         const template_id = "tenantRequest";
         const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
+
         emailjs.send(service_id, template_id, template_params, user_id);
 
         return entry;

@@ -1,12 +1,13 @@
 import { createClient } from "contentful-management";
 import { request } from "https";
 import { sendRequestUpdateEmail } from "./sendRequestUpdateEmail";
+import { stat } from "fs";
 
 var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postManagerResponse = (response, property, request) => {
+const postRequestUpdate = (response, property, request, status, creator) => {
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
@@ -18,12 +19,13 @@ const postManagerResponse = (response, property, request) => {
               .getEntry(request.sys.id)
               .then(requestToUpdate => {
                 let ids = [];
+
                 if (requestToUpdate.fields.notifications) {
-                  ids = requestToUpdate.fields.notifications["en-US"].map(
-                    notification => {
-                      return notification.sys.id;
-                    }
-                  );
+                  ids = requestToUpdate.fields.notifications[
+                    "en-US"
+                  ].map(notification => {
+                    return notification.sys.id;
+                  });
                 }
 
                 const allNotifications = {
@@ -49,22 +51,25 @@ const postManagerResponse = (response, property, request) => {
                 });
 
                 requestToUpdate.fields.notifications = allNotifications;
-                requestToUpdate.fields.status["en-US"] = "repair";
+                requestToUpdate.fields.status["en-US"] = status;
+
                 return requestToUpdate.update();
               })
               .then(requestToUpdate => requestToUpdate.publish())
+              .then(updatedRequest => {
+                sendRequestUpdateEmail(property, response, status, creator);
+
+                return updatedRequest;
+              })
               .catch(error => {
                 console.log("Error updating request", error);
               });
 
-            return newNotification;
+            return newNotification.publish();
           })
           .catch(error => console.log("Error creating entry", error));
       })
-      .then(newNotification => newNotification.publish())
       .then(newNotification => {
-        sendRequestUpdateEmail(property, response);
-
         return newNotification;
       })
       .catch(e => {
@@ -74,7 +79,26 @@ const postManagerResponse = (response, property, request) => {
   );
 };
 
-export const buildManagerResponse = (values, property, request) => {
+const getSubject = (status, type, propertyName) => {
+  switch (status) {
+    case "fixed":
+      return `${propertyName}: ${type} request - has been fixed`;
+    case "followup":
+      return `${propertyName}: ${type} request - requires follow-up`;
+    case "repair-rentch":
+      return `${propertyName}: ${type} request - will be handled by Rentch`;
+    case "repair-owner":
+      return `${propertyName}: ${type} request - will be handled by the property owner`;
+  }
+};
+
+export const sendRequestUpdate = (
+  values,
+  property,
+  request,
+  status,
+  creator,
+) => {
   const date = new Date();
   const response = {
     fields: {
@@ -84,17 +108,21 @@ export const buildManagerResponse = (values, property, request) => {
           sys: {
             type: "Link",
             linkType: "Entry",
-            id: property.fields.manager.sys.id
+            id: creator.sys.id
           }
         }
       },
       propertyId: { "en-US": property.sys.id },
       requestId: { "en-US": request.sys.id },
       subject: {
-        "en-US": `A repair has been scheduled for ${request.fields.property.fields.name}`
+        "en-US": getSubject(
+          status,
+          request.fields.type,
+          request.fields.property.fields.name
+        )
       },
       message: {
-        "en-US": values.response
+        "en-US": values.response ? values.response : "No message was provided"
       },
       archived: {
         "en-US": false
@@ -102,5 +130,11 @@ export const buildManagerResponse = (values, property, request) => {
     }
   };
 
-  return postManagerResponse(response, property, request);
+  return postRequestUpdate(
+    response,
+    property,
+    request,
+    status,
+    creator,
+  );
 };

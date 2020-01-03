@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { Button } from "../../../components/Button";
 
-import { sendTenantResponse } from "../../../helpers/sendTenantResponse";
+import { sendRequestUpdate } from "../../../helpers/sendRequestUpdate";
 import { validate } from "../../../helpers/validation";
 
 import styles from "./index.module.scss";
@@ -13,7 +13,7 @@ import styles from "./index.module.scss";
 const TenantResponseForm = ({ request, hideModal }) => {
   const [status, setStatus] = useState(undefined);
   const [succes, setSuccess] = useState(false);
-  const isActionable = request.fields.status === "repair";
+  const isActionable = request.fields.status === "repair" || request.fields.status === "repair-rentch" || request.fields.status === "repair-owner";
   let history = useHistory();
 
   const TenantResponseBuilder = ({
@@ -32,9 +32,10 @@ const TenantResponseForm = ({ request, hideModal }) => {
     if (status) {
       setStatus(undefined);
 
-      sendTenantResponse(values, property, request, status).then(data => {
+      sendRequestUpdate(values, property, request, status, property.fields.tenant[0]).then(data => {
+        
         if (data.error) {
-          console.error("There was an error", data.error);
+          console.error("There was an error sending the request update", data.error);
         } else {
           setSuccess(true);
         }
@@ -68,11 +69,6 @@ const TenantResponseForm = ({ request, hideModal }) => {
               <Button onClick={() => setStatus("followup")}>Not Fixed</Button>
             </div>
           ) : null}
-          <span>
-            <Button>
-              <Link to="/">Close</Link>
-            </Button>
-          </span>
         </div>
         <TenantResponseBuilder
           hideModal={hideModal}

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useModal } from "react-modal-hook";
+import { Link } from "react-router-dom";
+
 import {
   Button,
   Dialog,
@@ -29,16 +31,21 @@ import TenantResponseForm from "./TenantResponseForm";
 import ManagerResponseForm from "./ManagerResponseForm";
 
 import { getFormattedDate } from "../../helpers/getFormattedDate";
-import { isTenant } from "../../helpers/isTenant";
+import { isUserMatch } from "../../helpers/isUserMatch";
+import LandlordResponseForm from "./LandlordResponseForm";
 
 const renderResponseForm = (request, userEmail) => {
   if (
-    isTenant({
+    isUserMatch({
       userEmail,
-      tenant: request.fields.property.fields.tenant[0]
+      user: request.fields.property.fields.tenant[0]
     })
   ) {
     return <TenantResponseForm request={request} />;
+  } else if (
+    isUserMatch({ userEmail, user: request.fields.property.fields.landlord })
+  ) {
+    return <LandlordResponseForm request={request} />;
   } else return <ManagerResponseForm request={request} />;
 };
 
@@ -90,7 +97,12 @@ const RequestDetails = props => {
 
           return (
             <div className={styles.Wrapper}>
-              <Pill status={request.fields.status} />
+              <div className={styles.Header}>
+                <Pill status={request.fields.status} />
+                <Link className={styles.CloseLink} to="/">
+                  X
+                </Link>
+              </div>
               <HeadingXSmall className={styles.Date}>
                 {getFormattedDate({ date: request.fields.timestamp })}
               </HeadingXSmall>
@@ -105,10 +117,13 @@ const RequestDetails = props => {
               <div>
                 {request.fields.photos &&
                   request.fields.photos.map(photo => {
-                    console.log(photo);
                     if (photo.fields) {
                       return (
-                        <img key={photo.sys.id} src={photo.fields.file.url} />
+                        <img
+                          className={styles.Image}
+                          key={photo.sys.id}
+                          src={photo.fields.file.url}
+                        />
                       );
                     }
                   })}
@@ -120,7 +135,7 @@ const RequestDetails = props => {
                     return (
                       notificaiton.fields &&
                       <Notification
-                        date={notificaiton.fields.timestamp}
+                        date={notificaiton.sys.createdAt}
                         subject={notificaiton.fields.subject}
                         message={notificaiton.fields.message}
                       />

@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
 
-import { useStateValue } from "../../StateProvider";
+import { useStateValue } from "../../../StateProvider";
 
-import { ButtonLink } from "../../components/Button";
-import RequestNotification from "../../components/RequestNotification";
-import Property from "../../components/Property";
+import { ButtonLink } from "../../../components/Button";
+import RequestNotification from "../../../components/RequestNotification";
+import Property from "../../../components/Property";
 import {
   HeadingMedium,
   HeadingLarge,
   Text,
   HeadingSmall
-} from "../../components/Heading";
+} from "../../../components/Heading";
 
 import styles from "./index.module.scss";
 
