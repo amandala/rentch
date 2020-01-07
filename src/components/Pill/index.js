@@ -7,9 +7,9 @@ const Pill = ({ status }) => {
   return (
     <span
       className={cx(styles.Pill, {
-        [styles.PillRed]: status === "followup",
-        [styles.PillYellow]: status === "repair",
-        [styles.PillGreen]: status === "fixed"
+        [styles.PillFollowUp]: status === "followup",
+        [styles.PillRepair]: status === "repair",
+        [styles.PillFixed]: status === "fixed"
       })}
     >
       {status}

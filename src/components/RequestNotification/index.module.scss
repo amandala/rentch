@@ -6,7 +6,7 @@
   justify-content: space-between;
   color: $mineshaft-grey;
   background-color: $aquahaze-grey;
-  padding: 5px 10px;
+  padding: 10px 10px 5px;
   margin-bottom: 10px;
   border: none;
   font-size: 16px;
@@ -38,4 +38,5 @@
   display: flex;
   flex-direction: column;
   text-align: right;
+  justify-content: center;
 }

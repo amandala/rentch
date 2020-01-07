@@ -3,10 +3,24 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { HeadingXSmall } from "../Heading";
+import Pill from "../Pill";
 
 import styles from "./index.module.scss";
 
 import { getFormattedDate } from "../../helpers/getFormattedDate";
+
+const getPrettyRequestType = type => {
+  switch (type) {
+    case "plumbing":
+      return "Plumbing repair";
+    case "appliance":
+      return "Appliance repair";
+    case "heat":
+      return "Heating repair";
+    default:
+      return "General request";
+  }
+};
 
 const RequestNotification = ({ request }) => {
   return (
@@ -16,12 +30,12 @@ const RequestNotification = ({ request }) => {
           {getFormattedDate({ date: request.sys.updatedAt })}
         </HeadingXSmall>
         <span className={styles.Subject}>
-          {request.fields.property.fields.name}
+          {request.fields.property.fields.name} -{" "}
+          {getPrettyRequestType(request.fields.type)}
         </span>
       </span>
       <div className={styles.Status}>
-        <span>{request.fields.status}</span>
-        <span>{request.fields.type}</span>
+        <Pill status={request.fields.status} />
       </div>
     </Link>
   );
