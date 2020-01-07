@@ -30,7 +30,13 @@ const Notifications = ({ properties }) => {
           return <Text>Awesome! No active requests at this time</Text>;
         }
 
-        const requests = data.items;
+        const requests = data.items
+          .sort(
+            (a, b) =>
+              new Date(a.sys.updatedAt).getTime() -
+              new Date(b.sys.updatedAt).getTime()
+          )
+          .reverse();
 
         const openRequests = requests.filter(
           notification =>

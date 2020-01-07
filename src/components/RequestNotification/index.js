@@ -13,7 +13,7 @@ const RequestNotification = ({ request }) => {
         className={styles.Subject}
       >{`${request.fields.status} ${request.fields.type} ${request.fields.property.fields.name}`}</span>
       <span className={styles.Date}>
-        {getFormattedDate({ date: request.fields.timestamp })}
+        {getFormattedDate({ date: request.sys.updatedAt })}
       </span>
     </Link>
   );

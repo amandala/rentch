@@ -13,7 +13,6 @@ const postRequestUpdate = (
   creator,
   repairOwner
 ) => {
-  console.log("STATUS IN PSOT", status);
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
