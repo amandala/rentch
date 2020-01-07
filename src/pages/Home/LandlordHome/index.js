@@ -73,9 +73,7 @@ const LandlordHome = ({ properties }) => {
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        <HeadingLarge>
-          Welcome, {userData.givenName}
-        </HeadingLarge>
+        <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
       </div>
       <div className={styles.Notifications}>
         <HeadingSmall>Active Requests</HeadingSmall>
@@ -84,11 +82,11 @@ const LandlordHome = ({ properties }) => {
       <div>
         <HeadingSmall>Your Properties</HeadingSmall>
         <div className={styles.Properties}>
-          {properties.map(property =>
-            <div className={styles.Property}>
+          {properties.map(property => (
+            <div key={property.sys.id} className={styles.Property}>
               <Property key={property.sys.id} property={property} />
             </div>
-          )}
+          ))}
         </div>
       </div>
     </div>

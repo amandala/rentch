@@ -98,7 +98,10 @@ const RequestDetails = props => {
           return (
             <div className={styles.Wrapper}>
               <div className={styles.Header}>
-                <Pill status={request.fields.status} />
+                <div className={styles.Pills}>
+                  <Pill status={request.fields.status} />
+                  <Pill status={request.fields.repairOwner} />
+                </div>
                 <Link className={styles.CloseLink} to="/">
                   X
                 </Link>

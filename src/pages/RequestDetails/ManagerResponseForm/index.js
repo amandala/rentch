@@ -12,14 +12,12 @@ import styles from "./index.module.scss";
 
 const ManagerResponseForm = ({ request, hideModal }) => {
   const isActionable =
-    request.fields.status === "new" || request.fields.status === "followup";
+    request.fields.status === "repair" || request.fields.status === "followup";
   return (
     <>
       <Form>
         <div className={styles.Buttons}>
-          {isActionable ? (
-            <Button type="submit">Dismiss</Button>
-          ) : null}
+          {isActionable ? <Button type="submit">Dismiss</Button> : null}
         </div>
         <ManagerResponseBuilder
           hideModal={hideModal}
@@ -40,9 +38,14 @@ const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
   const { submits, errors, values } = formState;
 
   if (submits === 1 && !errors.length && !succes) {
-    sendRequestUpdate(values, property, request, "fixed", property.fields.manager).then(data => {
-
-      
+    sendRequestUpdate(
+      values.response,
+      property,
+      request,
+      "fixed",
+      property.fields.manager,
+      request.fields.repairOwner
+    ).then(data => {
       if (data.error) {
         console.error("There was an error", data.error);
       }

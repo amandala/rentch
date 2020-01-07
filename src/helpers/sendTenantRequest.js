@@ -74,6 +74,9 @@ export const buildTenantRequest = (property, values, uploads) => {
       },
       archived: {
         "en-US": false
+      },
+      repairOwner: {
+        "en-US": "landlord"
       }
     }
   };

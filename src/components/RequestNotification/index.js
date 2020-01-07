@@ -9,11 +9,7 @@ import { getFormattedDate } from "../../helpers/getFormattedDate";
 
 const RequestNotification = ({ request }) => {
   return (
-    <Link
-      to={`/request/${request.sys.id}`}
-      className={styles.Wrapper}
-      key={request.fields.date}
-    >
+    <Link to={`/request/${request.sys.id}`} className={styles.Wrapper}>
       <span
         className={styles.Subject}
       >{`${request.fields.status} ${request.fields.type} ${request.fields.property.fields.name}`}</span>

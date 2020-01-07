@@ -74,10 +74,11 @@ const TenantHome = ({ property }) => {
               <div className={styles.Home}>
                 {filteredRequests.map(request => {
                   return (
-                    <RequestNotification
-                      key={request.fields.date}
-                      request={{ ...Object.assign({}, request) }}
-                    />
+                    <span key={request.sys.id}>
+                      <RequestNotification
+                        request={{ ...Object.assign({}, request) }}
+                      />
+                    </span>
                   );
                 })}
               </div>
@@ -91,9 +92,7 @@ const TenantHome = ({ property }) => {
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        <HeadingLarge>
-          Welcome, {userData.givenName}
-        </HeadingLarge>
+        <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
         <ButtonLink url="request">Get Help</ButtonLink>
       </div>
       <div className={styles.PropertyDetails}>

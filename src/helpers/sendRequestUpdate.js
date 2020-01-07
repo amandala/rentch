@@ -7,7 +7,15 @@ var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
-const postRequestUpdate = (response, property, request, status, creator) => {
+const postRequestUpdate = (
+  response,
+  property,
+  request,
+  status,
+  creator,
+  repairOwner
+) => {
+  console.log("STATUS IN PSOT", status);
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
@@ -21,11 +29,11 @@ const postRequestUpdate = (response, property, request, status, creator) => {
                 let ids = [];
 
                 if (requestToUpdate.fields.notifications) {
-                  ids = requestToUpdate.fields.notifications[
-                    "en-US"
-                  ].map(notification => {
-                    return notification.sys.id;
-                  });
+                  ids = requestToUpdate.fields.notifications["en-US"].map(
+                    notification => {
+                      return notification.sys.id;
+                    }
+                  );
                 }
 
                 const allNotifications = {
@@ -50,6 +58,18 @@ const postRequestUpdate = (response, property, request, status, creator) => {
                   }
                 });
 
+                if (repairOwner === "manager") {
+                  requestToUpdate.fields.repairOwner = {
+                    "en-US": "manager"
+                  };
+                }
+
+                if (repairOwner === "landlord") {
+                  requestToUpdate.fields.repairOwner = {
+                    "en-US": "landlord"
+                  };
+                }
+
                 requestToUpdate.fields.notifications = allNotifications;
                 requestToUpdate.fields.status["en-US"] = status;
 
@@ -57,7 +77,13 @@ const postRequestUpdate = (response, property, request, status, creator) => {
               })
               .then(requestToUpdate => requestToUpdate.publish())
               .then(updatedRequest => {
-                sendRequestUpdateEmail(property, response, status, creator);
+                sendRequestUpdateEmail(
+                  property,
+                  response,
+                  status,
+                  creator,
+                  repairOwner
+                );
 
                 return updatedRequest;
               })
@@ -79,25 +105,32 @@ const postRequestUpdate = (response, property, request, status, creator) => {
   );
 };
 
-const getSubject = (status, type, propertyName) => {
+const getSubject = (status, type, propertyName, repairOwner) => {
   switch (status) {
     case "fixed":
       return `${propertyName}: ${type} request - has been fixed`;
     case "followup":
       return `${propertyName}: ${type} request - requires follow-up`;
-    case "repair-rentch":
-      return `${propertyName}: ${type} request - will be handled by Rentch`;
-    case "repair-owner":
-      return `${propertyName}: ${type} request - will be handled by the property owner`;
+    case "repair":
+      if (repairOwner === "manager") {
+        return `${propertyName}: The landlord has requested your help with a ${type} repair"
+        }`;
+      }
+      return `${propertyName}: ${type} request - will be handled by ${
+        repairOwner === "manager" ? "Rentch" : "your landlord"
+      }`;
+    default:
+      return `There is new activity on the ${type} request at ${propertyName}`;
   }
 };
 
 export const sendRequestUpdate = (
-  values,
+  message,
   property,
   request,
   status,
   creator,
+  repairOwner
 ) => {
   const date = new Date();
   const response = {
@@ -118,11 +151,12 @@ export const sendRequestUpdate = (
         "en-US": getSubject(
           status,
           request.fields.type,
-          request.fields.property.fields.name
+          request.fields.property.fields.name,
+          repairOwner
         )
       },
       message: {
-        "en-US": values.response ? values.response : "No message was provided"
+        "en-US": message ? message : "No message was provided"
       },
       archived: {
         "en-US": false
@@ -136,5 +170,6 @@ export const sendRequestUpdate = (
     request,
     status,
     creator,
+    repairOwner
   );
 };
