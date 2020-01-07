@@ -1,7 +1,9 @@
+@import "../../styles/variables.scss";
+
 .Dropzone {
-  background-color: #fff;
-  color: #bbbaba;
-  border: 2px dashed #bbbaba;
+  background-color: $white;
+  color: $silver-grey;
+  border: 2px dashed $silver-grey;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -13,7 +15,7 @@
   margin-top: 10px;
 
   &:hover {
-    border: 2px dashed #0eaaa6;
+    border: 2px dashed $niagra-green;
     cursor: pointer;
   }
 }
@@ -26,11 +28,11 @@
 .Upload {
   width: 100%;
   justify-self: flex-start;
-  color: #p;
+  color: $silver-grey;
   font-size: 12px;
 }
 
 .Check {
-  color: #0eaaa6;
+  color: $niagra-green;
   padding-right: 5px;
 }

@@ -1,6 +1,8 @@
+@import "../../styles/variables.scss";
+
 .Pill {
-  background-color: #ffbf43;
-  color: white;
+  background-color: $persian-blue;
+  color: $white;
   padding: 5px;
   font-size: 12px;
   text-transform: uppercase;
@@ -9,13 +11,13 @@
 }
 
 .PillFollowUp {
-  background-color: #fd4247;
+  background-color: $pumpkin-orange;
 }
 
 .PillRepair {
-  background-color: #cef740;
+  background-color: $mysin-orange;
 }
 
 .PillFixed {
-  background-color: #2fb5b0;
+  background-color: $niagra-green;
 }

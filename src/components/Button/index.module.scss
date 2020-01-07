@@ -1,8 +1,10 @@
+@import "../../styles/variables.scss";
+
 .Button {
   padding: 12px 30px;
-  background-color: #0eaaa6;
-  color: white;
-  border: 2px solid white;
+  background-color: $niagra-green;
+  color: $white;
+  border: 2px solid $white;
   border-radius: 5px;
   font-size: 16px;
   text-transform: uppercase;
@@ -11,23 +13,23 @@
 
   a {
     text-decoration: none;
-    color: white;
+    color: $white;
   }
 }
 
 .ButtonHollow {
   font-size: 16px;
   padding: 12px 30px;
-  color: #0eaaa6;
-  background-color: white;
-  border: 2px soid #0eaaa6;
+  color: $niagra-green;
+  background-color: $white;
+  border: 2px soid $niagra-green;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .ButtonText {
   font-size: 12px;
   padding: 12px 30px;
-  color: white;
+  color: $white;
   background-color: transparent;
   border: none;
   text-transform: uppercase;
@@ -38,6 +40,6 @@
   text-decoration: none;
 
   &:visited {
-    color: white;
+    color: $white;
   }
 }
