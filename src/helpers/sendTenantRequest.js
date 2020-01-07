@@ -1,5 +1,4 @@
 import { createClient } from "contentful-management";
-import { request } from "https";
 import emailjs from "emailjs-com";
 
 var client = createClient({
@@ -21,8 +20,7 @@ const postTenantRequest = (request, property) => {
           tenant_name: property.fields.tenant[0].fields.name,
           property_name: property.fields.name,
           message: request.fields.message["en-US"],
-          subject: `New ${request.fields.type["en-US"]} request at ${property
-            .fields.name}`
+          subject: `New ${request.fields.type["en-US"]} request at ${property.fields.name}`
         };
 
         const service_id = "default_service";

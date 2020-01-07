@@ -8,8 +8,6 @@ import LandlordHome from "./LandlordHome";
 import TenantHome from "./TenantHome";
 import ManagerHome from "./ManagerHome";
 
-import Property from "../../components/Property";
-
 import styles from "./index.module.scss";
 
 const Home = () => {
@@ -18,7 +16,7 @@ const Home = () => {
     space: process.env.REACT_APP_CONTENTFUL_SPACE
   });
 
-  const [{ userData, loggedIn }, dispatch] = useStateValue();
+  const [{ userData, loggedIn }] = useStateValue();
 
   if (!loggedIn) {
     return <Redirect to="/login" />;

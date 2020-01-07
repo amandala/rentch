@@ -1,14 +1,10 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
-import { getPropertyGreeting } from "../../helpers/user";
 import { getFormattedDay } from "../../helpers/getFormattedDate";
 import { HeadingSmall, Text } from "../Heading";
 
 import styles from "./index.module.scss";
 
 const Property = ({ property }) => {
-  const getImgUrl = photo => photo.fields.file.url.split("//")[1];
-
   return (
     <div className={styles.Wrapper}>
       <div>
@@ -16,6 +12,7 @@ const Property = ({ property }) => {
           className={styles.Image}
           style={{ width: "333px", height: "auto" }}
           src={`https:${property.fields.photos[0].fields.file.url}`}
+          alt="Property"
         />
       </div>
       <div className={styles.Details}>

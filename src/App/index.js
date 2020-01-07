@@ -1,7 +1,7 @@
 import React from "react";
 import { ModalProvider } from "react-modal-hook";
 import { TransitionGroup } from "react-transition-group";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Login from "../components/Login";
 import Home from "../pages/Home";

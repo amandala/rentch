@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useModal } from "react-modal-hook";
+import React from "react";
 
 import { Link } from "react-router-dom";
 

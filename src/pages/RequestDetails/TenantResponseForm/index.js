@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Form, TextArea, useFormState, Select, Option } from "informed";
-import { Link } from "react-router-dom";
+import { Form, TextArea, useFormState } from "informed";
 import { useHistory } from "react-router-dom";
 
 import { Button } from "../../../components/Button";
@@ -27,7 +26,7 @@ const TenantResponseForm = ({ request, hideModal }) => {
   }) => {
     const formState = useFormState();
 
-    const { submits, errors, values } = formState;
+    const { values } = formState;
 
     if (status) {
       const statusToSend = status;

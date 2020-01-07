@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { createClient } from "contentful-management";
-import Dropzone, { useDropzone } from "react-dropzone";
-import fs from "fs";
+import { useDropzone } from "react-dropzone";
 
 import { useStateValue } from "../../StateProvider";
 
@@ -78,29 +77,32 @@ const MyDropzone = () => {
 
   const [uploadState, setUploadState] = React.useState(undefined);
 
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
+  const onDrop = useCallback(
+    acceptedFiles => {
+      // Do something with the files
 
-    acceptedFiles.forEach(file => {
-      const reader = new FileReader();
+      acceptedFiles.forEach(file => {
+        const reader = new FileReader();
 
-      reader.onabort = () => console.log("file reading was aborted");
-      reader.onerror = () => console.log("file reading has failed");
-      reader.onload = () => {
-        processFile(file, setUploadState).then(result => {
-          dispatch({
-            type: "UPLOAD_SUCCESS",
-            data: {
-              name: result.fields.title["en-US"],
-              id: result.sys.id
-            }
+        reader.onabort = () => console.log("file reading was aborted");
+        reader.onerror = () => console.log("file reading has failed");
+        reader.onload = () => {
+          processFile(file, setUploadState).then(result => {
+            dispatch({
+              type: "UPLOAD_SUCCESS",
+              data: {
+                name: result.fields.title["en-US"],
+                id: result.sys.id
+              }
+            });
           });
-        });
-      };
+        };
 
-      reader.readAsArrayBuffer(file);
-    });
-  }, []);
+        reader.readAsArrayBuffer(file);
+      });
+    },
+    [dispatch]
+  );
 
   const {
     getRootProps,
@@ -111,11 +113,7 @@ const MyDropzone = () => {
 
   const renderContent = () => {
     if (uploadState && uploadState !== "Success") {
-      return (
-        <p>
-          {uploadState}
-        </p>
-      );
+      return <p>{uploadState}</p>;
     }
 
     if (isDragActive) {
@@ -132,12 +130,12 @@ const MyDropzone = () => {
         {renderContent()}
       </div>
       <div className={styles.Uploads}>
-        {uploads.map(asset =>
+        {uploads.map(asset => (
           <span key={asset.id} className={styles.Upload}>
             <span className={styles.Check}>&#10003;</span>
             {asset.name}
           </span>
-        )}
+        ))}
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const Login = () => {
   return (
     <div className={styles.Login}>
       <div>
-        {error ? <p>something went wrong</p> : null}
+        {error ? <p>Something went wrong: {error}</p> : null}
         <h1>Welcome to Rentch, please login to continue</h1>
         <GoogleLogin
           clientId="509100598048-ahu311l4ugtmf68q093g8po4oqubc38s.apps.googleusercontent.com"
@@ -31,6 +31,7 @@ const Login = () => {
             localStorage.setItem("profile", JSON.stringify(data.profileObj));
           }}
           onFailure={e => {
+            setError(e);
             console.error(e);
           }}
           cookiePolicy={"single_host_origin"}

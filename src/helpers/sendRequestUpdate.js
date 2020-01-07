@@ -1,7 +1,5 @@
 import { createClient } from "contentful-management";
-import { request } from "https";
 import { sendRequestUpdateEmail } from "./sendRequestUpdateEmail";
-import { stat } from "fs";
 
 var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API

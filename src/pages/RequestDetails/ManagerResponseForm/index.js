@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Form, useFormState, Select, Option } from "informed";
-import { Link } from "react-router-dom";
+import { Form, useFormState } from "informed";
+
 import { useHistory } from "react-router-dom";
 
 import { Button } from "../../../components/Button";
 
 import { sendRequestUpdate } from "../../../helpers/sendRequestUpdate";
-import { validate } from "../../../helpers/validation";
 
 import styles from "./index.module.scss";
 

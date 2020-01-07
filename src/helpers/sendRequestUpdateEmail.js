@@ -78,8 +78,6 @@ export const sendRequestUpdateEmail = (
     details
   );
 
-  console.log(tenantEmail);
-
   const managerEmail = createEmailTemplate(
     creator,
     property.fields.manager,
@@ -89,8 +87,6 @@ export const sendRequestUpdateEmail = (
     details
   );
 
-  console.log(tenantEmail);
-
   const landlordEmail = createEmailTemplate(
     creator,
     property.fields.landlord,
@@ -99,8 +95,6 @@ export const sendRequestUpdateEmail = (
     status,
     details
   );
-
-  console.log(tenantEmail);
 
   if (creator.fields.role === "manager") {
     emailjs.send(service_id, template_id, tenantEmail, user_id);
