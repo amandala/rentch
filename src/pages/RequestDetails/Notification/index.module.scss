@@ -1,5 +1,7 @@
+@import "../../../styles/variables.scss";
+
 .Notification {
-  border-top: 1px solid #c0c0c0;
+  border-top: 1px solid $silver-grey;
   padding-top: 16px;
   margin-bottom: 16px;
 }

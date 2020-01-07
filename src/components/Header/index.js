@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router";
-import { GoogleLogin } from "react-google-login";
 
 import { useStateValue } from "../../StateProvider";
 import { ButtonText } from "../Button";

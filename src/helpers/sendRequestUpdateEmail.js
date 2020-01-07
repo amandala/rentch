@@ -18,8 +18,7 @@ const getDetails = (status, creator, repairOwner) => {
   }
   if (creator.fields.role === "landlord") {
     if (repairOwner === "landlord") {
-      details = `The property owner will handle the required request. ${creator
-        .fields.name} will be in contact with you shortly to coordinate.`;
+      details = `The property owner will handle the required request. ${creator.fields.name} will be in contact with you shortly to coordinate.`;
     }
     if (repairOwner === "manager") {
       details =
@@ -57,11 +56,16 @@ const createEmailTemplate = (
   };
 };
 
-export const sendRequestUpdateEmail = (property, response, status, creator) => {
+export const sendRequestUpdateEmail = (
+  property,
+  response,
+  status,
+  creator,
+  repairOwner
+) => {
   const service_id = "default_service";
   const template_id = "managerResponse";
   const user_id = "user_MsiQ3UxI8JGshxx5VNpt5";
-  const repairOwner = status === "repair-owner" ? "landlord" : "manager";
 
   const details = getDetails(status, creator, repairOwner);
 
@@ -96,10 +100,10 @@ export const sendRequestUpdateEmail = (property, response, status, creator) => {
     emailjs.send(service_id, template_id, tenantEmail, user_id);
     emailjs.send(service_id, template_id, landlordEmail, user_id);
   } else if (creator.fields.role === "landlord") {
-    if (status === "repair-owner") {
+    if (repairOwner === "landlord") {
       emailjs.send(service_id, template_id, tenantEmail, user_id);
     }
-    if (status === "repair-rentch") {
+    if (repairOwner === "manager") {
       emailjs.send(service_id, template_id, tenantEmail, user_id);
       emailjs.send(service_id, template_id, managerEmail, user_id);
     }

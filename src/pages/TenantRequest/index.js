@@ -13,7 +13,6 @@ import styles from "./index.module.scss";
 
 const Validation = field => {
   const formState = useFormState();
-  const errors = formState.errors;
 
   return (
     <span>
@@ -53,7 +52,7 @@ const RequestBuilder = property => {
 };
 
 const TenantRequest = () => {
-  const [{ userData, properties, uploads }] = useStateValue();
+  const [{ properties }] = useStateValue();
 
   if (!properties.length) {
     return <Redirect to="/" />;

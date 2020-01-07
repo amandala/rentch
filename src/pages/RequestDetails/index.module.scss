@@ -1,3 +1,5 @@
+@import "../../styles/variables.scss";
+
 .Wrapper {
   width: 80%;
   max-width: 1200px;
@@ -29,16 +31,21 @@
 
 .CloseLink {
   text-decoration: none;
-  color: #606060;
+  color: $emperor-grey;
   font-size: 16px;
   padding: 10px;
 
   &:hover,
   &:focus {
-    color: #0eaaa6;
+    color: $niagra-green;
   }
 }
 
 .Image {
   max-width: 100%;
+}
+
+.Pills {
+  display: flex;
+  flex-direction: column;
 }

@@ -1,10 +1,12 @@
+@import "../../styles/variables.scss";
+
 .Wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  color: #202020;
-  background-color: #f4f7f8;
-  padding: 5px 10px;
+  color: $mineshaft-grey;
+  background-color: $aquahaze-grey;
+  padding: 10px 10px 5px;
   margin-bottom: 10px;
   border: none;
   font-size: 16px;
@@ -18,16 +20,23 @@
 
   &:hover,
   &:focus {
-    background-color: darken(#f4f7f8, 4);
+    background-color: darken($aquahaze-grey, 4);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    outline-color: #0eaaa6;
+    outline-color: $niagra-green;
   }
 
   &:visited {
-    color: #505050;
+    color: $emperor-grey;
   }
 }
 
 .Subject {
   align-self: left;
+}
+
+.Status {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  justify-content: center;
 }

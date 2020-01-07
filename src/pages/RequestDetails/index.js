@@ -1,19 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useModal } from "react-modal-hook";
+import React from "react";
+
 import { Link } from "react-router-dom";
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  DialogContent,
-  DialogContentText
-} from "@material-ui/core";
-import { Form, TextArea, useFormState, Select, Option } from "informed";
 import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
 import {
-  Text,
   HeadingMedium,
   HeadingSmall,
   HeadingXSmall
@@ -24,8 +14,6 @@ import Notification from "./Notification";
 import { useStateValue } from "../../StateProvider";
 
 import styles from "./index.module.scss";
-
-import { validate } from "../../helpers/validation";
 
 import TenantResponseForm from "./TenantResponseForm";
 import ManagerResponseForm from "./ManagerResponseForm";
@@ -90,7 +78,7 @@ const RequestDetails = props => {
                 return "Heat repair";
               case "plumbing":
                 return "Plumbing repair";
-              case "other":
+              default:
                 return "Miscellaneous";
             }
           };
@@ -98,7 +86,10 @@ const RequestDetails = props => {
           return (
             <div className={styles.Wrapper}>
               <div className={styles.Header}>
-                <Pill status={request.fields.status} />
+                <div className={styles.Pills}>
+                  <Pill status={request.fields.status} />
+                  <Pill status={request.fields.repairOwner} />
+                </div>
                 <Link className={styles.CloseLink} to="/">
                   X
                 </Link>
@@ -107,8 +98,9 @@ const RequestDetails = props => {
                 {getFormattedDate({ date: request.fields.timestamp })}
               </HeadingXSmall>
               <HeadingMedium className={styles.RequestTitle}>
-                {`${getRequestType(request.fields.type)} request at ${request
-                  .fields.property.fields.name}`}
+                {`${getRequestType(request.fields.type)} request at ${
+                  request.fields.property.fields.name
+                }`}
               </HeadingMedium>
 
               <HeadingSmall className={styles.Details}>
@@ -120,12 +112,14 @@ const RequestDetails = props => {
                     if (photo.fields) {
                       return (
                         <img
+                          alt="Request details"
                           className={styles.Image}
                           key={photo.sys.id}
                           src={photo.fields.file.url}
                         />
                       );
                     }
+                    return null;
                   })}
               </div>
               <div>
@@ -133,12 +127,13 @@ const RequestDetails = props => {
                   request.fields.notifications.length &&
                   request.fields.notifications.map(notificaiton => {
                     return (
-                      notificaiton.fields &&
-                      <Notification
-                        date={notificaiton.sys.createdAt}
-                        subject={notificaiton.fields.subject}
-                        message={notificaiton.fields.message}
-                      />
+                      notificaiton.fields && (
+                        <Notification
+                          date={notificaiton.sys.createdAt}
+                          subject={notificaiton.fields.subject}
+                          message={notificaiton.fields.message}
+                        />
+                      )
                     );
                   })}
               </div>

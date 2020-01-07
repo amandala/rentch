@@ -1,12 +1,14 @@
+@import "../../styles/_variables.scss";
+
 .Header {
-  background-color: #0eaaa6;
+  background-color: $niagra-green;
   min-height: 100px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: $white;
   padding-right: 20px;
 }
 
