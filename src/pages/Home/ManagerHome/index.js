@@ -75,19 +75,17 @@ const ManagerHome = ({ properties }) => {
                   );
                 })}
               </div>
-              {closedRequests.length
-                ? <div className={styles.Notifications}>
-                    <HeadingSmall>Closed Requests</HeadingSmall>
-                    {closedRequests.map(request => {
-                      return (
-                        <RequestNotification
-                          key={request.sys.id}
-                          request={{ ...Object.assign({}, request) }}
-                        />
-                      );
-                    })}
-                  </div>
-                : null}
+              <div className={styles.Notifications}>
+                <HeadingSmall>Closed Requests</HeadingSmall>
+                {closedRequests.map(request => {
+                  return (
+                    <RequestNotification
+                      key={request.sys.id}
+                      request={{ ...Object.assign({}, request) }}
+                    />
+                  );
+                })}
+              </div>
             </div>
           );
         }}
@@ -98,13 +96,9 @@ const ManagerHome = ({ properties }) => {
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        <HeadingLarge>
-          Welcome, {userData.givenName}
-        </HeadingLarge>
+        <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
       </div>
-      <div>
-        {renderNotifications(properties)}
-      </div>
+      <div>{renderNotifications(properties)}</div>
     </div>
   );
 };

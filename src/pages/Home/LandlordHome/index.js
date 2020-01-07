@@ -44,7 +44,7 @@ const LandlordHome = ({ properties }) => {
 
           const requests = data.items;
 
-          const filteredRequests = requests.filter(notification => {
+          const openRequests = requests.filter(notification => {
             if (
               !notification.fields.archived &&
               notification.fields.status !== "fixed"
@@ -53,16 +53,39 @@ const LandlordHome = ({ properties }) => {
             }
           });
 
+          const closedRequests = requests.filter(notification => {
+            if (
+              !notification.fields.archived &&
+              notification.fields.status === "fixed"
+            ) {
+              return notification;
+            }
+          });
+
           return (
             <div className={styles.Home}>
-              {filteredRequests.map(request => {
-                return (
-                  <RequestNotification
-                    key={request.sys.id}
-                    request={{ ...Object.assign({}, request) }}
-                  />
-                );
-              })}
+              <div className={styles.Notifications}>
+                <HeadingSmall>Active Requests</HeadingSmall>
+                {openRequests.map(request => {
+                  return (
+                    <RequestNotification
+                      key={request.sys.id}
+                      request={{ ...Object.assign({}, request) }}
+                    />
+                  );
+                })}
+              </div>
+              <div className={styles.Notifications}>
+                <HeadingSmall>Closed Requests</HeadingSmall>
+                {closedRequests.map(request => {
+                  return (
+                    <RequestNotification
+                      key={request.sys.id}
+                      request={{ ...Object.assign({}, request) }}
+                    />
+                  );
+                })}
+              </div>
             </div>
           );
         }}
@@ -76,7 +99,6 @@ const LandlordHome = ({ properties }) => {
         <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
       </div>
       <div className={styles.Notifications}>
-        <HeadingSmall>Active Requests</HeadingSmall>
         {renderNotifications(properties)}
       </div>
       <div>
