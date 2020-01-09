@@ -30,7 +30,11 @@ const Notifications = ({ properties }) => {
           return <Text>Awesome! No active requests at this time</Text>;
         }
 
-        const requests = data.items
+        const filtered = data.items.filter(notification =>
+          propertyIds.includes(notification.fields.propertyId)
+        );
+
+        const requests = filtered
           .sort(
             (a, b) =>
               new Date(a.sys.updatedAt).getTime() -
