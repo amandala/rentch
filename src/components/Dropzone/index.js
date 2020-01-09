@@ -68,7 +68,7 @@ const processFile = (file, setUploadState) => {
     })
     .catch(err => {
       setUploadState("Error");
-      console.log(err);
+      console.error(err);
     });
 };
 
@@ -84,8 +84,8 @@ const MyDropzone = () => {
       acceptedFiles.forEach(file => {
         const reader = new FileReader();
 
-        reader.onabort = () => console.log("file reading was aborted");
-        reader.onerror = () => console.log("file reading has failed");
+        reader.onabort = () => console.warn("file reading was aborted");
+        reader.onerror = () => console.warn("file reading has failed");
         reader.onload = () => {
           processFile(file, setUploadState).then(result => {
             dispatch({

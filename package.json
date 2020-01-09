@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://rentch.herokuapp.com/",
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-react": "^7.17.0",
     "react-scripts": "3.0.1"
   },
@@ -33,7 +33,7 @@
   "scripts": {
     "heroku-prebuild": "yarn install --production=false",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "yarn lint && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "flow": "flow",
