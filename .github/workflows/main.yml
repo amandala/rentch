@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -12,4 +11,6 @@ jobs:
         uses: a-b-r-o-w-n/eslint-action@v1
         with:
           # Token used to interact with the Github API.
-          repo-token:  ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          files: "src/**/*"
+          extensions: ".js,.ts,.jsx"
