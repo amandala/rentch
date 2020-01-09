@@ -1,16 +1,14 @@
-name: CI - ESLint
+name: ESLint
 
-on: [push, pull_request]
+on: [pull_request, push]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  lint:
     steps:
-      - name: Eslint Annotate
-        uses: a-b-r-o-w-n/eslint-action@v1
+      - uses: actions/checkout@v1
+      - uses: a-b-r-o-w-n/eslint-action@v1
         with:
-          # Token used to interact with the Github API.
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
           files: "src/**/*"
-          extensions: ".js,.ts,.jsx"
+          ignore: "src/some-file-to-ignore.js"
+          extensions: ".js,.ts"
