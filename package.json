@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://rentch.herokuapp.com/",
   "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.17.0",
     "react-scripts": "3.0.1"
   },
   "engines": {
@@ -12,7 +14,6 @@
     "yarn": "1.9.4"
   },
   "dependencies": {
-    "@material-ui/core": "^4.5.2",
     "classnames": "^2.2.6",
     "contentful-management": "^5.11.2",
     "emailjs-com": "^2.4.0",
@@ -35,7 +36,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "flow": "flow"
+    "flow": "flow",
+    "lint": "eslint  --ignore-path .gitignore ."
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -104,12 +104,7 @@ const MyDropzone = () => {
     [dispatch]
   );
 
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    acceptedFiles
-  } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const renderContent = () => {
     if (uploadState && uploadState !== "Success") {
