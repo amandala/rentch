@@ -1,0 +1,15 @@
+name: CI - ESLint
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Eslint Annotate
+        uses: a-b-r-o-w-n/eslint-action@v1
+        with:
+          # Token used to interact with the Github API.
+          repo-token:  ${{ secrets.GITHUB_TOKEN }}
