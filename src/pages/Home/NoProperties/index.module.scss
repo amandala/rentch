@@ -1,0 +1,25 @@
+@import "../../../styles/variables";
+
+.Wrapper {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.Heart {
+  color: $niagra-green;
+  font-size: 150px;
+  margin: 0;
+  transform: rotate(90deg);
+}
+
+.Message {
+  padding-left: 40px;
+}
+
+.Link {
+  color: $niagra-green;
+  text-decoration: none;
+}
