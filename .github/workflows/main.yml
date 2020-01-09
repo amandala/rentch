@@ -3,6 +3,8 @@ name: ESLint
 on: [pull_request, push]
 
 jobs:
+runs-on: ubuntu-latest
+
   lint:
     steps:
       - uses: actions/checkout@v1
