@@ -7,6 +7,7 @@ import { useStateValue } from "../../StateProvider";
 import LandlordHome from "./LandlordHome";
 import TenantHome from "./TenantHome";
 import ManagerHome from "./ManagerHome";
+import NoProperties from "./NoProperties";
 
 import styles from "./index.module.scss";
 
@@ -56,13 +57,16 @@ const Home = () => {
           }
 
           const properties = data.items[0].fields.property;
-
           const role = data.items[0].fields.role;
 
           return (
             <div className={styles.Home}>
               <div className={styles.ContentWrapper}>
-                {renderHomeView(role, properties)}
+                {properties ? (
+                  renderHomeView(role, properties)
+                ) : (
+                  <NoProperties />
+                )}
               </div>
             </div>
           );
