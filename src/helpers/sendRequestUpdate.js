@@ -86,6 +86,7 @@ const postRequestUpdate = (
               })
               .catch(error => {
                 console.error("Error updating request", error);
+                console.log("THIS SHOUDL NOT BE HERE");
               });
 
             return newNotification.publish();
