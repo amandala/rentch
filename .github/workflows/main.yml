@@ -4,14 +4,21 @@ on: [pull_request, push]
 
 jobs:
   build:
+    name: Test
     runs-on: ubuntu-latest
-    name: Install dependencies & lint
     steps:
       - uses: actions/checkout@v1
-      - run: yarn
-      - uses: actions/checkout@v1
-      - uses: a-b-r-o-w-n/eslint-action@v1
+      - uses: borales/actions-yarn@v2.0.0
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          files: "src/**/*"
-          extensions: ".js,.ts"
+          cmd: install # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: build # will run `yarn build` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: test # will run `yarn test` command
+      # - uses: a-b-r-o-w-n/eslint-action@v1
+      #   with:
+      #     repo-token: "${{ secrets.GITHUB_TOKEN }}"
+      #     files: "src/**/*"
+      #     extensions: ".js,.ts"
