@@ -9,10 +9,10 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "eslint-config-prettier"
+    "eslint-config-prettier",
+    "eslint-plugin-react"
   ],
   "plugins": ["react"],
-  "modules": ["eslint-plugin-react"],
   "rules": {
     "react/prop-types": "off",
     "react/no-unescaped-entities": "off",
