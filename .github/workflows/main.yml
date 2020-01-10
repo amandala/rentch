@@ -5,15 +5,10 @@ on: [pull_request, push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Install dependencies
+    name: Install dependencies & lint
     steps:
       - uses: actions/checkout@v1
       - run: yarn
-  lint:
-    name: Eslint
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v1
       - uses: a-b-r-o-w-n/eslint-action@v1
         with:

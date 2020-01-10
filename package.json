@@ -14,7 +14,6 @@
     "yarn": "1.21.1"
   },
   "dependencies": {
-    "eslint-config-prettier": "^6.9.0",
     "classnames": "^2.2.6",
     "contentful-management": "^5.11.2",
     "emailjs-com": "^2.4.0",
