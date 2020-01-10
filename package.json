@@ -34,7 +34,7 @@
     "heroku-prebuild": "yarn install --production=false",
     "start": "react-scripts start",
     "build": "yarn lint && react-scripts build",
-    "test": "react-scripts test && yarn lint",
+    "test": "yarn lint",
     "eject": "react-scripts eject",
     "flow": "flow",
     "lint": "eslint  --ignore-path .gitignore ."
