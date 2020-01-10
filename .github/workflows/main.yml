@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: yarn
+      - run: yarn build
       # - uses: actions/setup-node@v1
       #   with:
       #     node-version: "10.16.3"
