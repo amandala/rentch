@@ -85,12 +85,12 @@ const postRequestUpdate = (
                 return updatedRequest;
               })
               .catch(error => {
-                console.error("Error updating request", error);
+                console.log("Error updating request", error);
               });
 
             return newNotification.publish();
           })
-          .catch(error => console.error("Error creating entry", error));
+          .catch(error => console.log("Error creating entry", error));
       })
       .then(newNotification => {
         return newNotification;
