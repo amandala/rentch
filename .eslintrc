@@ -10,7 +10,8 @@
   "rules": {
     "react/prop-types": "off",
     "react/no-unescaped-entities": "off",
-    "no-console": ["error", { "allow": ["warn", "error"] }]
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-unused-vars": "warn"
   },
   "env": { "browser": true, "node": true, "es6": true, "jest": true },
   "settings": {
