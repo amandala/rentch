@@ -12,6 +12,7 @@
     "eslint-config-prettier"
   ],
   "plugins": ["react"],
+  "modules": ["eslint-plugin-react"],
   "rules": {
     "react/prop-types": "off",
     "react/no-unescaped-entities": "off",
