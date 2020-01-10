@@ -1,27 +1,15 @@
-name: ESLint
+name: CI - ESLint
 
-on: [pull_request, push]
+on: [push, pull_request]
 
 jobs:
   build:
-    name: Install
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/setup-node@v1
+      - name: Eslint Annotate
+        uses: a-b-r-o-w-n/eslint-action@v1
         with:
-          node-version: "10.16.3"
-          yarn-version: "1.9.4"
-      - uses: actions/checkout@v1
-        with:
-          cmd: install # will run `yarn install` command
-      # - uses: borales/actions-yarn@v2.0.0
-      #   with:
-      #     cmd: build # will run `yarn build` command
-      # - uses: borales/actions-yarn@v2.0.0
-      #   with:
-      #     cmd: test # will run `yarn test` command
-      - uses: a-b-r-o-w-n/eslint-action@v1
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          files: "src/**/*"
-          extensions: ".js,.ts"
+          # Token used to interact with the Github API.
+          repo-token:  ${{ secrets.GITHUB_TOKEN }}

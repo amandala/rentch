@@ -64,7 +64,7 @@ const LandlordResponseForm = ({ request, hideModal }) => {
   );
 };
 
-const LandlordResponseBuilder = ({ property, request }) => {
+const LandlordResponseBuilder = ({ hideModal, property, request, router }) => {
   let history = useHistory();
 
   const [succes, setSuccess] = useState(false);

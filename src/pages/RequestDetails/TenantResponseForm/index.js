@@ -15,7 +15,15 @@ const TenantResponseForm = ({ request, hideModal }) => {
   const isActionable = request.fields.status === "repair";
   let history = useHistory();
 
-  const TenantResponseBuilder = ({ property, request }) => {
+  const TenantResponseBuilder = ({
+    hideModal,
+    property,
+    request
+  }: {
+    hideModal: any,
+    property: any,
+    request: any
+  }) => {
     const formState = useFormState();
 
     const { values } = formState;
