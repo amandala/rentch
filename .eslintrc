@@ -6,12 +6,10 @@
       "jsx": true
     }
   },
-  "plugins": ["react"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "eslint-config-prettier",
-    "eslint-plugin-react"
+    "eslint-config-prettier"
   ],
   "rules": {
     "react/prop-types": "off",
