@@ -5,12 +5,12 @@ on: [pull_request, push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build and test
+    name: Install dependencies
     steps:
       - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1
-      - run: npm t
+      - run: yarn
   lint:
+    name: Eslint
     needs: [build]
     runs-on: ubuntu-latest
     steps:
