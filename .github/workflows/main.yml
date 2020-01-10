@@ -3,7 +3,7 @@ name: ESLint
 on: [pull_request, push]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     name: Build and test
     steps:
@@ -11,6 +11,7 @@ jobs:
       - uses: bahmutov/npm-install@v1
       - run: npm t
   lint:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
