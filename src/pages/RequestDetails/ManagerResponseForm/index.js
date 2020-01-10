@@ -28,7 +28,7 @@ const ManagerResponseForm = ({ request, hideModal }) => {
   );
 };
 
-const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
+const ManagerResponseBuilder = ({ property, request }) => {
   let history = useHistory();
 
   const [succes, setSuccess] = useState(false);
