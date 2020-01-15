@@ -8,19 +8,7 @@ import Pill from "../Pill";
 import styles from "./index.module.scss";
 
 import { getFormattedDate } from "../../helpers/getFormattedDate";
-
-const getPrettyRequestType = type => {
-  switch (type) {
-    case "plumbing":
-      return "Plumbing repair";
-    case "appliance":
-      return "Appliance repair";
-    case "heat":
-      return "Heating repair";
-    default:
-      return "General request";
-  }
-};
+import getPrettyRequestType from "../../helpers/getPrettyRequestType";
 
 const RequestNotification = ({ request }) => {
   return (

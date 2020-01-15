@@ -1,11 +1,15 @@
 import { createClient } from "contentful-management";
 import emailjs from "emailjs-com";
+import getEmailDetails from "./getEmailDetails";
+import getPrettyRequestType from "./getPrettyRequestType";
 
 var client = createClient({
   accessToken: process.env.REACT_APP_CONTENT_MANAGEMENT_API
 });
 
 const postTenantRequest = (request, property) => {
+  const details = getEmailDetails("new", property.fields.tenant[0], "landlord");
+
   return Promise.resolve(
     client
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
@@ -20,7 +24,10 @@ const postTenantRequest = (request, property) => {
           tenant_name: property.fields.tenant[0].fields.name,
           property_name: property.fields.name,
           message: request.fields.message["en-US"],
-          subject: `New ${request.fields.type["en-US"]} request at ${property.fields.name}`
+          subject: `New ${getPrettyRequestType(
+            request.fields.type["en-US"]
+          ).toLowerCase()} request at ${property.fields.name}`,
+          details
         };
 
         const service_id = "default_service";

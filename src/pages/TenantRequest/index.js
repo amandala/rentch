@@ -6,6 +6,7 @@ import { Form, TextArea, useFormState, Select, Option } from "informed";
 import { Button } from "../../components/Button";
 import { useStateValue } from "../../StateProvider";
 import { buildTenantRequest } from "../../helpers/sendTenantRequest";
+import getPrettyRequestType from "../../helpers/getPrettyRequestType";
 import { validate } from "../../helpers/validation";
 import Dropzone from "../../components/Dropzone";
 
@@ -70,10 +71,11 @@ const TenantRequest = () => {
           <Option disabled value="">
             Select one
           </Option>
-          <Option value="other">General repair</Option>
-          <Option value="appliance">Appliance repair</Option>
-          <Option value="heat">Heating issues</Option>
-          <Option value="plumbing">Plumbing issues</Option>
+          <Option value="other">{getPrettyRequestType("other")}</Option>
+          <Option value="appliance">{getPrettyRequestType("appliance")}</Option>
+          <Option value="heat">{getPrettyRequestType("heat")}</Option>
+          <Option value="plumbing">{getPrettyRequestType("plumbing")}</Option>
+          <Option value="lease">{getPrettyRequestType("lease")}</Option>
         </Select>
         <Validation field="requestType" />
       </label>
@@ -81,7 +83,8 @@ const TenantRequest = () => {
         Details
         <span className={styles.DetailsNote}>
           Please provide as much detail as possible. Include model and serial
-          numbers for appliance and heating repair requests.
+          numbers for appliance and heating repair requests. If this is a lease
+          negotiation request, provide requested renewal/termination terms.
         </span>
         <TextArea
           className={cx(styles.Field, styles.TextArea)}
