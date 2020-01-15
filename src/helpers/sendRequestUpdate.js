@@ -6,7 +6,7 @@ var client = createClient({
 });
 
 const postRequestUpdate = (
-  response,
+  notification,
   property,
   request,
   status,
@@ -18,7 +18,7 @@ const postRequestUpdate = (
       .getSpace(process.env.REACT_APP_CONTENTFUL_SPACE)
       .then(space => {
         return space
-          .createEntry("notification", response)
+          .createEntry("notification", notification)
           .then(newNotification => {
             space
               .getEntry(request.sys.id)
@@ -76,10 +76,10 @@ const postRequestUpdate = (
               .then(updatedRequest => {
                 sendRequestUpdateEmail(
                   property,
-                  response,
+                  notification,
                   status,
                   creator,
-                  repairOwner
+                  repairOwner, request.fields.type
                 );
 
                 return updatedRequest;
@@ -102,25 +102,6 @@ const postRequestUpdate = (
   );
 };
 
-const getSubject = (status, type, propertyName, repairOwner) => {
-  switch (status) {
-    case "fixed":
-      return `${propertyName}: ${type} request - has been fixed`;
-    case "followup":
-      return `${propertyName}: ${type} request - requires follow-up`;
-    case "repair":
-      if (repairOwner === "manager") {
-        return `${propertyName}: The landlord has requested your help with a ${type} repair"
-        }`;
-      }
-      return `${propertyName}: ${type} request - will be handled by ${
-        repairOwner === "manager" ? "Rentch" : "your landlord"
-      }`;
-    default:
-      return `There is new activity on the ${type} request at ${propertyName}`;
-  }
-};
-
 export const sendRequestUpdate = (
   message,
   property,
@@ -130,7 +111,7 @@ export const sendRequestUpdate = (
   repairOwner
 ) => {
   const date = new Date();
-  const response = {
+  const notification = {
     fields: {
       date: { "en-US": date.toLocaleString() },
       creator: {
@@ -145,12 +126,7 @@ export const sendRequestUpdate = (
       propertyId: { "en-US": property.sys.id },
       requestId: { "en-US": request.sys.id },
       subject: {
-        "en-US": getSubject(
-          status,
-          request.fields.type,
-          request.fields.property.fields.name,
-          repairOwner
-        )
+        "en-US": `Status updated to ${status} by ${creator.fields.name}`
       },
       message: {
         "en-US": message ? message : "No message was provided"
@@ -162,7 +138,7 @@ export const sendRequestUpdate = (
   };
 
   return postRequestUpdate(
-    response,
+    notification,
     property,
     request,
     status,
