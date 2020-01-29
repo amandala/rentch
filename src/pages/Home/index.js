@@ -1,8 +1,8 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { useAuth0 } from "../../react-auth0-spa";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
-import { useStateValue } from "../../StateProvider";
+import useRedirectOnLoggedOut from "../../components/useRedirectOnLoggedOut";
 
 import LandlordHome from "./LandlordHome";
 import TenantHome from "./TenantHome";
@@ -12,16 +12,14 @@ import NoProperties from "./NoProperties";
 import styles from "./index.module.scss";
 
 const Home = () => {
+  useRedirectOnLoggedOut();
+
   const contentfulClient = new ContentfulClient({
     accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
     space: process.env.REACT_APP_CONTENTFUL_SPACE
   });
 
-  const [{ userData, loggedIn }] = useStateValue();
-
-  if (!loggedIn) {
-    return <Redirect to="/login" />;
-  }
+  const { user, loading } = useAuth0();
 
   const renderHomeView = (role, properties) => {
     if (role === "tenant") {
@@ -33,13 +31,17 @@ const Home = () => {
     }
   };
 
+  if (loading || !user) {
+    return "loading...";
+  }
+
   return (
     <ContentfulProvider client={contentfulClient}>
       <Query
         contentType="user"
         include={4}
         query={{
-          "fields.email": userData.email
+          "fields.email": user.email
         }}
       >
         {({ data, error, fetched, loading }) => {

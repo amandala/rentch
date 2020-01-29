@@ -13,11 +13,7 @@ import { StateProvider } from "../StateProvider";
 import styles from "./index.module.scss";
 
 function App() {
-  const profileData = JSON.parse(localStorage.getItem("profile"));
-
   const initialState = {
-    loggedIn: !!profileData,
-    userData: profileData,
     properties: [],
     role: undefined,
     uploads: []
@@ -25,20 +21,6 @@ function App() {
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case "LOGIN":
-        return {
-          ...state,
-          loggedIn: true,
-          userData: action.data
-        };
-
-      case "LOGOUT":
-        return {
-          ...state,
-          loggedIn: false,
-          userData: undefined
-        };
-
       case "SET_PROPERTIES": {
         return {
           ...state,
