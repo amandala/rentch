@@ -15,6 +15,8 @@ import { useStateValue } from "../../StateProvider";
 
 import styles from "./index.module.scss";
 
+import useRedirectOnLoggedOut from "../../components/useRedirectOnLoggedOut";
+
 import TenantResponseForm from "./TenantResponseForm";
 import ManagerResponseForm from "./ManagerResponseForm";
 
@@ -38,6 +40,8 @@ const renderResponseForm = (request, userEmail) => {
 };
 
 const RequestDetails = props => {
+  useRedirectOnLoggedOut();
+
   const [{ userData }] = useStateValue();
 
   const contentfulClient = new ContentfulClient({

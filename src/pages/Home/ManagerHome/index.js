@@ -14,7 +14,7 @@ const ManagerHome = ({ properties }) => {
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
+        {/* <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge> */}
       </div>
       <div>
         <Notifications properties={properties} />

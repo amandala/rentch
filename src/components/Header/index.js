@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router";
 import { useAuth0 } from "../../react-auth0-spa";
 
-// import { useStateValue } from "../../StateProvider";
-// import { ButtonText } from "../Button";
+import { useStateValue } from "../../StateProvider";
 
 import styles from "./index.module.scss";
 
 const Header = props => {
-  const { isAuthenticated, loginWithRedirect, logout, loading } = useAuth0();
+  const [state, dispatch] = useStateValue();
+  console.log(state);
 
-  // const [{ loggedIn }, dispatch] = useStateValue();
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log(user);
+      dispatch({
+        type: "LOGIN",
+        data: user
+      });
+    }
+  }, [isAuthenticated, dispatch, user]);
+
   return (
     <header className={styles.Header}>
       <div className={styles.Logo} onClick={() => props.history.push("/")} />
-      {loading ? "LOADING..." : null}
       {!isAuthenticated && (
         <button onClick={() => loginWithRedirect({})}>Log in</button>
       )}
