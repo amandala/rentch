@@ -1,6 +1,5 @@
 import React from "react";
-
-import { useStateValue } from "../../../StateProvider";
+import { useAuth0 } from "../../../react-auth0-spa";
 
 import Property from "../../../components/Property";
 import { HeadingSmall, HeadingLarge } from "../../../components/Heading";
@@ -9,12 +8,12 @@ import Notifications from "../Notifications";
 import styles from "./index.module.scss";
 
 const LandlordHome = ({ properties }) => {
-  const [{ userData }] = useStateValue();
+  const { user } = useAuth0();
 
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        {/* <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge> */}
+        <HeadingLarge>Welcome, {user.givenName}</HeadingLarge>
       </div>
       <div className={styles.Notifications}>
         <Notifications properties={properties} />

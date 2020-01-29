@@ -1,4 +1,5 @@
 import React from "react";
+import { useAuth0 } from "../../react-auth0-spa";
 
 import { Link } from "react-router-dom";
 
@@ -10,8 +11,6 @@ import {
 } from "../../components/Heading";
 import Pill from "../../components/Pill";
 import Notification from "./Notification";
-
-import { useStateValue } from "../../StateProvider";
 
 import styles from "./index.module.scss";
 
@@ -40,9 +39,9 @@ const renderResponseForm = (request, userEmail) => {
 };
 
 const RequestDetails = props => {
-  useRedirectOnLoggedOut();
+  const { user } = useAuth0();
 
-  const [{ userData }] = useStateValue();
+  useRedirectOnLoggedOut();
 
   const contentfulClient = new ContentfulClient({
     accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
@@ -142,7 +141,7 @@ const RequestDetails = props => {
                   })}
               </div>
               <div className={styles.Form}>
-                {renderResponseForm(request, userData.email)}
+                {renderResponseForm(request, user.email)}
               </div>
             </div>
           );
