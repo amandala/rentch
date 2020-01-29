@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import { useAuth0 } from "../../../react-auth0-spa";
 import { useStateValue } from "../../../StateProvider";
 
 import { ButtonLink } from "../../../components/Button";
@@ -10,7 +10,8 @@ import Notifications from "../Notifications";
 import styles from "./index.module.scss";
 
 const TenantHome = ({ property }) => {
-  const [{ userData }, dispatch] = useStateValue();
+  const [state, dispatch] = useStateValue();
+  const { user } = useAuth0();
 
   useEffect(() => {
     dispatch({
@@ -26,7 +27,7 @@ const TenantHome = ({ property }) => {
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        <HeadingLarge>Welcome, {userData.givenName}</HeadingLarge>
+        <HeadingLarge>Welcome, {user.givenName}</HeadingLarge>
         <ButtonLink url="request">Get Help</ButtonLink>
       </div>
       <div className={styles.PropertyDetails}>
