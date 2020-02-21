@@ -2,6 +2,7 @@ import React from "react";
 import { ModalProvider } from "react-modal-hook";
 import { TransitionGroup } from "react-transition-group";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import HttpsRedirect from "react-https-redirect";
 
 import Login from "../components/Login";
 import Home from "../pages/Home";
@@ -11,6 +12,12 @@ import RequestDetails from "../pages/RequestDetails";
 import { StateProvider } from "../StateProvider";
 
 import styles from "./index.module.scss";
+
+const HttpApp = () => (
+  <HttpsRedirect>
+    <App />
+  </HttpsRedirect>
+);
 
 function App() {
   const initialState = {
@@ -64,4 +71,4 @@ function App() {
   );
 }
 
-export default App;
+export default HttpApp;

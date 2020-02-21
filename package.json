@@ -26,6 +26,7 @@
     "react-dom": "^16.8.6",
     "react-dropzone": "^10.2.1",
     "react-google-login": "^5.0.5",
+    "react-https-redirect": "^1.1.0",
     "react-modal-hook": "^2.0.0",
     "react-router-dom": "^5.0.1",
     "react-transition-group": "^4.3.0"
