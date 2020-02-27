@@ -1,7 +1,7 @@
 import React from "react";
 import { getFormattedDate } from "../../../helpers/getFormattedDate";
 
-import { Text, HeadingSmall, HeadingXSmall } from "../../../components/Heading";
+import { Text, HeadingSmall, HeadingXSmall } from "../../../components/Type";
 
 import styles from "./index.module.scss";
 

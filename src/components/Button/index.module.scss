@@ -10,6 +10,7 @@
   text-transform: uppercase;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
+  cursor: pointer;
 
   a {
     text-decoration: none;
@@ -24,6 +25,7 @@
   background-color: $white;
   border: 2px soid $niagra-green;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  cursor: pointer;
 }
 
 .ButtonText {
@@ -34,10 +36,12 @@
   border: none;
   text-transform: uppercase;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  cursor: pointer;
 }
 
 .Link {
   text-decoration: none;
+  cursor: pointer;
 
   &:visited {
     color: $white;

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import { HeadingXSmall } from "../Heading";
+import { HeadingXSmall } from "../Type";
 import Pill from "../Pill";
 
 import styles from "./index.module.scss";

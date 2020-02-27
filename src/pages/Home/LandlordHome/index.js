@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth0 } from "../../../react-auth0-spa";
 
 import Property from "../../../components/Property";
-import { HeadingSmall, HeadingLarge } from "../../../components/Heading";
+import { HeadingSmall, HeadingLarge } from "../../../components/Type";
 import Notifications from "../Notifications";
 
 import styles from "./index.module.scss";
@@ -13,7 +13,7 @@ const LandlordHome = ({ properties }) => {
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        <HeadingLarge>Welcome, {user.givenName}</HeadingLarge>
+        <HeadingLarge>Welcome, {user.nickname}</HeadingLarge>
       </div>
       <div className={styles.Notifications}>
         <Notifications properties={properties} />

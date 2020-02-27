@@ -6,6 +6,7 @@ import LandlordHome from "./LandlordHome";
 import TenantHome from "./TenantHome";
 import ManagerHome from "./ManagerHome";
 import NoProperties from "./NoProperties";
+import NoAccount from "./NoAccount";
 
 import styles from "./index.module.scss";
 
@@ -15,7 +16,12 @@ const Home = () => {
     space: process.env.REACT_APP_CONTENTFUL_SPACE
   });
 
-  const { user, loading } = useAuth0();
+  const { user } = useAuth0();
+  console.log(user);
+
+  if (!user) {
+    return null;
+  }
 
   const renderHomeView = (role, properties) => {
     if (role === "tenant") {
@@ -26,10 +32,6 @@ const Home = () => {
       return <LandlordHome properties={properties} />;
     }
   };
-
-  if (loading || !user) {
-    return "loading...";
-  }
 
   return (
     <ContentfulProvider client={contentfulClient}>
@@ -51,7 +53,7 @@ const Home = () => {
           }
 
           if (!data.items.length || !data.items[0]) {
-            return <p>No user data exists.</p>;
+            return <NoAccount email={user.email} />;
           }
 
           const properties = data.items[0].fields.property;

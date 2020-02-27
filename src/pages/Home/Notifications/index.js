@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Query } from "react-contentful";
-import { HeadingSmall, Text } from "../../../components/Heading";
+import { HeadingSmall, Text } from "../../../components/Type";
 import RequestNotification from "../../../components/RequestNotification";
 
 import styles from "./index.module.scss";

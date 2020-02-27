@@ -1,6 +1,6 @@
 import React from "react";
 import { getFormattedDay } from "../../helpers/getFormattedDate";
-import { HeadingSmall, Text } from "../Heading";
+import { HeadingSmall, Text } from "../Type";
 
 import styles from "./index.module.scss";
 
@@ -23,7 +23,9 @@ const Property = ({ property }) => {
             Lease Expiry: {getFormattedDay(property.fields.leaseExpiry)}
           </Text>
         ) : null}
+        {console.log(property)}
         <Text>Landlord: {property.fields.landlord.fields.name}</Text>
+        {/* <Text>Tenant: {property.fields.tenant[0].fields.name}</Text> */}
         <Text>Managed by: {property.fields.manager.fields.name}</Text>
       </div>
     </div>
