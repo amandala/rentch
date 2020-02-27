@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import TenantRequest from "../pages/TenantRequest";
 import RequestDetails from "../pages/RequestDetails";
 import { StateProvider } from "../StateProvider";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 import styles from "./index.module.scss";
 
@@ -59,10 +60,10 @@ function App() {
           <Header />
           <div className={styles.App}>
             <ModalProvider container={TransitionGroup}>
-              <Route exact path="/" component={Home} />
+              <ProtectedRoute exact path="/" component={Home} />
               <Route path="/login" component={Login} />
-              <Route path="/request/:id" component={RequestDetails} />
-              <Route exact path="/request" component={TenantRequest} />
+              <ProtectedRoute path="/request/:id" component={RequestDetails} />
+              <ProtectedRoute exact path="/request" component={TenantRequest} />
             </ModalProvider>
           </div>
         </Router>

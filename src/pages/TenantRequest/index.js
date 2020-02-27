@@ -9,7 +9,6 @@ import { buildTenantRequest } from "../../helpers/sendTenantRequest";
 import getPrettyRequestType from "../../helpers/getPrettyRequestType";
 import { validate } from "../../helpers/validation";
 import Dropzone from "../../components/Dropzone";
-import useRedirectOnLoggedOut from "../../components/useRedirectOnLoggedOut";
 
 import styles from "./index.module.scss";
 
@@ -54,7 +53,6 @@ const RequestBuilder = property => {
 };
 
 const TenantRequest = () => {
-  useRedirectOnLoggedOut();
   const [{ properties }] = useStateValue();
 
   if (!properties.length) {

@@ -18,9 +18,11 @@ const Property = ({ property }) => {
       <div className={styles.Details}>
         <HeadingSmall>{property.fields.name}</HeadingSmall>
         <Text>Monthly rent: ${property.fields.monthlyRent}</Text>
-        <Text>
-          Lease Expiry: {getFormattedDay(property.fields.leaseExpiry)}
-        </Text>
+        {property.fields.leaseExpiry ? (
+          <Text>
+            Lease Expiry: {getFormattedDay(property.fields.leaseExpiry)}
+          </Text>
+        ) : null}
         <Text>Landlord: {property.fields.landlord.fields.name}</Text>
         <Text>Managed by: {property.fields.manager.fields.name}</Text>
       </div>

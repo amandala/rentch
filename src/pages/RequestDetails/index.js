@@ -14,8 +14,6 @@ import Notification from "./Notification";
 
 import styles from "./index.module.scss";
 
-import useRedirectOnLoggedOut from "../../components/useRedirectOnLoggedOut";
-
 import TenantResponseForm from "./TenantResponseForm";
 import ManagerResponseForm from "./ManagerResponseForm";
 
@@ -40,8 +38,6 @@ const renderResponseForm = (request, userEmail) => {
 
 const RequestDetails = props => {
   const { user } = useAuth0();
-
-  useRedirectOnLoggedOut();
 
   const contentfulClient = new ContentfulClient({
     accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
