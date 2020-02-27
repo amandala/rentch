@@ -2,8 +2,6 @@ import React from "react";
 import { useAuth0 } from "../../react-auth0-spa";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
-import useRedirectOnLoggedOut from "../../components/useRedirectOnLoggedOut";
-
 import LandlordHome from "./LandlordHome";
 import TenantHome from "./TenantHome";
 import ManagerHome from "./ManagerHome";
@@ -12,8 +10,6 @@ import NoProperties from "./NoProperties";
 import styles from "./index.module.scss";
 
 const Home = () => {
-  useRedirectOnLoggedOut();
-
   const contentfulClient = new ContentfulClient({
     accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
     space: process.env.REACT_APP_CONTENTFUL_SPACE
