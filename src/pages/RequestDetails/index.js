@@ -8,7 +8,7 @@ import {
   HeadingMedium,
   HeadingSmall,
   HeadingXSmall
-} from "../../components/Heading";
+} from "../../components/Type";
 import Pill from "../../components/Pill";
 import Notification from "./Notification";
 

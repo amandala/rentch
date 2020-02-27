@@ -4,7 +4,7 @@ import { useStateValue } from "../../../StateProvider";
 
 import { ButtonLink } from "../../../components/Button";
 import Property from "../../../components/Property";
-import { HeadingLarge, HeadingSmall } from "../../../components/Heading";
+import { HeadingLarge, HeadingSmall } from "../../../components/Type";
 import Notifications from "../Notifications";
 
 import styles from "./index.module.scss";
@@ -27,7 +27,7 @@ const TenantHome = ({ property }) => {
   return (
     <div className={styles.Home}>
       <div className={styles.Greeting}>
-        <HeadingLarge>Welcome, {user.givenName}</HeadingLarge>
+        <HeadingLarge>Welcome, {user.nickname}</HeadingLarge>
         <ButtonLink url="request">Get Help</ButtonLink>
       </div>
       <div className={styles.PropertyDetails}>
