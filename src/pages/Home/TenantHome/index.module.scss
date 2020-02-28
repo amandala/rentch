@@ -1,24 +1,48 @@
+@import "../../../styles/variables";
+
 .Home {
+  margin: 20px;
   width: 100%;
 }
 
 .Notifications {
   flex: 1;
-  min-width: 425px;
 }
 
 .Greeting {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 .PropertyDetails {
   display: flex;
-  flex-wrap: wrap-reverse;
+  flex-direction: column;
   justify-content: space-between;
 }
 
-.Property {
-  margin-right: 24px;
+.GetHelp {
+  width: 100%;
+  margin: 10px 0;
+}
+
+@include breakpoint(medium) {
+  .Greeting {
+    flex-direction: row;
+  }
+
+  .GetHelp {
+    max-width: 200px;
+  }
+}
+
+@include breakpoint(large) {
+  .Notifications {
+    padding: 0;
+  }
+
+  .PropertyDetails {
+    flex-direction: row;
+  }
 }

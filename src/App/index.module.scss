@@ -1,5 +1,11 @@
+@import "../styles/variables";
+
 body {
   margin: 0;
+}
+
+.AppWrapper {
+  width: 100%;
 }
 
 .App {
@@ -8,6 +14,5 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 30px;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }

@@ -13,17 +13,13 @@ import getPrettyRequestType from "../../helpers/getPrettyRequestType";
 const RequestNotification = ({ request }) => {
   return (
     <Link to={`/request/${request.sys.id}`} className={styles.Wrapper}>
-      <span>
+      <div className={styles.Content}>
         <HeadingXSmall className={styles.Date}>
           {getFormattedDate({ date: request.sys.updatedAt })}
         </HeadingXSmall>
-        <span className={styles.Subject}>
-          {request.fields.property.fields.name} -{" "}
-          {getPrettyRequestType(request.fields.type)}
-        </span>
-      </span>
-      <div className={styles.Status}>
-        <Pill status={request.fields.status} />
+        <div>{getPrettyRequestType(request.fields.type)}</div>
+        <div>{request.fields.property.fields.name}</div>
+        <Pill className={styles.Pill} status={request.fields.status} />
       </div>
     </Link>
   );

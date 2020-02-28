@@ -4,7 +4,7 @@ import { useStateValue } from "../../../StateProvider";
 
 import { ButtonLink } from "../../../components/Button";
 import Property from "../../../components/Property";
-import { HeadingLarge, HeadingSmall } from "../../../components/Type";
+import { HeadingLarge } from "../../../components/Type";
 import Notifications from "../Notifications";
 
 import styles from "./index.module.scss";
@@ -28,15 +28,12 @@ const TenantHome = ({ property }) => {
     <div className={styles.Home}>
       <div className={styles.Greeting}>
         <HeadingLarge>Welcome, {user.nickname}</HeadingLarge>
-        <ButtonLink url="request">Get Help</ButtonLink>
+        <div className={styles.GetHelp}>
+          <ButtonLink url="request">Get Help</ButtonLink>
+        </div>
       </div>
       <div className={styles.PropertyDetails}>
-        <div>
-          <HeadingSmall>Your Home</HeadingSmall>
-          <div className={styles.Property}>
-            <Property property={property} />
-          </div>
-        </div>
+        <Property property={property} />
         <div className={styles.Notifications}>
           <Notifications properties={[property]} />
         </div>

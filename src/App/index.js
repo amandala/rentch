@@ -55,7 +55,7 @@ function App() {
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <div>
+      <div className={styles.AppWrapper}>
         <Router>
           <Header />
           <div className={styles.App}>

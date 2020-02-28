@@ -2,20 +2,19 @@
 
 .Header {
   background-color: $niagra-green;
-  min-height: 100px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: $white;
-  padding-right: 20px;
+  //width: 100%;
 }
 
 .Logo {
-  width: 450px;
-  height: 100px;
-  padding: 0;
+  width: 250px;
+  height: 50px;
+  padding: 10px;
   background: url(//www.rentch.ca/wp-content/uploads/2019/05/White.png)
     no-repeat scroll center left !important;
   background-size: contain !important;

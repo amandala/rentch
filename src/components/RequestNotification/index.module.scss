@@ -6,7 +6,6 @@
   justify-content: space-between;
   color: $mineshaft-grey;
   background-color: $aquahaze-grey;
-  padding: 10px 10px 5px;
   margin-bottom: 10px;
   border: none;
   font-size: 16px;
@@ -14,7 +13,7 @@
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   text-decoration: none;
 
-  :last-child {
+  &:last-of-type {
     margin-bottom: 0;
   }
 
@@ -30,13 +29,7 @@
   }
 }
 
-.Subject {
-  align-self: left;
-}
-
-.Status {
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-  justify-content: center;
+.Content {
+  padding: 10px;
+  width: 100%;
 }

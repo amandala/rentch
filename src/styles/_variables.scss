@@ -9,3 +9,23 @@ $silver-grey: #bbbaba;
 $regent-grey: #8a97a0;
 $emperor-grey: #505050;
 $mineshaft-grey: #202020;
+
+// breakpoints
+$breakpoints: (
+  xsmall: 320px,
+  small: 375px,
+  medium: 768px,
+  large: 1024px,
+  xlarge: 1200px,
+  xxlarge: 1440px,
+  xxxlarge: 1680px,
+  xxxxlarge: 1920px
+);
+
+// generate our breakpoint mixins
+@mixin breakpoint($breakpoint) {
+  $size: map-get($breakpoints, $breakpoint);
+  @media screen and (min-width: $size) {
+    @content;
+  }
+}

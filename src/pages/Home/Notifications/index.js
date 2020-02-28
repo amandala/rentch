@@ -1,8 +1,11 @@
 import React from "react";
 
 import { Query } from "react-contentful";
-import { HeadingSmall, Text } from "../../../components/Type";
+import { Text } from "../../../components/Type";
 import RequestNotification from "../../../components/RequestNotification";
+
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "./tabs.scss";
 
 import styles from "./index.module.scss";
 
@@ -55,29 +58,37 @@ const Notifications = ({ properties }) => {
         );
 
         return (
-          <div className={styles.Home}>
-            <div className={styles.Notifications}>
-              <HeadingSmall>Active Requests</HeadingSmall>
-              {openRequests.map(request => {
-                return (
-                  <RequestNotification
-                    key={request.sys.id}
-                    request={{ ...Object.assign({}, request) }}
-                  />
-                );
-              })}
-            </div>
-            <div className={styles.Notifications}>
-              <HeadingSmall>Closed Requests</HeadingSmall>
-              {closedRequests.map(request => {
-                return (
-                  <RequestNotification
-                    key={request.sys.id}
-                    request={{ ...Object.assign({}, request) }}
-                  />
-                );
-              })}
-            </div>
+          <div className={styles.Wrapper}>
+            <Tabs>
+              <TabList>
+                <Tab className={styles.Tab}>Active</Tab>
+                <Tab className={styles.Tab}>Closed</Tab>
+              </TabList>
+              <TabPanel>
+                <div className={styles.Notifications}>
+                  {openRequests.map(request => {
+                    return (
+                      <RequestNotification
+                        key={request.sys.id}
+                        request={{ ...Object.assign({}, request) }}
+                      />
+                    );
+                  })}
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className={styles.Notifications}>
+                  {closedRequests.map(request => {
+                    return (
+                      <RequestNotification
+                        key={request.sys.id}
+                        request={{ ...Object.assign({}, request) }}
+                      />
+                    );
+                  })}
+                </div>
+              </TabPanel>
+            </Tabs>
           </div>
         );
       }}

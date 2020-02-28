@@ -1,7 +1,17 @@
-.Home {
-  width: 100%;
+@import "../../../styles/variables";
+
+.Wrapper {
+  //width: 100%;
 }
 
 .Notifications {
-  margin-bottom: 36px;
+  max-height: 600px;
+  overflow-x: scroll;
+  padding: 10px;
+}
+
+@include breakpoint(medium) {
+  .Notifications {
+    padding: 10px;
+  }
 }
