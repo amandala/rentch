@@ -5,9 +5,8 @@ import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 import LandlordHome from "./LandlordHome";
 import TenantHome from "./TenantHome";
 import ManagerHome from "./ManagerHome";
-import NoProperties from "./NoProperties";
-import NoAccount from "./NoAccount";
-
+import ErrorPage from "./ErrorPage";
+import { Text } from "../../components/Type";
 import styles from "./index.module.scss";
 
 const Home = () => {
@@ -53,7 +52,14 @@ const Home = () => {
           }
 
           if (!data.items.length || !data.items[0]) {
-            return <NoAccount email={user.email} />;
+            return (
+              <ErrorPage>
+                <Text>
+                  We're sorry! There's no account configured for {user.email}{" "}
+                  yet.
+                </Text>
+              </ErrorPage>
+            );
           }
 
           const properties = data.items[0].fields.property;
@@ -61,13 +67,16 @@ const Home = () => {
 
           return (
             <div className={styles.Home}>
-              <div className={styles.ContentWrapper}>
-                {properties ? (
-                  renderHomeView(role, properties)
-                ) : (
-                  <NoProperties />
-                )}
-              </div>
+              {properties ? (
+                renderHomeView(role, properties)
+              ) : (
+                <ErrorPage>
+                  <Text>
+                    We're sorry! There's no properties configured for your user
+                    account yet.
+                  </Text>
+                </ErrorPage>
+              )}
             </div>
           );
         }}

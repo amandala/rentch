@@ -3,11 +3,15 @@
 .Wrapper {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
   align-items: center;
   height: 50vh;
+}
+
+.Message {
+  margin: 0 24px;
 }
 
 .Heart {
@@ -17,11 +21,13 @@
   transform: rotate(90deg);
 }
 
-.Message {
-  padding-left: 40px;
-}
-
 .Link {
   color: $niagra-green;
   text-decoration: none;
+}
+
+@include breakpoint(medium) {
+  .Wrapper {
+    flex-direction: row;
+  }
 }

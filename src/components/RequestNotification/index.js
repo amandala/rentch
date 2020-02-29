@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import { HeadingXSmall } from "../Type";
+import { HeadingXSmall, HeadingSmall } from "../Type";
 import Pill from "../Pill";
 
 import styles from "./index.module.scss";
@@ -16,10 +16,14 @@ const RequestNotification = ({ request }) => {
       <div className={styles.Content}>
         <HeadingXSmall className={styles.Date}>
           {getFormattedDate({ date: request.sys.updatedAt })}
+          <Pill className={styles.Pill} status={request.fields.status} />
         </HeadingXSmall>
-        <div>{getPrettyRequestType(request.fields.type)}</div>
-        <div>{request.fields.property.fields.name}</div>
-        <Pill className={styles.Pill} status={request.fields.status} />
+
+        <HeadingSmall className={styles.TypeWrapper}>
+          <span>{getPrettyRequestType(request.fields.type)}</span>
+          <div className={styles.Dash}> - </div>
+          <span>{request.fields.property.fields.name}</span>
+        </HeadingSmall>
       </div>
     </Link>
   );

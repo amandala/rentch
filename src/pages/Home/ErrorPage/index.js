@@ -1,24 +1,26 @@
 import React from "react";
 
+import { HeadingLarge, Text } from "../../../components/Type";
+
 import styles from "./index.module.scss";
 
-const NoProperties = ({ email }) => {
+const ErrorPage = ({ children }) => {
   return (
     <div className={styles.Wrapper}>
-      <div className={styles.Heart}>❥</div>
+      <HeadingLarge className={styles.Heart}>❥</HeadingLarge>
       <div className={styles.Message}>
-        <h1>Rentch loves you!</h1>
-        <p>We're sorry! There's no account configured for {email} yet.</p>
-        <p>
+        <HeadingLarge>Rentch loves you!</HeadingLarge>
+        <div>{children}</div>
+        <Text>
           Please email{" "}
           <a className={styles.Link} href="mailto:help@rentch.ca">
             help@rentch.ca
           </a>{" "}
           and we will get it sorted.
-        </p>
+        </Text>
       </div>
     </div>
   );
 };
 
-export default NoProperties;
+export default ErrorPage;

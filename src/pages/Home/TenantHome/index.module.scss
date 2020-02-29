@@ -1,7 +1,6 @@
 @import "../../../styles/variables";
 
-.Home {
-  margin: 20px;
+.TenantHome {
   width: 100%;
 }
 
@@ -16,7 +15,7 @@
   align-items: center;
 }
 
-.PropertyDetails {
+.Dashboard {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -42,7 +41,12 @@
     padding: 0;
   }
 
-  .PropertyDetails {
+  .Property {
+    width: 30%;
+    margin-right: 24px;
+  }
+
+  .Dashboard {
     flex-direction: row;
   }
 }

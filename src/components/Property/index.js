@@ -1,6 +1,6 @@
 import React from "react";
 import { getFormattedDay } from "../../helpers/getFormattedDate";
-import { HeadingSmall, Text } from "../Type";
+import { HeadingMedium, Text, HeadingSmall } from "../Type";
 
 import styles from "./index.module.scss";
 
@@ -15,17 +15,23 @@ const Property = ({ property }) => {
       ></div>
       <div className={styles.Details}>
         <div className={styles.Padding}>
-          <HeadingSmall>{property.fields.name}</HeadingSmall>
-          <Text>Monthly rent: ${property.fields.monthlyRent}</Text>
+          <HeadingMedium>{property.fields.name}</HeadingMedium>
+          <HeadingSmall>
+            Monthly rent: ${property.fields.monthlyRent}
+          </HeadingSmall>
           {property.fields.leaseExpiry ? (
-            <Text>
+            <HeadingSmall>
               Lease Expiry: {getFormattedDay(property.fields.leaseExpiry)}
-            </Text>
+            </HeadingSmall>
           ) : null}
           {console.log(property)}
-          <Text>Landlord: {property.fields.landlord.fields.name}</Text>
+          <HeadingSmall>
+            Landlord: {property.fields.landlord.fields.name}
+          </HeadingSmall>
           {/* <Text>Tenant: {property.fields.tenant[0].fields.name}</Text> */}
-          <Text>Managed by: {property.fields.manager.fields.name}</Text>
+          <HeadingSmall>
+            Managed by: {property.fields.manager.fields.name}
+          </HeadingSmall>
         </div>
       </div>
     </div>

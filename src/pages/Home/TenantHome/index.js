@@ -25,15 +25,17 @@ const TenantHome = ({ property }) => {
   }, [dispatch, property]);
 
   return (
-    <div className={styles.Home}>
+    <div className={styles.TenantHome}>
       <div className={styles.Greeting}>
         <HeadingLarge>Welcome, {user.nickname}</HeadingLarge>
         <div className={styles.GetHelp}>
           <ButtonLink url="request">Get Help</ButtonLink>
         </div>
       </div>
-      <div className={styles.PropertyDetails}>
-        <Property property={property} />
+      <div className={styles.Dashboard}>
+        <div className={styles.Property}>
+          <Property property={property} />
+        </div>
         <div className={styles.Notifications}>
           <Notifications properties={[property]} />
         </div>

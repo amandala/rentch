@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Query } from "react-contentful";
-import { Text } from "../../../components/Type";
+import { Text, HeadingMedium } from "../../../components/Type";
 import RequestNotification from "../../../components/RequestNotification";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -61,8 +61,12 @@ const Notifications = ({ properties }) => {
           <div className={styles.Wrapper}>
             <Tabs>
               <TabList>
-                <Tab className={styles.Tab}>Active</Tab>
-                <Tab className={styles.Tab}>Closed</Tab>
+                <Tab className={styles.Tab}>
+                  <HeadingMedium>Active</HeadingMedium>
+                </Tab>
+                <Tab className={styles.Tab}>
+                  <HeadingMedium>Closed</HeadingMedium>
+                </Tab>
               </TabList>
               <TabPanel>
                 <div className={styles.Notifications}>
