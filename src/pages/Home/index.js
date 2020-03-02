@@ -2,11 +2,11 @@ import React from "react";
 import { useAuth0 } from "../../react-auth0-spa";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
-import LandlordHome from "./LandlordHome";
-import TenantHome from "./TenantHome";
-import ManagerHome from "./ManagerHome";
 import ErrorPage from "./ErrorPage";
-import { Text } from "../../components/Type";
+import { Text, HeadingLarge } from "../../components/Type";
+import PropertyLinkList from "../../components/PropertyLinkList";
+import PropertyDetails from "../../components/PropertyDetails";
+import Notifications from "../../components/Notifications";
 import styles from "./index.module.scss";
 
 const Home = () => {
@@ -20,16 +20,6 @@ const Home = () => {
   if (!user) {
     return null;
   }
-
-  const renderHomeView = (role, properties) => {
-    if (role === "tenant") {
-      return <TenantHome property={properties[0]} />;
-    } else if (role === "manager") {
-      return <ManagerHome properties={properties} />;
-    } else {
-      return <LandlordHome properties={properties} />;
-    }
-  };
 
   return (
     <ContentfulProvider client={contentfulClient}>
@@ -65,9 +55,31 @@ const Home = () => {
           const role = data.items[0].fields.role;
 
           return (
-            <div className={styles.Home}>
+            <>
               {properties ? (
-                renderHomeView(role, properties)
+                <div className={styles.Home}>
+                  <div className={styles.Greeting}>
+                    <HeadingLarge>Welcome, {user.nickname}</HeadingLarge>
+                  </div>
+                  <div className={styles.Dashboard}>
+                    {role === "tenant" ? (
+                      <div className={styles.PropertyDetails}>
+                        <PropertyDetails
+                          showImage
+                          userRole="tenant"
+                          property={properties[0]}
+                        />
+                      </div>
+                    ) : (
+                      <div className={styles.PropertiesList}>
+                        <PropertyLinkList properties={properties} />
+                      </div>
+                    )}
+                    <div className={styles.Notifications}>
+                      <Notifications properties={properties} />
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <ErrorPage>
                   <Text>
@@ -76,7 +88,7 @@ const Home = () => {
                   </Text>
                 </ErrorPage>
               )}
-            </div>
+            </>
           );
         }}
       </Query>

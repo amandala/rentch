@@ -1,6 +1,48 @@
-.Home {
-  width: 100%;
+@import "../../styles/variables";
+
+.Greeting {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.Home {
+  padding: 0 24px 24px;
+}
+
+.Dashboard {
+  display: grid;
+  grid-template-columns: repeat(1, 100%);
+  grid-gap: 20px;
+}
+
+.Notifications {
+}
+
+.Properties {
+}
+
+.PropertiesGrid {
+  margin-top: 24px;
+}
+
+@include breakpoint(medium) {
+  .PropertiesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+}
+
+@include breakpoint(large) {
+  .Dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(450px, 1fr));
+    grid-gap: 20px;
+  }
+
+  .Properties {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

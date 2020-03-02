@@ -58,42 +58,48 @@ const Notifications = ({ properties }) => {
         );
 
         return (
-          <div className={styles.Wrapper}>
-            <Tabs>
-              <TabList>
-                <Tab className={styles.Tab}>
-                  <HeadingMedium>Active</HeadingMedium>
-                </Tab>
-                <Tab className={styles.Tab}>
-                  <HeadingMedium>Closed</HeadingMedium>
-                </Tab>
-              </TabList>
-              <TabPanel>
-                <div className={styles.Notifications}>
-                  {openRequests.map(request => {
+          <Tabs>
+            <TabList>
+              <Tab className={styles.Tab}>
+                <HeadingMedium>Active</HeadingMedium>
+              </Tab>
+              <Tab className={styles.Tab}>
+                <HeadingMedium>Closed</HeadingMedium>
+              </Tab>
+            </TabList>
+            <TabPanel>
+              <div className={styles.Notifications}>
+                {openRequests.length > 0 ? (
+                  openRequests.map(request => {
                     return (
                       <RequestNotification
                         key={request.sys.id}
                         request={{ ...Object.assign({}, request) }}
                       />
                     );
-                  })}
-                </div>
-              </TabPanel>
-              <TabPanel>
-                <div className={styles.Notifications}>
-                  {closedRequests.map(request => {
+                  })
+                ) : (
+                  <Text>No active requests</Text>
+                )}
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <div className={styles.Notifications}>
+                {closedRequests.length > 0 ? (
+                  closedRequests.map(request => {
                     return (
                       <RequestNotification
                         key={request.sys.id}
                         request={{ ...Object.assign({}, request) }}
                       />
                     );
-                  })}
-                </div>
-              </TabPanel>
-            </Tabs>
-          </div>
+                  })
+                ) : (
+                  <Text>No archived requests</Text>
+                )}
+              </div>
+            </TabPanel>
+          </Tabs>
         );
       }}
     </Query>
