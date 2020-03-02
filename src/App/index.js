@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import Header from "../components/Header";
 import TenantRequest from "../pages/TenantRequest";
 import RequestDetails from "../pages/RequestDetails";
+import SingleProperty from "../pages/SingleProperty";
 import { StateProvider } from "../StateProvider";
 import ProtectedRoute from "../components/ProtectedRoute";
 
@@ -29,19 +30,6 @@ function App() {
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case "SET_PROPERTIES": {
-        return {
-          ...state,
-          properties: action.data
-        };
-      }
-
-      case "SET_USER_ROLE":
-        return {
-          ...state,
-          role: action.data
-        };
-
       case "UPLOAD_SUCCESS":
         return {
           ...state,
@@ -55,7 +43,7 @@ function App() {
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <div>
+      <div className={styles.AppWrapper}>
         <Router>
           <Header />
           <div className={styles.App}>
@@ -64,6 +52,7 @@ function App() {
               <Route path="/login" component={Login} />
               <ProtectedRoute path="/request/:id" component={RequestDetails} />
               <ProtectedRoute exact path="/request" component={TenantRequest} />
+              <ProtectedRoute path="/property/:id" component={SingleProperty} />
             </ModalProvider>
           </div>
         </Router>

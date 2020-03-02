@@ -1,0 +1,30 @@
+@import "../../styles/variables";
+
+.SingleProperty {
+  width: 100%;
+}
+
+.Notifications {
+  flex: 1;
+}
+
+.Dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@include breakpoint(large) {
+  .Notifications {
+    padding: 0;
+  }
+
+  .Property {
+    width: 30%;
+    margin-right: 24px;
+  }
+
+  .Dashboard {
+    flex-direction: row;
+  }
+}

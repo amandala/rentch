@@ -6,7 +6,6 @@
   justify-content: space-between;
   color: $mineshaft-grey;
   background-color: $aquahaze-grey;
-  padding: 10px 10px 5px;
   margin-bottom: 10px;
   border: none;
   font-size: 16px;
@@ -14,7 +13,7 @@
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   text-decoration: none;
 
-  :last-child {
+  &:last-of-type {
     margin-bottom: 0;
   }
 
@@ -29,14 +28,38 @@
     color: $emperor-grey;
   }
 }
+@import "../../styles/variables";
 
-.Subject {
-  align-self: left;
+.Content {
+  padding: 10px;
+  width: 100%;
 }
 
-.Status {
+.Date {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: top;
+}
+
+.TypeWrapper {
   display: flex;
   flex-direction: column;
-  text-align: right;
-  justify-content: center;
+}
+
+.Dash {
+  display: none;
+}
+
+@include breakpoint(medium) {
+  .TypeWrapper {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .Dash {
+    display: inline-block;
+    padding: 0 5px;
+  }
 }

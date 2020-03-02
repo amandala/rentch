@@ -10,10 +10,14 @@ const Header = props => {
 
   return (
     <header className={styles.Header}>
-      <div className={styles.Logo} onClick={() => props.history.push("/")} />
-      {isAuthenticated && (
-        <ButtonText onClick={() => logout()}>Log out</ButtonText>
-      )}
+      <div className={styles.Content}>
+        <div className={styles.Logo} onClick={() => props.history.push("/")} />
+        {isAuthenticated && (
+          <div className={styles.Logout}>
+            <ButtonText onClick={() => logout()}>Log out</ButtonText>
+          </div>
+        )}
+      </div>
     </header>
   );
 };
