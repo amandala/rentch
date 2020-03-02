@@ -1,8 +1,8 @@
 import React from "react";
 
 import { Query } from "react-contentful";
-import { Text, HeadingMedium } from "../../../components/Type";
-import RequestNotification from "../../../components/RequestNotification";
+import { Text, HeadingMedium } from "../Type";
+import RequestNotification from "../RequestNotification";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "./tabs.scss";

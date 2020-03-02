@@ -1,11 +1,8 @@
 import React from "react";
 import { useAuth0 } from "../../../react-auth0-spa";
-import Link from "../../../components/Link";
-
 import { HeadingLarge } from "../../../components/Type";
-import PropertyDetails from "../../../components/PropertyDetails";
-
-import Notifications from "../Notifications";
+import PropertyLinkList from "../../../components/PropertyLinkList";
+import Notifications from "../../../components/Notifications";
 
 import styles from "./index.module.scss";
 
@@ -20,11 +17,7 @@ const ManagerHome = ({ properties }) => {
       </div>
       <div className={styles.Dashboard}>
         <div className={styles.Properties}>
-          {properties.map(property => (
-            <Link href={`/property/${property.sys.id}`}>
-              <PropertyDetails userRole="manager" property={property} />
-            </Link>
-          ))}
+          <PropertyLinkList properties={properties} />
         </div>
         <div>
           <Notifications properties={properties} />

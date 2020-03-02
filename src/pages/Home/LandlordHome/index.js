@@ -3,7 +3,7 @@ import { useAuth0 } from "../../../react-auth0-spa";
 
 import PropertyDetails from "../../../components/PropertyDetails";
 import { HeadingSmall, HeadingLarge } from "../../../components/Type";
-import Notifications from "../Notifications";
+import Notifications from "../../../components/Notifications";
 
 import styles from "./index.module.scss";
 

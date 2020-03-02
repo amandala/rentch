@@ -6,13 +6,14 @@ import styles from "./index.module.scss";
 
 type PropTypes = {
   property: any,
+  showImage?: Boolean,
   userRole: "landlord" | "tenant" | "manager"
 };
 
-const PropertyDetails = ({ property, userRole }: PropTypes) => {
+const PropertyDetails = ({ property, showImage, userRole }: PropTypes) => {
   return (
     <div className={styles.Wrapper}>
-      {userRole === "tenant" ? (
+      {showImage ? (
         <div
           className={styles.Image}
           style={{
