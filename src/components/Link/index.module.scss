@@ -1,0 +1,16 @@
+@import "../../styles/variables";
+
+.Wrapper {
+  text-decoration: none;
+  width: 100%;
+}
+
+.Link {
+  color: black;
+  font-size: 35px;
+  text-decoration: none;
+  outline-color: $niagra-green;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

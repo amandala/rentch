@@ -16,7 +16,6 @@ const Home = () => {
   });
 
   const { user } = useAuth0();
-  console.log(user);
 
   if (!user) {
     return null;

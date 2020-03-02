@@ -1,3 +1,5 @@
+@import "../../../styles/variables";
+
 .Greeting {
   display: flex;
   flex-direction: row;
@@ -5,6 +7,42 @@
   margin-bottom: 24px;
 }
 
+.Dashboard {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 .Home {
   width: 100%;
+  padding: 0 10px;
+}
+
+.Properties {
+  margin-top: 24px;
+}
+
+@include breakpoint(medium) {
+  .Properties {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+
+  .Home {
+    padding: 0 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+@include breakpoint(large) {
+  .Dashboard {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    grid-gap: 20px;
+  }
+
+  .Properties {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

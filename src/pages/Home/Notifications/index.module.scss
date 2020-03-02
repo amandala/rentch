@@ -1,11 +1,7 @@
 @import "../../../styles/variables";
 
-.Wrapper {
-  //width: 100%;
-}
-
 .Notifications {
-  max-height: 600px;
+  max-height: 300px;
   overflow-x: scroll;
   padding: 10px;
 }
@@ -13,5 +9,6 @@
 @include breakpoint(medium) {
   .Notifications {
     padding: 10px;
+    max-height: 500px;
   }
 }

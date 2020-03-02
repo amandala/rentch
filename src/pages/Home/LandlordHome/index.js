@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth0 } from "../../../react-auth0-spa";
 
-import Property from "../../../components/Property";
+import PropertyDetails from "../../../components/PropertyDetails";
 import { HeadingSmall, HeadingLarge } from "../../../components/Type";
 import Notifications from "../Notifications";
 
@@ -23,7 +23,11 @@ const LandlordHome = ({ properties }) => {
         <div className={styles.Properties}>
           {properties.map(property => (
             <div key={property.sys.id} className={styles.Property}>
-              <Property key={property.sys.id} property={property} />
+              <PropertyDetails
+                userRole="landlord"
+                key={property.sys.id}
+                property={property}
+              />
             </div>
           ))}
         </div>

@@ -3,7 +3,7 @@ import { useAuth0 } from "../../../react-auth0-spa";
 import { useStateValue } from "../../../StateProvider";
 
 import { ButtonLink } from "../../../components/Button";
-import Property from "../../../components/Property";
+import PropertyDetails from "../../../components/PropertyDetails";
 import { HeadingLarge } from "../../../components/Type";
 import Notifications from "../Notifications";
 
@@ -34,7 +34,7 @@ const TenantHome = ({ property }) => {
       </div>
       <div className={styles.Dashboard}>
         <div className={styles.Property}>
-          <Property property={property} />
+          <PropertyDetails userRole="tenant" property={property} />
         </div>
         <div className={styles.Notifications}>
           <Notifications properties={[property]} />
