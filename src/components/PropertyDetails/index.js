@@ -32,12 +32,12 @@ const PropertyDetails = ({ property, showImage, userRole }: PropTypes) => {
               Lease Expiry: {getFormattedDay(property.fields.leaseExpiry)}
             </HeadingSmall>
           ) : null}
-          {userRole !== "tenant" ? (
+          {userRole !== "tenant" && property.fields.tenant.length > 0 ? (
             <HeadingSmall>
               Tenant: {property.fields.tenant[0].fields.name}
             </HeadingSmall>
           ) : null}
-          {userRole !== "landlord" ? (
+          {userRole !== "landlord" && property.fields.landlord.length > 0 ? (
             <HeadingSmall>
               Landlord: {property.fields.landlord.fields.name}
             </HeadingSmall>
