@@ -23,10 +23,10 @@ const PropertyDetails = ({ property, showImage, userRole }: PropTypes) => {
       });
       dispatch({
         type: "SET_USER_ROLE",
-        data: "tenant"
+        data: userRole
       });
     }
-  }, [dispatch, property]);
+  }, [dispatch, property, userRole]);
 
   return (
     <div className={styles.Wrapper}>
@@ -66,9 +66,11 @@ const PropertyDetails = ({ property, showImage, userRole }: PropTypes) => {
               </HeadingSmall>
             ) : null}
           </div>
-          <div className={styles.GetHelp}>
-            <ButtonLink to="/request">Get Help</ButtonLink>
-          </div>
+          {userRole === "tenant" ? (
+            <div className={styles.GetHelp}>
+              <ButtonLink to="/request">Get Help</ButtonLink>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

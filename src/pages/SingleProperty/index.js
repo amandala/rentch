@@ -1,13 +1,18 @@
 import React from "react";
-import { useAuth0 } from "../../react-auth0-spa";
+import { Redirect } from "react-router-dom";
 import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
 import PropertyDetails from "../../components/PropertyDetails";
 import Notifications from "../../components/Notifications";
+import { useStateValue } from "../../StateProvider";
 
 import styles from "./index.module.scss";
 
 const SingleProperty = props => {
-  const { user } = useAuth0();
+  const [{ userRole }] = useStateValue();
+
+  if (!props.match.params.id) {
+    return <Redirect to="/" />;
+  }
 
   const contentfulClient = new ContentfulClient({
     accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
@@ -45,7 +50,7 @@ const SingleProperty = props => {
                 <div className={styles.Property}>
                   <PropertyDetails
                     showImage
-                    userRole="tenant"
+                    userRole={userRole}
                     property={property}
                   />
                 </div>
