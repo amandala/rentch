@@ -54,11 +54,11 @@ function App() {
           <Header />
           <div className={styles.App}>
             <ModalProvider container={TransitionGroup}>
-              <ProtectedRoute exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <ProtectedRoute path="/request/:id" component={RequestDetails} />
               <ProtectedRoute exact path="/request" component={TenantRequest} />
               <ProtectedRoute path="/property/:id" component={SingleProperty} />
+              <ProtectedRoute exact path="/" component={Home} />
             </ModalProvider>
           </div>
         </Router>

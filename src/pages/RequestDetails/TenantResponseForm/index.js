@@ -11,7 +11,7 @@ import styles from "./index.module.scss";
 
 const TenantResponseForm = ({ request, hideModal }) => {
   const [status, setStatus] = useState(undefined);
-  const [succes, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
   const isActionable = request.fields.status === "repair";
   let history = useHistory();
 
@@ -28,7 +28,7 @@ const TenantResponseForm = ({ request, hideModal }) => {
 
     const { values } = formState;
 
-    if (status) {
+    if (status && !success) {
       const statusToSend = status;
       setStatus(undefined);
       sendRequestUpdate(
@@ -40,6 +40,7 @@ const TenantResponseForm = ({ request, hideModal }) => {
         request.fields.repairOwner
       ).then(data => {
         if (data.error) {
+          //TODO: return small error
           console.error(
             "There was an error sending the request update",
             data.error
@@ -53,7 +54,7 @@ const TenantResponseForm = ({ request, hideModal }) => {
     return null;
   };
 
-  if (succes) {
+  if (success) {
     history.replace("/");
   }
 

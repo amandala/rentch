@@ -1,13 +1,13 @@
 import React from "react";
 import { useAuth0 } from "../../react-auth0-spa";
-
-import { Link } from "react-router-dom";
-
 import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
+import { Redirect, Link } from "react-router-dom";
+import ErrorScreen from "../../components/ErrorScreen";
 import {
   HeadingMedium,
   HeadingSmall,
-  HeadingXSmall
+  HeadingXSmall,
+  Text
 } from "../../components/Type";
 import Pill from "../../components/Pill";
 import Notification from "./Notification";
@@ -39,6 +39,10 @@ const renderResponseForm = (request, userEmail) => {
 const RequestDetails = props => {
   const { user } = useAuth0();
 
+  if (!props.match.params.id) {
+    return <Redirect to="/" />;
+  }
+
   const contentfulClient = new ContentfulClient({
     accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
     space: process.env.REACT_APP_CONTENTFUL_SPACE
@@ -60,11 +64,25 @@ const RequestDetails = props => {
 
           if (error) {
             console.error(error);
-            return null;
+            return (
+              <ErrorScreen>
+                <Text>
+                  We're sorry! Something went wrong locating this request.
+                  Please refresh the page and try again.
+                </Text>
+              </ErrorScreen>
+            );
           }
 
           if (!data.items.length || !data.items[0]) {
-            return <p>No user data exists.</p>;
+            return (
+              <ErrorScreen>
+                <Text>
+                  We're sorry! There doesn't appear to be anything here.{" "}
+                  <Link to="/">Let's get you home.</Link>
+                </Text>
+              </ErrorScreen>
+            );
           }
 
           const request = data.items[0];
@@ -124,13 +142,13 @@ const RequestDetails = props => {
               <div>
                 {request.fields.notifications &&
                   request.fields.notifications.length &&
-                  request.fields.notifications.map(notificaiton => {
+                  request.fields.notifications.map(notification => {
                     return (
-                      notificaiton.fields && (
+                      notification.fields && (
                         <Notification
-                          date={notificaiton.sys.createdAt}
-                          subject={notificaiton.fields.subject}
-                          message={notificaiton.fields.message}
+                          date={notification.sys.createdAt}
+                          subject={notification.fields.subject}
+                          message={notification.fields.message}
                         />
                       )
                     );

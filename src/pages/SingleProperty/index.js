@@ -1,13 +1,20 @@
 import React from "react";
-import { useAuth0 } from "../../react-auth0-spa";
+import { Redirect } from "react-router-dom";
 import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
 import PropertyDetails from "../../components/PropertyDetails";
 import Notifications from "../../components/Notifications";
+import { useStateValue } from "../../StateProvider";
+import ErrorScreen from "../../components/ErrorScreen";
+import { Text } from "../../components/Type";
 
 import styles from "./index.module.scss";
 
 const SingleProperty = props => {
-  const { user } = useAuth0();
+  const [{ userRole }] = useStateValue();
+
+  if (!props.match.params.id) {
+    return <Redirect to="/" />;
+  }
 
   const contentfulClient = new ContentfulClient({
     accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
@@ -26,11 +33,19 @@ const SingleProperty = props => {
         {({ data, error, fetched, loading }) => {
           if (loading || !fetched) {
             return null;
+            //TODO: loading
           }
 
           if (error) {
             console.error(error);
-            return null;
+            return (
+              <ErrorScreen>
+                <Text>
+                  We're sorry! Something went wrong locating the details for
+                  this property. Please refresh the page and try again.
+                </Text>
+              </ErrorScreen>
+            );
           }
 
           if (!data.items.length || !data.items[0]) {
@@ -45,7 +60,7 @@ const SingleProperty = props => {
                 <div className={styles.Property}>
                   <PropertyDetails
                     showImage
-                    userRole="tenant"
+                    userRole={userRole}
                     property={property}
                   />
                 </div>

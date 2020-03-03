@@ -1,18 +1,18 @@
 import React from "react";
 
-import { HeadingLarge, Text } from "../../../components/Type";
+import { HeadingLarge, Text } from "../Type";
 
 import styles from "./index.module.scss";
 
-const ErrorPage = ({ children }) => {
+const ErrorScreen = ({ children }) => {
   return (
     <div className={styles.Wrapper}>
       <HeadingLarge className={styles.Heart}>❥</HeadingLarge>
       <div className={styles.Message}>
-        <HeadingLarge>Rentch loves you!</HeadingLarge>
+        <HeadingLarge className={styles.Love}>Rentch loves you!</HeadingLarge>
         <div>{children}</div>
-        <Text>
-          Please email{" "}
+        <Text className={styles.Email}>
+          If the problem persists, please email{" "}
           <a className={styles.Link} href="mailto:help@rentch.ca">
             help@rentch.ca
           </a>{" "}
@@ -23,4 +23,4 @@ const ErrorPage = ({ children }) => {
   );
 };
 
-export default ErrorPage;
+export default ErrorScreen;

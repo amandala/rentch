@@ -31,12 +31,12 @@ const ManagerResponseForm = ({ request, hideModal }) => {
 const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
   let history = useHistory();
 
-  const [succes, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
   const formState = useFormState();
 
   const { submits, errors, values } = formState;
 
-  if (submits === 1 && !errors.length && !succes) {
+  if (submits === 1 && !errors.length && !success) {
     sendRequestUpdate(
       values.response,
       property,
@@ -47,13 +47,14 @@ const ManagerResponseBuilder = ({ hideModal, property, request, router }) => {
     ).then(data => {
       if (data.error) {
         console.error("There was an error", data.error);
+        //TODO: return small error
       }
 
       setSuccess(true);
     });
   }
 
-  if (succes) {
+  if (success) {
     history.replace("/");
   }
 
