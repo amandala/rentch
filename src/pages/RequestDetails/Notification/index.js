@@ -9,11 +9,7 @@ const Notificaiton = ({ date, subject, message }) => {
   return (
     <div className={styles.Notification}>
       <span>
-        <HeadingXSmall>
-          {getFormattedDate({
-            date: date
-          })}
-        </HeadingXSmall>
+        <HeadingXSmall>{getFormattedDate(date)}</HeadingXSmall>
         <HeadingSmall>{subject}</HeadingSmall>
       </span>
       <Text>{message || "No message was provided"}</Text>

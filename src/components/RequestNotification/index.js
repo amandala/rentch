@@ -15,7 +15,7 @@ const RequestNotification = ({ request }) => {
     <Link to={`/request/${request.sys.id}`} className={styles.Wrapper}>
       <div className={styles.Content}>
         <HeadingXSmall className={styles.Date}>
-          {getFormattedDate({ date: request.sys.updatedAt })}
+          {getFormattedDate(request.sys.updatedAt)}
           <Pill className={styles.Pill} status={request.fields.status} />
         </HeadingXSmall>
 

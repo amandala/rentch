@@ -94,7 +94,7 @@ const RequestDetails = props => {
                 </Link>
               </div>
               <HeadingXSmall className={styles.Date}>
-                {getFormattedDate({ date: request.fields.timestamp })}
+                {getFormattedDate(request.fields.timestamp)}
               </HeadingXSmall>
               <HeadingMedium className={styles.RequestTitle}>
                 {`${getRequestType(request.fields.type)} request at ${
