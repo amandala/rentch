@@ -1,10 +1,7 @@
 import React from "react";
 import { useAuth0 } from "../../react-auth0-spa";
 import { Query, ContentfulClient, ContentfulProvider } from "react-contentful";
-
-import { ButtonLink } from "../../components/Button";
 import PropertyDetails from "../../components/PropertyDetails";
-import { HeadingLarge } from "../../components/Type";
 import Notifications from "../../components/Notifications";
 
 import styles from "./index.module.scss";

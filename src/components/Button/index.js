@@ -27,12 +27,12 @@ export const ButtonText = ({ onClick, children, ...rest }) => {
   );
 };
 
-export const ButtonLink = ({ onClick, children, url, ...rest }) => {
+export const ButtonLink = ({ onClick, children, to, ...rest }) => {
   return (
-    <button className={styles.Button} onClick={onClick} {...rest}>
-      <Link className={styles.Link} to={url}>
+    <Link className={styles.Link} to={to}>
+      <button className={styles.Button} onClick={onClick} {...rest}>
         {children}
-      </Link>
-    </button>
+      </button>
+    </Link>
   );
 };

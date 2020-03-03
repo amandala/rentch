@@ -36,6 +36,12 @@ function App() {
           uploads: [...state.uploads, action.data]
         };
 
+      case "SET_PROPERTIES":
+        return {
+          ...state,
+          properties: action.data
+        };
+
       default:
         return state;
     }
