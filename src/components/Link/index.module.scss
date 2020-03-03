@@ -2,15 +2,13 @@
 
 .Wrapper {
   text-decoration: none;
-  width: 100%;
+  color: $niagra-green;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  margin-bottom: 0;
+  letter-spacing: 0.25px;
 }
 
 .Link {
-  color: black;
-  font-size: 35px;
   text-decoration: none;
-  outline-color: $niagra-green;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 }

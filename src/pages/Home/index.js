@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth0 } from "../../react-auth0-spa";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 
-import ErrorPage from "./ErrorPage";
+import ErrorScreen from "../../components/ErrorScreen";
 import { Text, HeadingLarge } from "../../components/Type";
 import PropertyLinkList from "../../components/PropertyLinkList";
 import PropertyDetails from "../../components/PropertyDetails";
@@ -32,22 +32,31 @@ const Home = () => {
       >
         {({ data, error, fetched, loading }) => {
           if (loading || !fetched) {
+            //TODO: loading
             return null;
           }
 
           if (error) {
             console.error(error);
-            return null;
+
+            return (
+              <ErrorScreen>
+                <Text>
+                  We're sorry! Something went wrong locating the user account
+                  for {user.email}. Please refresh the page and try again.
+                </Text>
+              </ErrorScreen>
+            );
           }
 
           if (!data.items.length || !data.items[0]) {
             return (
-              <ErrorPage>
+              <ErrorScreen>
                 <Text>
                   We're sorry! There's no account configured for {user.email}{" "}
                   yet.
                 </Text>
-              </ErrorPage>
+              </ErrorScreen>
             );
           }
 
@@ -81,12 +90,12 @@ const Home = () => {
                   </div>
                 </div>
               ) : (
-                <ErrorPage>
+                <ErrorScreen>
                   <Text>
                     We're sorry! There's no properties configured for your user
                     account yet.
                   </Text>
-                </ErrorPage>
+                </ErrorScreen>
               )}
             </>
           );

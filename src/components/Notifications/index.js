@@ -25,12 +25,17 @@ const Notifications = ({ properties }) => {
         }
 
         if (error) {
+          //TODO: return small error
           console.error(error);
           return null;
         }
 
         if (!data.items.length || !data.items[0]) {
-          return <Text>Awesome! No active requests at this time</Text>;
+          return (
+            <Text>
+              There's no current or archived requests for this property.
+            </Text>
+          );
         }
 
         const filtered = data.items.filter(notification =>

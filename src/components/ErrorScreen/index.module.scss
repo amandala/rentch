@@ -1,4 +1,4 @@
-@import "../../../styles/variables";
+@import "../../styles/variables";
 
 .Wrapper {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -14,6 +14,10 @@
   margin: 0 24px;
 }
 
+.Love {
+  margin-bottom: 14px;
+}
+
 .Heart {
   color: $niagra-green;
   font-size: 150px;
@@ -24,6 +28,10 @@
 .Link {
   color: $niagra-green;
   text-decoration: none;
+}
+
+.Email {
+  margin-top: 14px;
 }
 
 @include breakpoint(medium) {
