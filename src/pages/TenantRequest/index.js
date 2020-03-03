@@ -55,9 +55,9 @@ const RequestBuilder = property => {
 const TenantRequest = () => {
   const [{ properties }] = useStateValue();
 
-  if (!properties.length) {
-    return <Redirect to="/" />;
-  }
+  // if (!properties.length) {
+  //   return <Redirect to="/" />;
+  // }
 
   return (
     <Form className={styles.Form}>

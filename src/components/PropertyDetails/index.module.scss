@@ -29,6 +29,17 @@
   background-repeat: no-repeat;
 }
 
+.GetHelp {
+  padding: 24px 0;
+}
+
+@include breakpoint(medium) {
+  .Padding {
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+}
+
 @include breakpoint(large) {
   .Wrapper {
     width: 30%;
