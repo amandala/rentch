@@ -5,13 +5,7 @@ import cx from "classnames";
 
 import styles from "./index.module.scss";
 
-type PropsType = {
-  children: React.ReactNode | string,
-  href: string,
-  className?: string
-};
-
-const Link = ({ className = "", children, href, ...rest }: PropsType) => (
+const Link = ({ className = "", children, href, ...rest }) => (
   <ReactLink className={styles.Wrapper} to={href}>
     <span className={cx(styles.Link, className)}>{children}</span>
   </ReactLink>
