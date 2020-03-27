@@ -1,7 +1,6 @@
 import React from "react";
 import { useAuth0 } from "../../react-auth0-spa";
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
-
 import ErrorScreen from "../../components/ErrorScreen";
 import { Text, HeadingLarge } from "../../components/Type";
 import PropertyLinkList from "../../components/PropertyLinkList";
