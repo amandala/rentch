@@ -14,6 +14,9 @@ import RequestDetails from "../pages/RequestDetails";
 import SingleProperty from "../pages/SingleProperty";
 import { StateProvider } from "../StateProvider";
 import ProtectedRoute from "../components/ProtectedRoute";
+import { ButtonText } from "../components/Button";
+
+import { useAuth0 } from "../react-auth0-spa";
 
 import styles from "./index.module.scss";
 
@@ -22,6 +25,20 @@ const HttpApp = () => (
     <App />
   </HttpsRedirect>
 );
+
+const AppError = ({ title, subtitle }) => {
+  const { isAuthenticated, logout } = useAuth0();
+
+  return (
+    <ErrorScreen>
+      <Text>{title}</Text>
+      <Text>{subtitle}</Text>
+      {isAuthenticated ? (
+        <ButtonText onClick={() => logout()}>Log out</ButtonText>
+      ) : null}
+    </ErrorScreen>
+  );
+};
 
 function App() {
   const initialState = {
@@ -52,12 +69,7 @@ function App() {
   return (
     <ErrorBoundary
       renderError={(title, subtitle) => {
-        return (
-          <ErrorScreen>
-            <Text>{title}</Text>
-            <Text>{subtitle}</Text>
-          </ErrorScreen>
-        );
+        return <AppError title={title} subtitle={subtitle} />;
       }}
     >
       <StateProvider initialState={initialState} reducer={reducer}>
