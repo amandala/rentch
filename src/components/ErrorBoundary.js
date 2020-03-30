@@ -1,17 +1,5 @@
 import React from "react";
 
-class AppError extends Error {
-  title;
-  subtitle;
-
-  constructor(title, subtitle) {
-    super(`${title}: ${subtitle}`);
-    this.name = "AppError";
-    this.title = title;
-    this.subtitle = subtitle || "";
-  }
-}
-
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -25,19 +13,11 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error) {
     console.error(error);
 
-    if (error instanceof AppError) {
-      this.setState({
-        hasError: true,
-        title: error.title,
-        subtitle: error.subtitle
-      });
-    } else {
-      this.setState({
-        hasError: true,
-        title: "An internal error occurred",
-        subtitle: error.message
-      });
-    }
+    this.setState({
+      hasError: true,
+      title: error,
+      subtitle: "APP_ERROR"
+    });
   }
 
   render() {
