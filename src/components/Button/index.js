@@ -1,11 +1,15 @@
 import React from "react";
-
+import cx from "classnames";
 import styles from "./index.module.scss";
 import { Link } from "react-router-dom";
 
-export const Button = ({ onClick, children, ...rest }) => {
+export const Button = ({ onClick, className, children, ...rest }) => {
   return (
-    <button className={styles.Button} onClick={onClick} {...rest}>
+    <button
+      className={cx(styles.Button, className)}
+      onClick={onClick}
+      {...rest}
+    >
       {children}
     </button>
   );
@@ -27,10 +31,14 @@ export const ButtonText = ({ onClick, children, ...rest }) => {
   );
 };
 
-export const ButtonLink = ({ onClick, children, to, ...rest }) => {
+export const ButtonLink = ({ onClick, className, children, to, ...rest }) => {
   return (
-    <Link className={styles.Link} to={to}>
-      <button className={styles.Button} onClick={onClick} {...rest}>
+    <Link to={to}>
+      <button
+        className={cx(styles.Button, className)}
+        onClick={onClick}
+        {...rest}
+      >
         {children}
       </button>
     </Link>

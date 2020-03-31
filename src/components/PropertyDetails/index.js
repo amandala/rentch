@@ -43,51 +43,50 @@ const PropertyDetails = ({ property, showImage, userRole }: PropTypes) => {
         />
       ) : null}
       <div className={styles.Details}>
-        <div className={styles.Padding}>
-          <div>
-            {property.fields && property.fields.name ? (
-              <HeadingMedium>{property.fields.name}</HeadingMedium>
-            ) : null}
+        {property.fields && property.fields.name ? (
+          <div className={styles.Heading}>
+            <HeadingMedium>{property.fields.name}</HeadingMedium>
             <HeadingSmall>
-              Monthly rent: ${property.fields.monthlyRent}
+              Lease Expiry: {getFormattedDay(property.fields.leaseExpiry)}
             </HeadingSmall>
-            {property.fields.leaseExpiry ? (
-              <HeadingSmall>
-                Lease Expiry: {getFormattedDay(property.fields.leaseExpiry)}
-              </HeadingSmall>
-            ) : null}
-            {userRole !== "tenant" && property.fields.tenant ? (
-              <HeadingSmall>
-                Tenant:{" "}
-                {property.fields.tenant[0].fields.name
-                  ? property.fields.tenant[0].fields.name
-                  : ""}
-              </HeadingSmall>
-            ) : null}
-            {userRole !== "landlord" && property.fields.landlord ? (
-              <HeadingSmall>
-                Landlord:{" "}
-                {property.fields.landlord.fields.name
-                  ? property.fields.landlord.fields.name
-                  : ""}
-              </HeadingSmall>
-            ) : null}
-            {userRole !== "manager" && property.fields.manager ? (
-              <HeadingSmall>
-                Managed by:{" "}
-                {property.fields.manager.fields.name
-                  ? property.fields.manager.fields.name
-                  : ""}
-              </HeadingSmall>
-            ) : null}
           </div>
-          {userRole === "tenant" ? (
-            <div className={styles.GetHelp}>
-              <ButtonLink to="/request">Get Help</ButtonLink>
-            </div>
-          ) : null}
-        </div>
+        ) : null}
+        {userRole === "tenant" ? (
+          <HeadingSmall>
+            Monthly rent: ${property.fields.monthlyRent}
+          </HeadingSmall>
+        ) : null}
+
+        {userRole !== "tenant" && property.fields.tenant ? (
+          <HeadingSmall>
+            Tenant:{" "}
+            {property.fields.tenant[0].fields.name
+              ? property.fields.tenant[0].fields.name
+              : ""}
+          </HeadingSmall>
+        ) : null}
+        {userRole !== "landlord" && property.fields.landlord ? (
+          <HeadingSmall>
+            Landlord:{" "}
+            {property.fields.landlord.fields.name
+              ? property.fields.landlord.fields.name
+              : ""}
+          </HeadingSmall>
+        ) : null}
+        {userRole !== "manager" && property.fields.manager ? (
+          <HeadingSmall>
+            Managed by:{" "}
+            {property.fields.manager.fields.name
+              ? property.fields.manager.fields.name
+              : ""}
+          </HeadingSmall>
+        ) : null}
       </div>
+      {userRole === "tenant" ? (
+        <div className={styles.GetHelp}>
+          <ButtonLink to="/request">Get Help</ButtonLink>
+        </div>
+      ) : null}
     </div>
   );
 };

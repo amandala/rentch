@@ -23,8 +23,17 @@
 .Logo {
   width: 250px;
   height: 50px;
-
   background: url(//www.rentch.ca/wp-content/uploads/2019/05/White.png)
     no-repeat scroll center left !important;
   background-size: contain !important;
+}
+
+.Nav {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.Greeting {
+  margin-right: 24px;
 }

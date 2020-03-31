@@ -1,18 +1,54 @@
 import React from "react";
 import { useAuth0 } from "../../react-auth0-spa";
+
 import { ContentfulClient, ContentfulProvider, Query } from "react-contentful";
 import ErrorScreen from "../../components/ErrorScreen";
-import { Text, HeadingLarge } from "../../components/Type";
-import PropertyLinkList from "../../components/PropertyLinkList";
+import Properties from "../Properties";
+import { Text } from "../../components/Type";
+import { Button } from "../../components/Button";
 import PropertyDetails from "../../components/PropertyDetails";
 import Notifications from "../../components/Notifications";
 import styles from "./index.module.scss";
+
+const renderHome = ({ properties, role, activePage }) => {
+  console.log(activePage);
+  if (properties && properties.length < 1) {
+    return (
+      <ErrorScreen>
+        <Text>
+          We're sorry! There's no properties configured for your user account
+          yet.
+        </Text>
+      </ErrorScreen>
+    );
+  }
+  if (role === "tenant") {
+    return (
+      <div className={styles.PropertyDetails}>
+        <PropertyDetails showImage userRole="tenant" property={properties[0]} />
+      </div>
+    );
+  } else {
+    if (activePage === "properties") {
+      return <Properties properties={properties} />;
+    }
+    if (activePage === "dashboard") {
+      return (
+        <div className={styles.Notifications}>
+          <Notifications properties={properties} />
+        </div>
+      );
+    }
+  }
+};
 
 const Home = () => {
   const contentfulClient = new ContentfulClient({
     accessToken: process.env.REACT_APP_CONTENT_DELIVERY_API,
     space: process.env.REACT_APP_CONTENTFUL_SPACE
   });
+
+  const [activePage, setActivePage] = React.useState("dashboard");
 
   const { user } = useAuth0();
 
@@ -64,38 +100,34 @@ const Home = () => {
 
           return (
             <>
-              {properties ? (
-                <div className={styles.Home}>
-                  <div className={styles.Greeting}>
-                    <HeadingLarge>Welcome, {user.nickname}</HeadingLarge>
-                  </div>
-                  <div className={styles.Dashboard}>
-                    {role === "tenant" ? (
-                      <div className={styles.PropertyDetails}>
-                        <PropertyDetails
-                          showImage
-                          userRole="tenant"
-                          property={properties[0]}
-                        />
-                      </div>
-                    ) : (
-                      <div className={styles.PropertiesList}>
-                        <PropertyLinkList properties={properties} />
-                      </div>
-                    )}
-                    <div className={styles.Notifications}>
-                      <Notifications properties={properties} />
-                    </div>
+              {role === "manager" ? (
+                <div className={styles.Subnav}>
+                  <div className={styles.SubnavContent}>
+                    <Button
+                      onClick={() => setActivePage("dashboard")}
+                      className={styles.NavButton}
+                    >
+                      Dashboard
+                    </Button>
+                    <Button
+                      onClick={() => setActivePage("properties")}
+                      className={styles.NavButton}
+                    >
+                      Properties
+                    </Button>
+                    <Button
+                      onClick={() => setActivePage("archive")}
+                      className={styles.NavButton}
+                    >
+                      Archive
+                    </Button>
                   </div>
                 </div>
-              ) : (
-                <ErrorScreen>
-                  <Text>
-                    We're sorry! There's no properties configured for your user
-                    account yet.
-                  </Text>
-                </ErrorScreen>
-              )}
+              ) : null}
+
+              <div className={styles.Home}>
+                {renderHome({ activePage, properties, role })}
+              </div>
             </>
           );
         }}
