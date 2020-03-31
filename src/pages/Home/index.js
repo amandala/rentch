@@ -11,7 +11,6 @@ import Notifications from "../../components/Notifications";
 import styles from "./index.module.scss";
 
 const renderHome = ({ properties, role, activePage }) => {
-  console.log(activePage);
   if (properties && properties.length < 1) {
     return (
       <ErrorScreen>
