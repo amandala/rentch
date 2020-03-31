@@ -28,7 +28,7 @@ const PropertyDetails = ({ property, showImage, userRole }: PropTypes) => {
     }
   }, [dispatch, property, userRole]);
 
-  if (!property) {
+  if (!property || !property.fields) {
     return null;
   }
 
@@ -45,7 +45,7 @@ const PropertyDetails = ({ property, showImage, userRole }: PropTypes) => {
       <div className={styles.Details}>
         <div className={styles.Padding}>
           <div>
-            {property.fields.name ? (
+            {property.fields && property.fields.name ? (
               <HeadingMedium>{property.fields.name}</HeadingMedium>
             ) : null}
             <HeadingSmall>
